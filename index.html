@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>✨ hello · gav eme</title>
+  <!-- Font Awesome (optional but adds a tiny sparkle) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      min-height: 100vh;
+      background: linear-gradient(145deg, #0b1120 0%, #1a2639 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+      padding: 1rem;
+      /* subtle animated grain overlay (pure css) */
+      position: relative;
+    }
+
+    /* soft noise texture via pseudo-element */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      opacity: 0.3;
+      z-index: 0;
+    }
+
+    .card {
+      position: relative;
+      z-index: 2;
+      max-width: 680px;
+      width: 100%;
+      background: rgba(255, 255, 255, 0.04);
+      backdrop-filter: blur(14px) saturate(180%);
+      -webkit-backdrop-filter: blur(14px) saturate(180%);
+      border-radius: 3.5rem;
+      padding: 3rem 2.5rem;
+      box-shadow: 0 30px 50px -20px rgba(0, 0, 0, 0.8),
+                  inset 0 1px 1px rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.03);
+      transition: transform 0.2s ease, box-shadow 0.2s;
+      text-align: center;
+    }
+
+    .card:hover {
+      transform: scale(1.01);
+      box-shadow: 0 40px 60px -18px #000000cc;
+    }
+
+    /* decorative glow orbs */
+    .card::after,
+    .card::before {
+      content: '';
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(70px);
+      opacity: 0.25;
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    .card::before {
+      width: 240px;
+      height: 240px;
+      background: #6f8cff;
+      top: -80px;
+      right: -60px;
+    }
+
+    .card::after {
+      width: 200px;
+      height: 200px;
+      background: #c084fc;
+      bottom: -70px;
+      left: -50px;
+    }
+
+    /* --- typography & content --- */
+    .greeting-icon {
+      font-size: 4.8rem;
+      line-height: 1;
+      margin-bottom: 0.25rem;
+      display: inline-block;
+      filter: drop-shadow(0 8px 12px rgba(0, 0, 0, 0.4));
+      animation: float 4s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0% { transform: translateY(0px); }
+      50% { transform: translateY(-8px); }
+      100% { transform: translateY(0px); }
+    }
+
+    h1 {
+      font-size: 4.8rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      background: linear-gradient(to right, #f0f3ff, #b7c9ff, #d9b3ff);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      margin: 0.25rem 0 0.2rem;
+      text-shadow: 0 2px 20px rgba(90, 120, 255, 0.2);
+      line-height: 1.1;
+    }
+
+    .sub-gav {
+      font-size: 1.4rem;
+      font-weight: 500;
+      color: rgba(220, 230, 255, 0.7);
+      letter-spacing: 0.4px;
+      background: rgba(255, 255, 255, 0.02);
+      display: inline-block;
+      padding: 0.3rem 1.4rem;
+      border-radius: 60px;
+      backdrop-filter: blur(4px);
+      border: 1px solid rgba(255, 255, 255, 0.04);
+      margin: 0.5rem 0 1.25rem;
+      box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.02);
+    }
+
+    .sub-gav i {
+      margin: 0 6px;
+      color: #a8b9ff;
+      font-size: 0.9rem;
+      opacity: 0.7;
+    }
+
+    .message-box {
+      background: rgba(0, 0, 0, 0.2);
+      border-radius: 2.2rem;
+      padding: 1.4rem 2rem;
+      margin: 1.8rem 0 2rem;
+      border: 1px solid rgba(255, 255, 255, 0.03);
+      backdrop-filter: blur(2px);
+      box-shadow: inset 0 6px 12px rgba(0, 0, 0, 0.2);
+    }
+
+    .message-box p {
+      font-size: 1.25rem;
+      font-weight: 400;
+      color: #d3defa;
+      line-height: 1.6;
+      letter-spacing: 0.3px;
+    }
+
+    .message-box p i {
+      color: #fbbf24;
+      margin: 0 6px;
+    }
+
+    .emoji-line {
+      font-size: 1.8rem;
+      letter-spacing: 10px;
+      margin: 0.2rem 0 1rem;
+      opacity: 0.9;
+    }
+
+    /* CTA / footer */
+    .meta-footer {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem 1.8rem;
+      margin-top: 2rem;
+      padding-top: 1.2rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.04);
+    }
+
+    .meta-footer span {
+      color: rgba(200, 212, 255, 0.5);
+      font-size: 0.85rem;
+      letter-spacing: 0.5px;
+      font-weight: 400;
+      background: rgba(255, 255, 255, 0.02);
+      padding: 0.3rem 1rem;
+      border-radius: 40px;
+      backdrop-filter: blur(2px);
+      border: 1px solid rgba(255, 255, 255, 0.02);
+    }
+
+    .meta-footer i {
+      margin-right: 8px;
+      color: #8aa0ff;
+      opacity: 0.6;
+    }
+
+    .badge {
+      background: rgba(255, 255, 255, 0.02);
+      border-radius: 40px;
+      padding: 0.3rem 1.4rem;
+      border: 1px solid rgba(255, 255, 255, 0.03);
+      color: #b7c9ff;
+      font-size: 0.9rem;
+      font-weight: 400;
+      backdrop-filter: blur(2px);
+      transition: 0.2s;
+    }
+
+    .badge i {
+      margin-right: 6px;
+      color: #fcd34d;
+    }
+
+    .badge:hover {
+      background: rgba(255, 255, 255, 0.06);
+      border-color: rgba(255, 255, 255, 0.08);
+      color: #d6e2ff;
+    }
+
+    /* responsive touches */
+    @media (max-width: 480px) {
+      .card {
+        padding: 2rem 1.2rem;
+        border-radius: 2.5rem;
+      }
+      h1 {
+        font-size: 3.6rem;
+      }
+      .greeting-icon {
+        font-size: 3.8rem;
+      }
+      .sub-gav {
+        font-size: 1.1rem;
+        padding: 0.2rem 1rem;
+      }
+      .message-box p {
+        font-size: 1rem;
+      }
+      .meta-footer {
+        flex-direction: column;
+        gap: 0.6rem;
+      }
+    }
+
+    /* "gav eme" custom highlight */
+    .highlight {
+      background: linear-gradient(145deg, #6d8cff, #a06eff);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      font-weight: 600;
+    }
+
+    /* extra sparkle */
+    .sparkle {
+      display: inline-block;
+      animation: twinkle 2.4s infinite alternate;
+    }
+
+    @keyframes twinkle {
+      0% { opacity: 0.6; transform: scale(0.9); }
+      100% { opacity: 1; transform: scale(1.2); }
+    }
+
+    .attribution {
+      position: fixed;
+      bottom: 20px;
+      right: 24px;
+      color: rgba(255, 255, 255, 0.08);
+      font-size: 0.7rem;
+      letter-spacing: 1px;
+      z-index: 1;
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="card" role="main" aria-label="greeting card">
+    <!-- icon with float -->
+    <div class="greeting-icon" aria-hidden="true">
+      <i class="fas fa-hand-peace" style="color: #e0eaff; filter: drop-shadow(0 4px 8px #5b7cff55);"></i>
+    </div>
+
+    <!-- main title: "hello" -->
+    <h1>hello</h1>
+
+    <!-- "gav eme" sub-line with emojis -->
+    <div class="sub-gav">
+      <i class="fas fa-asterisk" style="opacity: 0.4;"></i>
+      <span class="highlight">gav eme</span>
+      <i class="fas fa-asterisk" style="opacity: 0.4;"></i>
+    </div>
+
+    <!-- decorative emoji line -->
+    <div class="emoji-line" aria-hidden="true">
+      ✦ ✧ ✦ ✧ ✦
+    </div>
+
+    <!-- message box with a friendly vibe -->
+    <div class="message-box">
+      <p>
+        <i class="fas fa-quote-left" style="opacity: 0.2; font-size: 0.8rem;"></i>
+        <span style="font-weight: 300;">glad you're here</span>
+        <i class="fas fa-heart" style="color: #ff6b8a; margin: 0 6px;"></i>
+        <span style="font-weight: 300;"> this is a little </span>
+        <span class="highlight" style="font-weight: 500;">index</span>
+        <span style="font-weight: 300;"> for </span>
+        <span style="background: rgba(255,255,255,0.02); padding: 0 6px; border-radius: 12px;">gav eme</span>
+        <i class="fas fa-quote-right" style="opacity: 0.2; font-size: 0.8rem;"></i>
+      </p>
+    </div>
+
+    <!-- extra sparkle: "fro hello" reference -->
+    <div style="margin: 0.6rem 0 0.2rem; font-size: 1.1rem; color: rgba(200, 215, 255, 0.4); letter-spacing: 4px; font-weight: 300;">
+      <i class="fas fa-feather-alt" style="margin-right: 6px; opacity: 0.3;"></i>
+      <span style="background: rgba(255,255,255,0.02); padding: 0 10px; border-radius: 30px;">fro · hello</span>
+      <i class="fas fa-feather-alt" style="margin-left: 6px; opacity: 0.3;"></i>
+    </div>
+
+    <!-- footer with badges & index info -->
+    <div class="meta-footer">
+      <span>
+        <i class="fas fa-code"></i> index.html
+      </span>
+      <span>
+        <i class="far fa-file"></i> v1 · gav
+      </span>
+      <span class="badge">
+        <i class="fas fa-star"></i> eme
+      </span>
+      <span>
+        <i class="far fa-smile"></i> fro
+      </span>
+    </div>
+
+    <!-- tiny hidden reference: "gav eme index file html fro hello" -->
+    <div style="position: absolute; bottom: 8px; right: 18px; opacity: 0.04; font-size: 0.6rem; letter-spacing: 0.5px; pointer-events: none; user-select: none;">
+      gav eme · index · html · fro · hello
+    </div>
+  </div>
+
+  <!-- subtle attribution (not intrusive) -->
+  <div class="attribution">✦ gav eme ✦</div>
+</body>
+</html>
