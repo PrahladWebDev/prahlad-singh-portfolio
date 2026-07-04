@@ -589,6 +589,7 @@ body::before {
   line-height: 1;
   pointer-events: none;
 }
+.proj-card.wide { grid-column: 1 / -1; }
 .p-name {
   font-family: var(--display);
   font-size: 22px;
@@ -596,7 +597,35 @@ body::before {
   letter-spacing: -0.5px;
   line-height: 1.1;
 }
+.p-tagline {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--mid);
+  letter-spacing: 0.5px;
+  margin-top: -8px;
+}
 .p-desc { font-size: 12px; color: #666; line-height: 1.65; flex: 1; }
+.p-feature-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin: 2px 0 4px;
+}
+.p-feature-list li {
+  font-size: 11.5px;
+  color: #444;
+  padding-left: 16px;
+  position: relative;
+  line-height: 1.5;
+}
+.p-feature-list li::before {
+  content: '✓';
+  position: absolute; left: 0;
+  color: var(--black);
+  font-weight: 700;
+  font-size: 10px;
+}
 .p-stack { display: flex; flex-wrap: wrap; gap: 6px; }
 .p-tag {
   padding: 3px 10px; border: 1.5px solid var(--black);
@@ -708,6 +737,7 @@ body::before {
   .section { padding: 72px 20px 60px; }
   .stats-row { grid-template-columns: repeat(2,1fr); }
   .skills-wrap, .proj-grid, .about-hero, .contact-grid { grid-template-columns: 1fr; }
+  .proj-card.wide { grid-column: auto; }
   .sec-title { font-size: 40px; }
   .exp-item { padding: 20px; }
   .mobile-nav {
@@ -879,10 +909,6 @@ body::before {
             <div class="ib-title">// WHAT I DO</div>
             <div class="ib-text">RESTful APIs, multi-tenant architecture, JWT/RBAC auth, real-time features with Socket.io, DICOM medical imaging, DevOps on Linux.</div>
           </div>
-          <div class="info-block reveal">
-            <div class="ib-title">// CURRENTLY BUILDING</div>
-            <div class="ib-text">Life Layer — a large-scale healthcare platform with diagnostics, telemedicine, ambulance tracking, DICOM viewer, and Razorpay payments.</div>
-          </div>
         </div>
       </div>
 
@@ -1001,113 +1027,102 @@ body::before {
     <section id="section-projects" class="section">
       <div class="eyebrow">04 — PROJECTS</div>
       <h2 class="sec-title">Things I<br><em>Built.</em></h2>
-      <p class="sec-sub">Personal projects, production tools, experiments that shipped</p>
+      <p class="sec-sub">Full-stack MERN/MEVN systems — architected, built, and shipped end to end</p>
 
       <div class="proj-grid">
-        <div class="proj-card reveal" data-num="01">
-          <div class="p-name">VaultDrop</div>
-          <div class="p-desc">Secure file sharing with password protection, OTP verification, expiring links, auto-delete, and configurable download limits. Zero-knowledge sharing model.</div>
+
+        <!-- ShareVault -->
+        <div class="proj-card wide reveal" data-num="01">
+          <div class="p-name">ShareVault</div>
+          <div class="p-tagline">Secure File &amp; Video Sharing Platform · MERN</div>
+          <div class="p-desc">A production-ready file sharing platform with auto-expiring links, role-based access, and a dedicated admin Video Vault. Built the full system — from JWT auth and rate-limited uploads to a cron-based cleanup engine that purges expired files off the VPS filesystem every 10 minutes.</div>
+          <ul class="p-feature-list">
+            <li>Password-protected, expiring public share links with OTP verification &amp; download limits</li>
+            <li>Admin Video Vault — upload, stream, and manage videos separately from regular files</li>
+            <li>JWT access + refresh token auth (httpOnly cookies), bcrypt hashing, RBAC (user/admin)</li>
+            <li>Auto-expiry engine — 24hr TTL on user files, storage usage tracking, cleanup logs</li>
+            <li>Admin dashboard — analytics, storage stats, user management, unified file+video listings</li>
+            <li>Hardened uploads — Multer MIME/extension validation, path-traversal prevention, rate limiting</li>
+          </ul>
           <div class="p-stack">
-            <span class="p-tag">MongoDB</span><span class="p-tag">Express</span>
-            <span class="p-tag">React</span><span class="p-tag">Node.js</span>
-            <span class="p-tag">Cloudinary</span>
+            <span class="p-tag">React 18</span><span class="p-tag">Node.js</span>
+            <span class="p-tag">Express</span><span class="p-tag">MongoDB</span>
+            <span class="p-tag">Tailwind CSS</span><span class="p-tag">JWT</span>
+            <span class="p-tag">React Query</span><span class="p-tag">Node Cron</span>
           </div>
           <div class="p-links">
-            <a class="p-link" href="https://vaultdrop.prahladsingh.in/" target="_blank">
+            <a class="p-link" href="#" target="_blank">
               <svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
               LIVE DEMO
             </a>
-            <a class="p-link" href="https://github.com/PrahladWebDev/vaultdrop.git" target="_blank">
+            <a class="p-link" href="#" target="_blank">
               <svg viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
               GITHUB
             </a>
           </div>
         </div>
 
-        <div class="proj-card reveal" data-num="02">
-          <div class="p-name">Wardrobe Manager</div>
-          <div class="p-desc">Clothing inventory system with analytics dashboards. Organize your wardrobe, visualize usage patterns with Chart.js, and get outfit insights.</div>
+        <!-- MythLok -->
+        <div class="proj-card wide reveal" data-num="02">
+          <div class="p-name">MythLok</div>
+          <div class="p-tagline">World Folklore &amp; Mythology Platform · MERN</div>
+          <div class="p-desc">A community platform for discovering and contributing world folklore — ghost stories, mythological creatures, and regional legends from 20+ countries. Led the full architecture, including a large-scale refactor migrating the entire app from Indian state-wise to country-wise organization across frontend, backend, and mobile.</div>
+          <ul class="p-feature-list">
+            <li>500+ stories across 20+ countries with an interactive country-tile world map</li>
+            <li>Contributor workflow — multi-step submission, draft saving, admin review (approve/reject/request changes)</li>
+            <li>Bookmarks, 1–5 star ratings, comments, reading history, and a 10-badge achievement system</li>
+            <li>Admin CMS — analytics dashboard, user role/block management, broadcast notifications, featured story control</li>
+            <li>JWT auth with 4 roles, Redux Toolkit state, Cloudinary image uploads</li>
+          </ul>
           <div class="p-stack">
-            <span class="p-tag">MongoDB</span><span class="p-tag">Express</span>
-            <span class="p-tag">React</span><span class="p-tag">Node.js</span>
-            <span class="p-tag">Chart.js</span>
+            <span class="p-tag">React 18</span><span class="p-tag">Redux Toolkit</span>
+            <span class="p-tag">Node.js</span><span class="p-tag">Express</span>
+            <span class="p-tag">MongoDB</span>
+            <span class="p-tag">Cloudinary</span><span class="p-tag">JWT</span>
           </div>
           <div class="p-links">
-            <a class="p-link" href="https://wardrobemanager.prahladsingh.in/" target="_blank">
+            <a class="p-link" href="#" target="_blank">
               <svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
               LIVE DEMO
             </a>
-            <a class="p-link" href="https://github.com/PrahladWebDev/wardrobe-manager.git" target="_blank">
+            <a class="p-link" href="#" target="_blank">
               <svg viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
               GITHUB
             </a>
           </div>
         </div>
 
-        <div class="proj-card reveal" data-num="03">
-          <div class="p-name">Legend Sansar</div>
-          <div class="p-desc">Indian folktale storytelling platform with audio narration, category filters, and an immersive reading UI built for cultural preservation.</div>
+        <!-- School ERP -->
+        <div class="proj-card wide reveal" data-num="03">
+          <div class="p-name">School ERP</div>
+          <div class="p-tagline">Multi-Tenant School Management System · MERN</div>
+          <div class="p-desc">A full multi-tenant ERP for schools covering academics, attendance, fees, and communication — built with a shared-database, tenant-scoped data model so a single deployment can serve many schools securely and independently.</div>
+          <ul class="p-feature-list">
+            <li>Multi-tenant architecture — global vs. tenant-scoped Mongoose models, per-school data isolation</li>
+            <li>Student, teacher, class, timetable, exam, and homework management modules</li>
+            <li>Attendance tracking with role-based views for students, teachers, and parents</li>
+            <li>Fees &amp; accounting module with scholarship handling and report generation</li>
+            <li>Notice board, leave requests, and real-time notifications via Socket.io</li>
+            <li>Redux-driven React frontend with role-based dashboards (super admin / school admin / teacher / student / parent)</li>
+          </ul>
           <div class="p-stack">
-            <span class="p-tag">MongoDB</span><span class="p-tag">Express</span>
-            <span class="p-tag">React</span><span class="p-tag">Node.js</span>
+            <span class="p-tag">React</span><span class="p-tag">Redux</span>
+            <span class="p-tag">Node.js</span><span class="p-tag">Express</span>
+            <span class="p-tag">MongoDB</span><span class="p-tag">Socket.io</span>
+            <span class="p-tag">Multi-Tenant</span>
           </div>
           <div class="p-links">
-            <a class="p-link" href="https://legendsansar.prahladsingh.in/" target="_blank">
+            <a class="p-link" href="#" target="_blank">
               <svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
               LIVE DEMO
             </a>
-            <a class="p-link" href="https://github.com/PrahladWebDev/legend-sansar.git" target="_blank">
+            <a class="p-link" href="#" target="_blank">
               <svg viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
               GITHUB
             </a>
           </div>
         </div>
 
-        <div class="proj-card reveal" data-num="04">
-          <div class="p-name">CodeForge</div>
-          <div class="p-desc">Online code editor supporting JS, Python, C++, Go, Java, HTML/CSS. Run code instantly in the browser, save projects, work from any device.</div>
-          <div class="p-stack">
-            <span class="p-tag">MongoDB</span><span class="p-tag">Express</span>
-            <span class="p-tag">React</span><span class="p-tag">Node.js</span>
-          </div>
-          <div class="p-links">
-            <a class="p-link" href="https://codeforge.prahladsingh.in/" target="_blank">
-              <svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-              LIVE DEMO
-            </a>
-            <a class="p-link" href="https://github.com/PrahladWebDev/codeforge-code-editor.git" target="_blank">
-              <svg viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
-              GITHUB
-            </a>
-          </div>
-        </div>
-
-        <div class="proj-card reveal" data-num="05">
-          <div class="p-name">EduNotesHub</div>
-          <div class="p-desc">Student resource sharing platform where students upload, browse, and share academic notes and study materials with an organized category system.</div>
-          <div class="p-stack">
-            <span class="p-tag">PHP</span><span class="p-tag">JavaScript</span>
-            <span class="p-tag">HTML</span><span class="p-tag">CSS</span>
-            <span class="p-tag">MySQL</span>
-          </div>
-          <div class="p-links">
-            <a class="p-link" href="https://edunoteshub.webdevprahlad.site/" target="_blank">
-              <svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-              LIVE DEMO
-            </a>
-          </div>
-        </div>
-
-        <div class="proj-card proj-ghost reveal" data-num="??">
-          <div class="p-name" style="color:#999">More on the way...</div>
-          <div class="p-desc">Always shipping. Follow on GitHub for the latest builds and experiments.</div>
-          <div class="p-links">
-            <a class="p-link" href="https://github.com/PrahladWebDev" target="_blank">
-              <svg viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
-              GITHUB PROFILE
-            </a>
-          </div>
-        </div>
       </div>
     </section>
 
@@ -1249,7 +1264,7 @@ function counter(el, target, suffix) {
   }, 35);
 }
 counter(document.getElementById('cnt-exp'), 1, '+');
-counter(document.getElementById('cnt-proj'), 10, '+');
+counter(document.getElementById('cnt-proj'), 3, '+');
 counter(document.getElementById('cnt-stack'), 20, '+');
 
 // ── SKILL BARS ───────────────────────────────────────────────────
