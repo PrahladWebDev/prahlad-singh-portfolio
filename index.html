@@ -907,7 +907,7 @@ body::before {
           </div>
           <div class="info-block reveal">
             <div class="ib-title">// WHAT I DO</div>
-            <div class="ib-text">I design and build RESTful APIs, multi-tenant SaaS architectures with per-tenant data isolation, and JWT/RBAC authentication systems with fine-grained role control. On the real-time side, I've built video calling, live GPS tracking, and instant notifications with Socket.io, PeerJS, and Redis. I also work on niche builds like a DICOM medical imaging viewer, Razorpay payment integrations, and PDF generation pipelines — and I handle my own DevOps: Linux VPS setup, Nginx, PM2, and CI/CD with GitHub Actions.</div>
+            <div class="ib-text">I design and build RESTful APIs, multi-tenant SaaS architectures with per-tenant data isolation, and JWT/RBAC authentication systems with fine-grained role control. On the real-time side, I've built video calling, live GPS tracking, and instant notifications with Socket.io, PeerJS, and Redis. I also build cross-platform mobile apps with React Native (Expo), work on niche builds like a DICOM medical imaging viewer, Razorpay payment integrations, and PDF generation pipelines — and I handle my own DevOps: Linux VPS setup, Nginx, PM2, and CI/CD with GitHub Actions.</div>
           </div>
         </div>
       </div>
@@ -943,6 +943,7 @@ body::before {
           <div class="sk-head"><div class="sk-icon">⬡</div> Frontend</div>
           <div class="skill-tags">
             <span class="sk-tag">Vue.js</span><span class="sk-tag">React.js</span>
+            <span class="sk-tag">React Native</span>
             <span class="sk-tag">JavaScript</span><span class="sk-tag">HTML5</span>
             <span class="sk-tag">CSS3</span><span class="sk-tag">Tailwind</span>
             <span class="sk-tag">Vuex</span><span class="sk-tag">Vite</span>
@@ -950,6 +951,7 @@ body::before {
           <div class="skill-bars">
             <div class="bar-row"><div class="bar-lbl"><span>Vue.js</span><span>90%</span></div><div class="bar-track"><div class="bar-fill" data-w="90"></div></div></div>
             <div class="bar-row"><div class="bar-lbl"><span>React.js</span><span>78%</span></div><div class="bar-track"><div class="bar-fill" data-w="78"></div></div></div>
+            <div class="bar-row"><div class="bar-lbl"><span>React Native</span><span>72%</span></div><div class="bar-track"><div class="bar-fill" data-w="72"></div></div></div>
             <div class="bar-row"><div class="bar-lbl"><span>JavaScript</span><span>85%</span></div><div class="bar-track"><div class="bar-fill" data-w="85"></div></div></div>
           </div>
         </div>
@@ -974,7 +976,7 @@ body::before {
           <div class="skill-tags">
             <span class="sk-tag">MongoDB</span><span class="sk-tag">MySQL</span>
             <span class="sk-tag">Mongoose</span><span class="sk-tag">Multi-tenant</span>
-            <span class="sk-tag">Indexing</span>
+            <span class="sk-tag">Aggregation</span><span class="sk-tag">Indexing</span>
           </div>
           <div class="skill-bars">
             <div class="bar-row"><div class="bar-lbl"><span>MongoDB</span><span>87%</span></div><div class="bar-track"><div class="bar-fill" data-w="87"></div></div></div>
@@ -983,13 +985,14 @@ body::before {
         </div>
 
         <div class="skill-block reveal">
-          <div class="sk-head"><div class="sk-icon">⚙</div> DevOps & Tools</div>
+          <div class="sk-head"><div class="sk-icon">⚙</div> DevOps, Tools & APIs</div>
           <div class="skill-tags">
             <span class="sk-tag">Linux</span><span class="sk-tag">Nginx</span>
             <span class="sk-tag">PM2</span><span class="sk-tag">GitHub Actions</span>
             <span class="sk-tag">Git</span><span class="sk-tag">SSH/SCP</span>
             <span class="sk-tag">SSL</span><span class="sk-tag">Cloudinary</span>
             <span class="sk-tag">Postman</span><span class="sk-tag">Puppeteer</span>
+            <span class="sk-tag">OpenWeatherMap</span><span class="sk-tag">remove.bg</span>
           </div>
         </div>
       </div>
@@ -1031,8 +1034,40 @@ body::before {
 
       <div class="proj-grid">
 
-        <!-- ShareVault -->
+        <!-- Wardrobe Manager -->
         <div class="proj-card wide reveal" data-num="01">
+          <div class="p-name">Wardrobe Manager</div>
+          <div class="p-tagline">Mobile Wardrobe &amp; Outfit Planning App · React Native (Expo) + MERN</div>
+          <div class="p-desc">A full-stack mobile app for organizing your closet, building outfits, and getting weather-aware suggestions — built with React Native (Expo) on the front end and a Node.js/Express/MongoDB backend. Combines everyday wardrobe management with data-driven insights into what you actually wear.</div>
+          <ul class="p-feature-list">
+            <li>Wardrobe grid with search, category filters, and infinite-scroll pagination</li>
+            <li>Reusable, fully editable outfit builder combining items into complete outfits</li>
+            <li>Laundry tracker that auto-excludes dirty items from suggestions &amp; packing lists</li>
+            <li>"Today" tab — live weather-aware outfit suggestions (OpenWeatherMap + device location)</li>
+            <li>Trip packing-list generator pulling weather-appropriate items from the user's real closet, with the latest list persisted per user</li>
+            <li>Stats tab powered by MongoDB aggregation pipelines — wear timelines, most-worn &amp; cost-per-wear leaderboards, closet value, category breakdowns — rendered with real charts via react-native-svg</li>
+            <li>Optional automatic background removal on item photos (remove.bg) and an in-app Server Settings screen for on-device backend URL configuration with a live connection test</li>
+          </ul>
+          <div class="p-stack">
+            <span class="p-tag">React Native</span><span class="p-tag">Expo</span>
+            <span class="p-tag">Node.js</span><span class="p-tag">Express</span>
+            <span class="p-tag">MongoDB</span><span class="p-tag">react-native-svg</span>
+            <span class="p-tag">OpenWeatherMap API</span><span class="p-tag">remove.bg</span>
+          </div>
+          <div class="p-links">
+            <a class="p-link" href="https://sharevault.prahladsingh.in/share/009c99b900946f86bbf2feed8358e5efda6eeb44e0da7c57" target="_blank">
+              <svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+              DOWNLOAD APK
+            </a>
+            <a class="p-link" href="https://github.com/PrahladWebDev/wardrobe-manager-react-native" target="_blank">
+              <svg viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+              GITHUB
+            </a>
+          </div>
+        </div>
+
+        <!-- ShareVault -->
+        <div class="proj-card wide reveal" data-num="02">
           <div class="p-name">ShareVault</div>
           <div class="p-tagline">Secure File &amp; Video Sharing Platform · MERN</div>
           <div class="p-desc">A production-ready file sharing platform with auto-expiring links, role-based access, and a dedicated admin Video Vault. Built the full system — from JWT auth and rate-limited uploads to a cron-based cleanup engine that purges expired files off the VPS filesystem every 10 minutes.</div>
@@ -1063,7 +1098,7 @@ body::before {
         </div>
 
         <!-- MythLok -->
-        <div class="proj-card wide reveal" data-num="02">
+        <div class="proj-card wide reveal" data-num="03">
           <div class="p-name">MythLok</div>
           <div class="p-tagline">World Folklore &amp; Mythology Platform · MERN</div>
           <div class="p-desc">A community platform for discovering and contributing world folklore — ghost stories, mythological creatures, and regional legends from 20+ countries. Led the full architecture, including a large-scale refactor migrating the entire app from Indian state-wise to country-wise organization across frontend and backend.</div>
@@ -1093,7 +1128,7 @@ body::before {
         </div>
 
         <!-- School ERP -->
-        <div class="proj-card wide reveal" data-num="03">
+        <div class="proj-card wide reveal" data-num="04">
           <div class="p-name">School ERP</div>
           <div class="p-tagline">Multi-Tenant School Management System · MERN</div>
           <div class="p-desc">A full multi-tenant ERP for schools covering academics, attendance, fees, and communication — built with a shared-database, tenant-scoped data model so a single deployment can serve many schools securely and independently.</div>
@@ -1124,7 +1159,7 @@ body::before {
         </div>
 
         <!-- Zip Router -->
-        <div class="proj-card wide reveal" data-num="04">
+        <div class="proj-card wide reveal" data-num="05">
           <div class="p-name">Zip Router</div>
           <div class="p-tagline">Single-Line Grid Puzzle Game · MERN</div>
           <div class="p-desc">A full MERN-stack puzzle game where players trace a single continuous line through every cell of a grid, hitting numbered checkpoints in order without crossing blocked edges — with accounts, level progression, and star ratings. Built a procedural puzzle generator that guarantees a solvable, unique board for every level.</div>
@@ -1259,7 +1294,7 @@ function go(id, el) {
 const termLines = [
   { text: '# Prahlad Singh', color: '#ffd23f' },
   { text: 'role     → Full-Stack Developer', color: '#8be9fd' },
-  { text: 'stack    → MERN | MEVN | Node.js', color: '#8be9fd' },
+  { text: 'stack    → MERN | MEVN | React Native', color: '#8be9fd' },
   { text: 'location → Gurgaon, Haryana, IN', color: '#8be9fd' },
   { text: 'status   → AVAILABLE_FOR_HIRE ✓', color: '#39ff14' },
   { text: 'passion  → Building things that work', color: '#ff79c6' },
@@ -1296,7 +1331,7 @@ function counter(el, target, suffix) {
   }, 35);
 }
 counter(document.getElementById('cnt-exp'), 1, '+');
-counter(document.getElementById('cnt-proj'), 4, '+');
+counter(document.getElementById('cnt-proj'), 5, '+');
 counter(document.getElementById('cnt-stack'), 20, '+');
 
 // ── SKILL BARS ───────────────────────────────────────────────────
