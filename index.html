@@ -907,7 +907,7 @@ body::before {
           </div>
           <div class="info-block reveal">
             <div class="ib-title">// WHAT I DO</div>
-            <div class="ib-text">I design and build RESTful APIs, multi-tenant SaaS architectures with per-tenant data isolation, and JWT/RBAC authentication systems with fine-grained role control. On the real-time side, I've built video calling, live GPS tracking, and instant notifications with Socket.io, PeerJS, and Redis. I also build cross-platform mobile apps with React Native (Expo), work on niche builds like a DICOM medical imaging viewer, Razorpay payment integrations, and PDF generation pipelines — and I handle my own DevOps: Linux VPS setup, Nginx, PM2, and CI/CD with GitHub Actions.</div>
+            <div class="ib-text">I design and build RESTful APIs, multi-tenant SaaS architectures with per-tenant data isolation, and JWT/RBAC authentication systems with fine-grained role control. On the real-time side, I've built video calling, live GPS tracking, and instant notifications with Socket.io, PeerJS, and Redis. I also build cross-platform mobile apps with React Native (Expo), terminal/CLI tools with Node.js, work on niche builds like a DICOM medical imaging viewer, Razorpay payment integrations, and PDF generation pipelines — and I handle my own DevOps: Linux VPS setup, Nginx, PM2, and CI/CD with GitHub Actions.</div>
           </div>
         </div>
       </div>
@@ -993,6 +993,7 @@ body::before {
             <span class="sk-tag">SSL</span><span class="sk-tag">Cloudinary</span>
             <span class="sk-tag">Postman</span><span class="sk-tag">Puppeteer</span>
             <span class="sk-tag">OpenWeatherMap</span><span class="sk-tag">remove.bg</span>
+            <span class="sk-tag">npm Publishing</span><span class="sk-tag">CLI (Ink)</span>
           </div>
         </div>
       </div>
@@ -1190,6 +1191,36 @@ body::before {
           </div>
         </div>
 
+        <!-- GrabVid -->
+        <div class="proj-card wide reveal" data-num="06">
+          <div class="p-name">GrabVid</div>
+          <div class="p-tagline">Terminal Video Downloader CLI · Node.js + Ink (React for CLI)</div>
+          <div class="p-desc">A terminal app for downloading videos from YouTube, X, Instagram, and more — built with Ink (React for CLI interfaces) instead of a typical scripting approach, giving it a real interactive UI inside the terminal. Published to npm as a globally installable CLI tool.</div>
+          <ul class="p-feature-list">
+            <li>Interactive, keyboard-navigable format picker with live download progress, powered by yt-dlp</li>
+            <li>6 switchable color themes with a pixel-block wordmark; frame pulses while fetching/downloading</li>
+            <li>Persistent URL history — arrow-key recall, deduped, last 20 saved to a local config file</li>
+            <li>Quick flags (--best, --mp3) for one-shot downloads without the interactive picker</li>
+            <li>State machine across input → fetching → picking → downloading → done/error</li>
+            <li>Fixed cross-terminal rendering bugs to keep the frame layout consistent across different terminal emulators</li>
+          </ul>
+          <div class="p-stack">
+            <span class="p-tag">Node.js</span><span class="p-tag">React</span>
+            <span class="p-tag">Ink</span><span class="p-tag">yt-dlp</span>
+            <span class="p-tag">CLI</span><span class="p-tag">npm Package</span>
+          </div>
+          <div class="p-links">
+            <a class="p-link" href="https://www.npmjs.com/package/grabvid-cli" target="_blank">
+              <svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+              NPM PACKAGE
+            </a>
+            <a class="p-link" href="https://github.com/PrahladWebDev/grabvid" target="_blank">
+              <svg viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+              GITHUB
+            </a>
+          </div>
+        </div>
+
       </div>
     </section>
 
@@ -1331,7 +1362,7 @@ function counter(el, target, suffix) {
   }, 35);
 }
 counter(document.getElementById('cnt-exp'), 1, '+');
-counter(document.getElementById('cnt-proj'), 5, '+');
+counter(document.getElementById('cnt-proj'), 6, '+');
 counter(document.getElementById('cnt-stack'), 20, '+');
 
 // ── SKILL BARS ───────────────────────────────────────────────────
