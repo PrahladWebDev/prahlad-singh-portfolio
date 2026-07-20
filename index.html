@@ -432,6 +432,108 @@ body::before {
 }
 .stat-l { font-size: 11px; color: var(--mid); margin-top: 4px; font-family: var(--mono); }
 
+/* GitHub Stats section */
+.github-stats {
+  margin-top: 40px;
+  padding: 32px;
+  background: var(--white);
+  border: var(--border);
+  border-radius: var(--radius);
+  box-shadow: 6px 6px 0 var(--black);
+}
+.github-stats .gh-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 28px;
+}
+.github-stats .gh-header .gh-avatar {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  border: 2px solid var(--black);
+}
+.github-stats .gh-header .gh-name {
+  font-family: var(--display);
+  font-size: 20px;
+  font-weight: 700;
+}
+.github-stats .gh-header .gh-handle {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--mid);
+}
+.gh-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin-bottom: 28px;
+}
+.gh-stat {
+  border: 1.5px solid var(--black);
+  border-radius: var(--radius);
+  padding: 16px 12px;
+  text-align: center;
+  background: var(--off-white);
+}
+.gh-stat .gh-num {
+  font-family: var(--display);
+  font-size: 28px;
+  font-weight: 800;
+}
+.gh-stat .gh-label {
+  font-family: var(--mono);
+  font-size: 9px;
+  color: var(--mid);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.gh-langs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 24px;
+}
+.gh-lang-tag {
+  padding: 4px 12px;
+  border: 1px solid var(--black);
+  border-radius: 20px;
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 600;
+  background: var(--white);
+}
+.gh-repos {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+.gh-repo {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 14px;
+  border: 1px solid #ddd;
+  border-radius: var(--radius);
+  background: var(--off-white);
+  font-size: 12px;
+  text-decoration: none;
+  color: var(--black);
+  transition: all 0.15s;
+}
+.gh-repo:hover {
+  border-color: var(--black);
+  background: var(--black);
+  color: var(--white);
+}
+.gh-repo .gh-star {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-family: var(--mono);
+  font-size: 10px;
+}
+
 /* ── SKILLS ── */
 .skills-wrap { display: grid; grid-template-columns: repeat(2,1fr); gap: 20px; }
 .skill-block {
@@ -764,6 +866,8 @@ body::before {
     border: 1px solid transparent;
   }
   .mn-item.active { color: var(--black); background: var(--accent); }
+  .gh-grid { grid-template-columns: repeat(2, 1fr); }
+  .gh-repos { grid-template-columns: 1fr; }
 }
 
 /* ── SCROLL ANIMATION ── */
@@ -1086,6 +1190,21 @@ body::before {
           <div class="stat-l">Coffee ☕</div>
         </div>
       </div>
+
+      <!-- GITHUB STATS INTEGRATION -->
+      <div id="github-stats-container" class="github-stats reveal">
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:8px;">
+          <span style="font-family:var(--mono);font-size:10px;letter-spacing:2px;color:var(--mid);">// GITHUB</span>
+          <span style="flex:1;height:1px;background:#ddd;"></span>
+          <a href="https://github.com/PrahladWebDev" target="_blank" style="font-family:var(--mono);font-size:10px;color:var(--black);font-weight:600;text-decoration:none;border:1px solid var(--black);padding:2px 10px;border-radius:3px;">@PrahladWebDev →</a>
+        </div>
+        <div id="gh-content">
+          <div style="display:flex;justify-content:center;padding:32px 0;color:var(--mid);font-family:var(--mono);font-size:12px;">
+            <span class="gh-loading">⟳ loading GitHub data...</span>
+          </div>
+        </div>
+      </div>
+
     </section>
 
     <!-- ── SKILLS ── -->
@@ -1568,6 +1687,74 @@ window.addEventListener('mousemove', (e) => {
     d.style.transform = `translate(${nx * strength}px, ${ny * strength}px)`;
   });
 });
+
+// ══════════════════════════════════════════════════════════════
+// GITHUB STATS FETCHER
+// ══════════════════════════════════════════════════════════════
+async function fetchGitHubStats() {
+  const container = document.getElementById('gh-content');
+  try {
+    const [userRes, reposRes] = await Promise.all([
+      fetch('https://api.github.com/users/PrahladWebDev'),
+      fetch('https://api.github.com/users/PrahladWebDev/repos?per_page=100&sort=updated')
+    ]);
+    if (!userRes.ok || !reposRes.ok) throw new Error('GitHub API error');
+    const user = await userRes.json();
+    const repos = await reposRes.json();
+
+    const totalStars = repos.reduce((acc, r) => acc + (r.stargazers_count || 0), 0);
+    const totalForks = repos.reduce((acc, r) => acc + (r.forks_count || 0), 0);
+    const langCount = {};
+    repos.forEach(r => { if (r.language) langCount[r.language] = (langCount[r.language] || 0) + 1; });
+    const topLangs = Object.entries(langCount).sort((a,b) => b[1]-a[1]).slice(0,6).map(([lang]) => lang);
+    const topRepos = repos.sort((a,b) => (b.stargazers_count||0) - (a.stargazers_count||0)).slice(0,6);
+
+    container.innerHTML = `
+      <div style="display:flex;align-items:center;gap:16px;margin-bottom:24px;flex-wrap:wrap;">
+        <img src="${user.avatar_url}" alt="${user.login}" style="width:48px;height:48px;border-radius:50%;border:2px solid var(--black);">
+        <div>
+          <div style="font-family:var(--display);font-size:20px;font-weight:700;">${user.name || user.login}</div>
+          <div style="font-family:var(--mono);font-size:11px;color:var(--mid);">@${user.login} · ${user.public_repos} public repos</div>
+        </div>
+        <div style="margin-left:auto;font-family:var(--mono);font-size:10px;color:var(--mid);">updated ${new Date().toLocaleDateString()}</div>
+      </div>
+
+      <div class="gh-grid">
+        <div class="gh-stat"><div class="gh-num">${user.public_repos}</div><div class="gh-label">Repos</div></div>
+        <div class="gh-stat"><div class="gh-num">${totalStars}</div><div class="gh-label">Stars ⭐</div></div>
+        <div class="gh-stat"><div class="gh-num">${totalForks}</div><div class="gh-label">Forks</div></div>
+        <div class="gh-stat"><div class="gh-num">${user.followers}</div><div class="gh-label">Followers</div></div>
+      </div>
+
+      <div style="margin-bottom:18px;">
+        <div style="font-family:var(--mono);font-size:9px;letter-spacing:1px;color:var(--mid);text-transform:uppercase;margin-bottom:8px;">Top Languages</div>
+        <div class="gh-langs">
+          ${topLangs.map(lang => `<span class="gh-lang-tag">${lang}</span>`).join('')}
+          ${Object.keys(langCount).length > 6 ? `<span class="gh-lang-tag" style="border-style:dashed;">+${Object.keys(langCount).length-6} more</span>` : ''}
+        </div>
+      </div>
+
+      <div>
+        <div style="font-family:var(--mono);font-size:9px;letter-spacing:1px;color:var(--mid);text-transform:uppercase;margin-bottom:8px;">Most Starred Repos</div>
+        <div class="gh-repos">
+          ${topRepos.map(r => `
+            <a href="${r.html_url}" target="_blank" class="gh-repo">
+              <span>${r.name}</span>
+              <span class="gh-star">⭐ ${r.stargazers_count || 0}</span>
+            </a>
+          `).join('')}
+        </div>
+      </div>
+    `;
+  } catch (err) {
+    container.innerHTML = `
+      <div style="display:flex;justify-content:center;padding:28px 0;color:var(--mid);font-family:var(--mono);font-size:12px;">
+        ⚡ couldn't reach GitHub — check your network
+      </div>
+    `;
+  }
+}
+fetchGitHubStats();
 
 // ══════════════════════════════════════════════════════════════
 // THREE.JS — FULL PAGE PARTICLE NETWORK BACKGROUND
