@@ -1461,6 +1461,99 @@ body::before {
             </a>
           </div>
         </div>
+
+        <!-- School ERP -->
+        <div class="proj-card wide reveal" data-num="04">
+          <div class="p-name">School ERP</div>
+          <div class="p-tagline">Multi-Tenant School Management System · MERN</div>
+          <div class="p-desc">A full multi-tenant ERP for schools covering academics, attendance, fees, and communication — built with a shared-database, tenant-scoped data model so a single deployment can serve many schools securely and independently.</div>
+          <ul class="p-feature-list">
+            <li>Multi-tenant architecture — global vs. tenant-scoped Mongoose models, per-school data isolation</li>
+            <li>Student, teacher, class, timetable, exam, and homework management modules</li>
+            <li>Attendance tracking with role-based views for students, teachers, and parents</li>
+            <li>Fees &amp; accounting module with scholarship handling and report generation</li>
+            <li>Notice board, leave requests, and real-time notifications via Socket.io</li>
+            <li>Redux-driven React frontend with role-based dashboards (super admin / school admin / teacher / student / parent)</li>
+          </ul>
+          <div class="p-stack">
+            <span class="p-tag">React</span><span class="p-tag">Redux</span>
+            <span class="p-tag">Node.js</span><span class="p-tag">Express</span>
+            <span class="p-tag">MongoDB</span><span class="p-tag">Socket.io</span>
+            <span class="p-tag">Multi-Tenant</span>
+          </div>
+          <div class="p-links">
+            <a class="p-link" href="https://schoolerp.prahladsingh.in/" target="_blank">
+              <svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+              LIVE DEMO
+            </a>
+            <a class="p-link" href="https://github.com/PrahladWebDev/school-erp-mern.git" target="_blank">
+              <svg viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+              GITHUB
+            </a>
+          </div>
+        </div>
+
+        <!-- Zip Router -->
+        <div class="proj-card wide reveal" data-num="05">
+          <div class="p-name">Zip Router</div>
+          <div class="p-tagline">Single-Line Grid Puzzle Game · MERN</div>
+          <div class="p-desc">A full MERN-stack puzzle game where players trace a single continuous line through every cell of a grid, hitting numbered checkpoints in order without crossing blocked edges — with accounts, level progression, and star ratings. Built a procedural puzzle generator that guarantees a solvable, unique board for every level.</div>
+          <ul class="p-feature-list">
+            <li>Procedural puzzle generator — randomized, Warnsdorff-ordered DFS producing a Hamiltonian path through every grid cell, with checkpoints and walls placed along the route</li>
+            <li>Levels generated once via a seed script and stored in MongoDB, so every player sees an identical board per level</li>
+            <li>Server-side path validation — client submits its full drawn path; server independently re-verifies grid coverage, adjacency, wall compliance, and checkpoint order before awarding completion, closing the "fake a fast time" exploit</li>
+            <li>Star-rating system based on completion-time thresholds, with per-user level locking and progression</li>
+            <li>JWT authentication via httpOnly cookies</li>
+            <li>Vite + React + Tailwind CSS frontend</li>
+          </ul>
+          <div class="p-stack">
+            <span class="p-tag">React.js</span><span class="p-tag">Node.js</span>
+            <span class="p-tag">Express.js</span><span class="p-tag">MongoDB</span>
+            <span class="p-tag">Mongoose</span><span class="p-tag">JWT</span>
+            <span class="p-tag">Vite</span><span class="p-tag">Tailwind CSS</span>
+            <span class="p-tag">Algorithm Design</span>
+          </div>
+          <div class="p-links">
+            <a class="p-link" href="https://ziprouter.prahladsingh.in/" target="_blank">
+              <svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+              LIVE DEMO
+            </a>
+            <a class="p-link" href="https://github.com/PrahladWebDev/zip-router" target="_blank">
+              <svg viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+              GITHUB
+            </a>
+          </div>
+        </div>
+
+        <!-- GrabVid -->
+        <div class="proj-card wide reveal" data-num="06">
+          <div class="p-name">GrabVid</div>
+          <div class="p-tagline">Terminal Video Downloader CLI · Node.js + Ink (React for CLI)</div>
+          <div class="p-desc">A terminal app for downloading videos from YouTube, X, Instagram, and more — built with Ink (React for CLI interfaces) instead of a typical scripting approach, giving it a real interactive UI inside the terminal. Published to npm as a globally installable CLI tool.</div>
+          <ul class="p-feature-list">
+            <li>Interactive, keyboard-navigable format picker with live download progress, powered by yt-dlp</li>
+            <li>6 switchable color themes with a pixel-block wordmark; frame pulses while fetching/downloading</li>
+            <li>Persistent URL history — arrow-key recall, deduped, last 20 saved to a local config file</li>
+            <li>Quick flags (--best, --mp3) for one-shot downloads without the interactive picker</li>
+            <li>State machine across input → fetching → picking → downloading → done/error</li>
+            <li>Fixed cross-terminal rendering bugs to keep the frame layout consistent across different terminal emulators</li>
+          </ul>
+          <div class="p-stack">
+            <span class="p-tag">Node.js</span><span class="p-tag">React</span>
+            <span class="p-tag">Ink</span><span class="p-tag">yt-dlp</span>
+            <span class="p-tag">CLI</span><span class="p-tag">npm Package</span>
+          </div>
+          <div class="p-links">
+            <a class="p-link" href="https://www.npmjs.com/package/grabvid-cli" target="_blank">
+              <svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+              NPM PACKAGE
+            </a>
+            <a class="p-link" href="https://github.com/PrahladWebDev/grab-vid" target="_blank">
+              <svg viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+              GITHUB
+            </a>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -1614,7 +1707,7 @@ function counter(el, target, suffix) {
   }, 35);
 }
 counter(document.getElementById('cnt-exp'), 1, '+');
-counter(document.getElementById('cnt-proj'), 3, '+');
+counter(document.getElementById('cnt-proj'), 6, '+');
 counter(document.getElementById('cnt-stack'), 20, '+');
 
 // ── SKILL BARS ───────────────────────────────────────────────────
