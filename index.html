@@ -54,7 +54,7 @@ body::before {
 /* ── SIDEBAR ── */
 .sidebar {
   width: 280px;
-  min-height: 100vh;
+  height: 100vh;
   position: fixed;
   top: 0; left: 0; bottom: 0;
   background: var(--black);
@@ -79,6 +79,7 @@ body::before {
 .sidebar-top {
   padding: 40px 28px 28px;
   border-bottom: 2px solid rgba(255,255,255,0.08);
+  flex-shrink: 0;
 }
 
 /* Avatar — cartoon face style */
@@ -134,7 +135,8 @@ body::before {
 
 /* Nav */
 .sidebar-nav {
-  flex: 1;
+  flex: 1 1 auto;
+  min-height: 0;
   padding: 24px 0;
   overflow-y: auto;
 }
@@ -176,6 +178,7 @@ body::before {
 .sidebar-footer {
   padding: 20px 28px;
   border-top: 2px solid rgba(255,255,255,0.08);
+  flex-shrink: 0;
 }
 .socials { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 14px; }
 .soc {
@@ -805,13 +808,6 @@ body::before {
 }
 .sidebar-top { position: relative; z-index: 1; }
 .sidebar-top > * { position: relative; z-index: 2; }
-#hero-canvas {
-  position: absolute;
-  top: -10px; right: -10px;
-  width: 130px; height: 130px;
-  z-index: 3;
-  pointer-events: none;
-}
 .term-card { position: relative; }
 
 /* ── PRELOADER ── */
@@ -873,7 +869,7 @@ body::before {
 .tilt-inner { transform-style: preserve-3d; }
 
 /* ── ENTRANCE ── */
-.shell { animation: shellIn 0.7s cubic-bezier(0.16,1,0.3,1) both; }
+.sidebar, .main { animation: shellIn 0.7s cubic-bezier(0.16,1,0.3,1) both; }
 @keyframes shellIn {
   from { opacity: 0; transform: translateY(14px) scale(0.995); }
   to { opacity: 1; transform: translateY(0) scale(1); }
@@ -925,7 +921,7 @@ body::before {
   transition: opacity 0.3s ease;
   will-change: left, top;
 }
-@media (max-width: 900px) { #cursor-glow, #hero-canvas { display: none; } }
+@media (max-width: 900px) { #cursor-glow { display: none; } }
 
 /* ── BUTTON MICRO-MOTION ── */
 .resume-btn, .soc, .p-link, .p-tag, .sk-tag { will-change: transform; }
@@ -1048,7 +1044,6 @@ body::before {
 
       <div class="about-hero reveal">
         <div class="term-card">
-          <canvas id="hero-canvas"></canvas>
           <div class="term-bar">
             <span class="tbar-dot td-r"></span>
             <span class="tbar-dot td-y"></span>
@@ -1732,41 +1727,6 @@ window.addEventListener('mousemove', (e) => {
     camera.updateProjectionMatrix();
     renderer.setSize(nw, nh);
   });
-})();
-
-// ══════════════════════════════════════════════════════════════
-// THREE.JS — HERO MINI 3D BADGE (top-right of terminal card)
-// ══════════════════════════════════════════════════════════════
-(function initHeroScene() {
-  const canvas = document.getElementById('hero-canvas');
-  if (!canvas || typeof THREE === 'undefined') return;
-
-  const size = 130;
-  const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-  renderer.setSize(size, size);
-
-  const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(45, 1, 0.1, 100);
-  camera.position.z = 6;
-
-  const light = new THREE.DirectionalLight(0xffd23f, 1.2);
-  light.position.set(2, 3, 4);
-  scene.add(light);
-  scene.add(new THREE.AmbientLight(0xffffff, 0.4));
-
-  const geo = new THREE.TorusKnotGeometry(1.1, 0.32, 100, 16);
-  const mat = new THREE.MeshStandardMaterial({ color: 0xffd23f, wireframe: true, metalness: 0.3, roughness: 0.4 });
-  const knot = new THREE.Mesh(geo, mat);
-  scene.add(knot);
-
-  function animateHero() {
-    knot.rotation.x += 0.006;
-    knot.rotation.y += 0.009;
-    renderer.render(scene, camera);
-    requestAnimationFrame(animateHero);
-  }
-  animateHero();
 })();
 
 // ══════════════════════════════════════════════════════════════
