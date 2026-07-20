@@ -432,70 +432,139 @@ body::before {
 }
 .stat-l { font-size: 11px; color: var(--mid); margin-top: 4px; font-family: var(--mono); }
 
-/* GitHub Stats section */
-.github-stats {
-  margin-top: 40px;
-  padding: 32px;
-  background: var(--white);
+/* ── GITHUB SECTION ── */
+#section-github .repo-grid {
+  display: grid;
+  grid-template-columns: repeat(2,1fr);
+  gap: 18px;
+  margin-top: 20px;
+}
+#section-github .repo-card {
   border: var(--border);
   border-radius: var(--radius);
-  box-shadow: 6px 6px 0 var(--black);
+  padding: 20px 24px;
+  background: var(--white);
+  box-shadow: 5px 5px 0 var(--black);
+  transition: transform 0.25s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.25s;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
-.github-stats .gh-header {
+#section-github .repo-card:hover {
+  transform: translate(-4px,-4px);
+  box-shadow: 9px 9px 0 var(--black);
+}
+#section-github .repo-card .repo-name {
+  font-family: var(--display);
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: -0.3px;
+}
+#section-github .repo-card .repo-desc {
+  font-size: 12px;
+  color: #555;
+  line-height: 1.5;
+  flex: 1;
+}
+#section-github .repo-card .repo-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--mid);
+  margin-top: 4px;
+}
+#section-github .repo-card .repo-meta span {
   display: flex;
   align-items: center;
-  gap: 14px;
-  margin-bottom: 28px;
+  gap: 4px;
 }
-.github-stats .gh-header .gh-avatar {
-  width: 52px;
-  height: 52px;
+#section-github .repo-card .repo-meta .lang-dot {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
   border-radius: 50%;
-  border: 2px solid var(--black);
+  border: 1px solid rgba(0,0,0,0.1);
+  flex-shrink: 0;
 }
-.github-stats .gh-header .gh-name {
-  font-family: var(--display);
-  font-size: 20px;
-  font-weight: 700;
+#section-github .repo-card .repo-links {
+  display: flex;
+  gap: 10px;
+  margin-top: 6px;
 }
-.github-stats .gh-header .gh-handle {
+#section-github .repo-card .repo-links a {
   font-family: var(--mono);
-  font-size: 11px;
-  color: var(--mid);
+  font-size: 9px;
+  font-weight: 700;
+  color: var(--black);
+  text-decoration: none;
+  padding: 4px 12px;
+  border: 1.5px solid var(--black);
+  border-radius: 3px;
+  transition: all 0.15s;
+  background: var(--white);
 }
-.gh-grid {
+#section-github .repo-card .repo-links a:hover {
+  background: var(--black);
+  color: var(--accent);
+}
+#section-github .gh-summary {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(5,1fr);
   gap: 12px;
-  margin-bottom: 28px;
+  margin: 24px 0 12px;
 }
-.gh-stat {
+#section-github .gh-summary .gh-stat {
   border: 1.5px solid var(--black);
   border-radius: var(--radius);
-  padding: 16px 12px;
+  padding: 14px 10px;
   text-align: center;
   background: var(--off-white);
 }
-.gh-stat .gh-num {
+#section-github .gh-summary .gh-stat .gh-num {
   font-family: var(--display);
-  font-size: 28px;
+  font-size: 26px;
   font-weight: 800;
 }
-.gh-stat .gh-label {
+#section-github .gh-summary .gh-stat .gh-label {
   font-family: var(--mono);
-  font-size: 9px;
+  font-size: 8px;
   color: var(--mid);
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
-.gh-langs {
+#section-github .profile-header {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  margin-bottom: 8px;
+  flex-wrap: wrap;
+}
+#section-github .profile-header img {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  border: 2px solid var(--black);
+}
+#section-github .profile-header .gh-handle {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--mid);
+}
+#section-github .profile-header .gh-name {
+  font-family: var(--display);
+  font-size: 24px;
+  font-weight: 800;
+}
+#section-github .top-langs {
   display: flex;
   flex-wrap: wrap;
   gap: 6px;
-  margin-bottom: 24px;
+  margin: 12px 0 16px;
 }
-.gh-lang-tag {
-  padding: 4px 12px;
+#section-github .top-langs .lang-tag {
+  padding: 3px 12px;
   border: 1px solid var(--black);
   border-radius: 20px;
   font-family: var(--mono);
@@ -503,35 +572,38 @@ body::before {
   font-weight: 600;
   background: var(--white);
 }
-.gh-repos {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 10px;
-}
-.gh-repo {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 8px 14px;
-  border: 1px solid #ddd;
-  border-radius: var(--radius);
-  background: var(--off-white);
-  font-size: 12px;
-  text-decoration: none;
-  color: var(--black);
-  transition: all 0.15s;
-}
-.gh-repo:hover {
-  border-color: var(--black);
-  background: var(--black);
-  color: var(--white);
-}
-.gh-repo .gh-star {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  font-family: var(--mono);
-  font-size: 10px;
+
+@media (max-width: 900px) {
+  #section-github .repo-grid { grid-template-columns: 1fr; }
+  #section-github .gh-summary { grid-template-columns: repeat(3,1fr); }
+  .sidebar { display: none; }
+  .main { margin-left: 0; }
+  .section { padding: 72px 20px 60px; }
+  .stats-row { grid-template-columns: repeat(2,1fr); }
+  .skills-wrap, .proj-grid, .about-hero, .contact-grid { grid-template-columns: 1fr; }
+  .proj-card.wide { grid-column: auto; }
+  .sec-title { font-size: 40px; }
+  .exp-item { padding: 20px; }
+  .mobile-nav {
+    display: flex;
+    position: fixed; top: 0; left: 0; right: 0;
+    background: var(--black); z-index: 200;
+    padding: 0 16px; height: 52px;
+    align-items: center; gap: 6px;
+    overflow-x: auto;
+    border-bottom: var(--border);
+  }
+  .mn-item {
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-family: var(--mono);
+    font-size: 10px; font-weight: 700;
+    color: rgba(255,255,255,0.5);
+    cursor: pointer; white-space: nowrap;
+    transition: all 0.2s;
+    border: 1px solid transparent;
+  }
+  .mn-item.active { color: var(--black); background: var(--accent); }
 }
 
 /* ── SKILLS ── */
@@ -866,8 +938,7 @@ body::before {
     border: 1px solid transparent;
   }
   .mn-item.active { color: var(--black); background: var(--accent); }
-  .gh-grid { grid-template-columns: repeat(2, 1fr); }
-  .gh-repos { grid-template-columns: 1fr; }
+  #section-github .gh-summary { grid-template-columns: repeat(2,1fr); }
 }
 
 /* ── SCROLL ANIMATION ── */
@@ -1062,6 +1133,7 @@ body::before {
   <div class="mn-item" onclick="go('skills',this)">Skills</div>
   <div class="mn-item" onclick="go('experience',this)">XP</div>
   <div class="mn-item" onclick="go('projects',this)">Projects</div>
+  <div class="mn-item" onclick="go('github',this)">GitHub</div>
   <div class="mn-item" onclick="go('education',this)">Education</div>
   <div class="mn-item" onclick="go('contact',this)">Contact</div>
 </nav>
@@ -1093,11 +1165,14 @@ body::before {
       <div class="nav-item" id="nav-projects" style="--ni:3" onclick="go('projects',this)">
         Projects <span class="nav-num">04</span>
       </div>
-      <div class="nav-item" id="nav-education" style="--ni:4" onclick="go('education',this)">
-        Education <span class="nav-num">05</span>
+      <div class="nav-item" id="nav-github" style="--ni:4" onclick="go('github',this)">
+        GitHub <span class="nav-num">05</span>
       </div>
-      <div class="nav-item" id="nav-contact" style="--ni:5" onclick="go('contact',this)">
-        Contact <span class="nav-num">06</span>
+      <div class="nav-item" id="nav-education" style="--ni:5" onclick="go('education',this)">
+        Education <span class="nav-num">06</span>
+      </div>
+      <div class="nav-item" id="nav-contact" style="--ni:6" onclick="go('contact',this)">
+        Contact <span class="nav-num">07</span>
       </div>
     </nav>
 
@@ -1190,21 +1265,6 @@ body::before {
           <div class="stat-l">Coffee ☕</div>
         </div>
       </div>
-
-      <!-- GITHUB STATS INTEGRATION -->
-      <div id="github-stats-container" class="github-stats reveal">
-        <div style="display:flex;align-items:center;gap:12px;margin-bottom:8px;">
-          <span style="font-family:var(--mono);font-size:10px;letter-spacing:2px;color:var(--mid);">// GITHUB</span>
-          <span style="flex:1;height:1px;background:#ddd;"></span>
-          <a href="https://github.com/PrahladWebDev" target="_blank" style="font-family:var(--mono);font-size:10px;color:var(--black);font-weight:600;text-decoration:none;border:1px solid var(--black);padding:2px 10px;border-radius:3px;">@PrahladWebDev →</a>
-        </div>
-        <div id="gh-content">
-          <div style="display:flex;justify-content:center;padding:32px 0;color:var(--mid);font-family:var(--mono);font-size:12px;">
-            <span class="gh-loading">⟳ loading GitHub data...</span>
-          </div>
-        </div>
-      </div>
-
     </section>
 
     <!-- ── SKILLS ── -->
@@ -1309,7 +1369,6 @@ body::before {
       <p class="sec-sub">Full-stack MERN/MEVN systems — architected, built, and shipped end to end</p>
 
       <div class="proj-grid">
-
         <!-- Wardrobe Manager -->
         <div class="proj-card wide reveal" data-num="01">
           <div class="p-name">Wardrobe Manager</div>
@@ -1402,106 +1461,25 @@ body::before {
             </a>
           </div>
         </div>
+      </div>
+    </section>
 
-        <!-- School ERP -->
-        <div class="proj-card wide reveal" data-num="04">
-          <div class="p-name">School ERP</div>
-          <div class="p-tagline">Multi-Tenant School Management System · MERN</div>
-          <div class="p-desc">A full multi-tenant ERP for schools covering academics, attendance, fees, and communication — built with a shared-database, tenant-scoped data model so a single deployment can serve many schools securely and independently.</div>
-          <ul class="p-feature-list">
-            <li>Multi-tenant architecture — global vs. tenant-scoped Mongoose models, per-school data isolation</li>
-            <li>Student, teacher, class, timetable, exam, and homework management modules</li>
-            <li>Attendance tracking with role-based views for students, teachers, and parents</li>
-            <li>Fees &amp; accounting module with scholarship handling and report generation</li>
-            <li>Notice board, leave requests, and real-time notifications via Socket.io</li>
-            <li>Redux-driven React frontend with role-based dashboards (super admin / school admin / teacher / student / parent)</li>
-          </ul>
-          <div class="p-stack">
-            <span class="p-tag">React</span><span class="p-tag">Redux</span>
-            <span class="p-tag">Node.js</span><span class="p-tag">Express</span>
-            <span class="p-tag">MongoDB</span><span class="p-tag">Socket.io</span>
-            <span class="p-tag">Multi-Tenant</span>
-          </div>
-          <div class="p-links">
-            <a class="p-link" href="https://schoolerp.prahladsingh.in/" target="_blank">
-              <svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-              LIVE DEMO
-            </a>
-            <a class="p-link" href="https://github.com/PrahladWebDev/school-erp-mern.git" target="_blank">
-              <svg viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
-              GITHUB
-            </a>
-          </div>
+    <!-- ── GITHUB ── -->
+    <section id="section-github" class="section">
+      <div class="eyebrow">05 — GITHUB</div>
+      <h2 class="sec-title">Code &<br><em>Repos.</em></h2>
+      <p class="sec-sub">All public repositories — full details, languages, stars, forks, and more</p>
+
+      <div id="github-full-content">
+        <div style="display:flex;justify-content:center;padding:48px 0;color:var(--mid);font-family:var(--mono);font-size:13px;">
+          <span class="gh-loading">⟳ loading GitHub data...</span>
         </div>
-
-        <!-- Zip Router -->
-        <div class="proj-card wide reveal" data-num="05">
-          <div class="p-name">Zip Router</div>
-          <div class="p-tagline">Single-Line Grid Puzzle Game · MERN</div>
-          <div class="p-desc">A full MERN-stack puzzle game where players trace a single continuous line through every cell of a grid, hitting numbered checkpoints in order without crossing blocked edges — with accounts, level progression, and star ratings. Built a procedural puzzle generator that guarantees a solvable, unique board for every level.</div>
-          <ul class="p-feature-list">
-            <li>Procedural puzzle generator — randomized, Warnsdorff-ordered DFS producing a Hamiltonian path through every grid cell, with checkpoints and walls placed along the route</li>
-            <li>Levels generated once via a seed script and stored in MongoDB, so every player sees an identical board per level</li>
-            <li>Server-side path validation — client submits its full drawn path; server independently re-verifies grid coverage, adjacency, wall compliance, and checkpoint order before awarding completion, closing the "fake a fast time" exploit</li>
-            <li>Star-rating system based on completion-time thresholds, with per-user level locking and progression</li>
-            <li>JWT authentication via httpOnly cookies</li>
-            <li>Vite + React + Tailwind CSS frontend</li>
-          </ul>
-          <div class="p-stack">
-            <span class="p-tag">React.js</span><span class="p-tag">Node.js</span>
-            <span class="p-tag">Express.js</span><span class="p-tag">MongoDB</span>
-            <span class="p-tag">Mongoose</span><span class="p-tag">JWT</span>
-            <span class="p-tag">Vite</span><span class="p-tag">Tailwind CSS</span>
-            <span class="p-tag">Algorithm Design</span>
-          </div>
-          <div class="p-links">
-            <a class="p-link" href="https://ziprouter.prahladsingh.in/" target="_blank">
-              <svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-              LIVE DEMO
-            </a>
-            <a class="p-link" href="https://github.com/PrahladWebDev/zip-router" target="_blank">
-              <svg viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
-              GITHUB
-            </a>
-          </div>
-        </div>
-
-        <!-- GrabVid -->
-        <div class="proj-card wide reveal" data-num="06">
-          <div class="p-name">GrabVid</div>
-          <div class="p-tagline">Terminal Video Downloader CLI · Node.js + Ink (React for CLI)</div>
-          <div class="p-desc">A terminal app for downloading videos from YouTube, X, Instagram, and more — built with Ink (React for CLI interfaces) instead of a typical scripting approach, giving it a real interactive UI inside the terminal. Published to npm as a globally installable CLI tool.</div>
-          <ul class="p-feature-list">
-            <li>Interactive, keyboard-navigable format picker with live download progress, powered by yt-dlp</li>
-            <li>6 switchable color themes with a pixel-block wordmark; frame pulses while fetching/downloading</li>
-            <li>Persistent URL history — arrow-key recall, deduped, last 20 saved to a local config file</li>
-            <li>Quick flags (--best, --mp3) for one-shot downloads without the interactive picker</li>
-            <li>State machine across input → fetching → picking → downloading → done/error</li>
-            <li>Fixed cross-terminal rendering bugs to keep the frame layout consistent across different terminal emulators</li>
-          </ul>
-          <div class="p-stack">
-            <span class="p-tag">Node.js</span><span class="p-tag">React</span>
-            <span class="p-tag">Ink</span><span class="p-tag">yt-dlp</span>
-            <span class="p-tag">CLI</span><span class="p-tag">npm Package</span>
-          </div>
-          <div class="p-links">
-            <a class="p-link" href="https://www.npmjs.com/package/grabvid-cli" target="_blank">
-              <svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-              NPM PACKAGE
-            </a>
-            <a class="p-link" href="https://github.com/PrahladWebDev/grab-vid" target="_blank">
-              <svg viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
-              GITHUB
-            </a>
-          </div>
-        </div>
-
       </div>
     </section>
 
     <!-- ── EDUCATION ── -->
     <section id="section-education" class="section">
-      <div class="eyebrow">05 — EDUCATION</div>
+      <div class="eyebrow">06 — EDUCATION</div>
       <h2 class="sec-title">Where I<br><em>Studied.</em></h2>
       <p class="sec-sub">Academic foundation that fed the curiosity</p>
 
@@ -1527,7 +1505,7 @@ body::before {
 
     <!-- ── CONTACT ── -->
     <section id="section-contact" class="section">
-      <div class="eyebrow">06 — CONTACT</div>
+      <div class="eyebrow">07 — CONTACT</div>
       <h2 class="sec-title">Let's<br><em>Connect.</em></h2>
       <p class="sec-sub">Open to new opportunities — let's build something together</p>
 
@@ -1581,7 +1559,7 @@ body::before {
 
 <script>
 // ── NAV ──────────────────────────────────────────────────────────
-const paths = { about:'about.md', skills:'skills.json', experience:'experience.log', projects:'projects/', education:'education.md', contact:'contact.json' };
+const paths = { about:'about.md', skills:'skills.json', experience:'experience.log', projects:'projects/', github:'repos.json', education:'education.md', contact:'contact.json' };
 
 function go(id, el) {
   document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
@@ -1592,7 +1570,6 @@ function go(id, el) {
   if (el) el.classList.add('active');
   document.getElementById('tpath').textContent = paths[id] || id;
   if (id === 'skills') setTimeout(animateBars, 100);
-  // trigger reveals
   setTimeout(triggerReveals, 60);
 }
 
@@ -1637,7 +1614,7 @@ function counter(el, target, suffix) {
   }, 35);
 }
 counter(document.getElementById('cnt-exp'), 1, '+');
-counter(document.getElementById('cnt-proj'), 6, '+');
+counter(document.getElementById('cnt-proj'), 3, '+');
 counter(document.getElementById('cnt-stack'), 20, '+');
 
 // ── SKILL BARS ───────────────────────────────────────────────────
@@ -1652,10 +1629,8 @@ function triggerReveals() {
     setTimeout(() => { el.classList.add('visible'); }, i * 80);
   });
 }
-// Initial reveal
 setTimeout(triggerReveals, 200);
 
-// Observe when sections become visible via scrolling within the main panel
 const observer = new IntersectionObserver((entries) => {
   entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
 }, { threshold: 0.1 });
@@ -1689,10 +1664,10 @@ window.addEventListener('mousemove', (e) => {
 });
 
 // ══════════════════════════════════════════════════════════════
-// GITHUB STATS FETCHER
+// GITHUB FULL DATA FETCHER — all repos with details
 // ══════════════════════════════════════════════════════════════
-async function fetchGitHubStats() {
-  const container = document.getElementById('gh-content');
+async function fetchFullGitHub() {
+  const container = document.getElementById('github-full-content');
   try {
     const [userRes, reposRes] = await Promise.all([
       fetch('https://api.github.com/users/PrahladWebDev'),
@@ -1704,57 +1679,85 @@ async function fetchGitHubStats() {
 
     const totalStars = repos.reduce((acc, r) => acc + (r.stargazers_count || 0), 0);
     const totalForks = repos.reduce((acc, r) => acc + (r.forks_count || 0), 0);
+    const totalWatchers = repos.reduce((acc, r) => acc + (r.watchers_count || 0), 0);
+
     const langCount = {};
     repos.forEach(r => { if (r.language) langCount[r.language] = (langCount[r.language] || 0) + 1; });
-    const topLangs = Object.entries(langCount).sort((a,b) => b[1]-a[1]).slice(0,6).map(([lang]) => lang);
-    const topRepos = repos.sort((a,b) => (b.stargazers_count||0) - (a.stargazers_count||0)).slice(0,6);
+    const topLangs = Object.entries(langCount).sort((a,b) => b[1]-a[1]).slice(0,8).map(([lang]) => lang);
+
+    // Color map for languages
+    const langColors = {
+      JavaScript: '#f1e05a', TypeScript: '#3178c6', Vue: '#41b883',
+      HTML: '#e34c26', CSS: '#563d7c', EJS: '#a91e50',
+      Python: '#3572A5', Shell: '#89e051', Dockerfile: '#384d54',
+      PHP: '#4F5D95', Ruby: '#701516', Go: '#00ADD8',
+      Rust: '#dea584', Java: '#b07219', C: '#555555',
+      'C++': '#f34b7d', 'C#': '#178600', Swift: '#ffac45',
+      Kotlin: '#A97BFF', Dart: '#00B4AB', Elixir: '#6e4a7e',
+    };
 
     container.innerHTML = `
-      <div style="display:flex;align-items:center;gap:16px;margin-bottom:24px;flex-wrap:wrap;">
-        <img src="${user.avatar_url}" alt="${user.login}" style="width:48px;height:48px;border-radius:50%;border:2px solid var(--black);">
+      <div class="profile-header">
+        <img src="${user.avatar_url}" alt="${user.login}">
         <div>
-          <div style="font-family:var(--display);font-size:20px;font-weight:700;">${user.name || user.login}</div>
-          <div style="font-family:var(--mono);font-size:11px;color:var(--mid);">@${user.login} · ${user.public_repos} public repos</div>
+          <div class="gh-name">${user.name || user.login}</div>
+          <div class="gh-handle">@${user.login} · ${user.public_repos} public repositories</div>
+          <div style="font-size:12px;color:var(--mid);margin-top:2px;">${user.bio || ''}</div>
         </div>
-        <div style="margin-left:auto;font-family:var(--mono);font-size:10px;color:var(--mid);">updated ${new Date().toLocaleDateString()}</div>
+        <a href="https://github.com/PrahladWebDev" target="_blank" style="margin-left:auto;font-family:var(--mono);font-size:10px;font-weight:700;color:var(--black);text-decoration:none;border:2px solid var(--black);padding:6px 16px;border-radius:3px;background:var(--white);">VIEW PROFILE →</a>
       </div>
 
-      <div class="gh-grid">
+      <div class="gh-summary">
         <div class="gh-stat"><div class="gh-num">${user.public_repos}</div><div class="gh-label">Repos</div></div>
         <div class="gh-stat"><div class="gh-num">${totalStars}</div><div class="gh-label">Stars ⭐</div></div>
         <div class="gh-stat"><div class="gh-num">${totalForks}</div><div class="gh-label">Forks</div></div>
+        <div class="gh-stat"><div class="gh-num">${totalWatchers}</div><div class="gh-label">Watchers</div></div>
         <div class="gh-stat"><div class="gh-num">${user.followers}</div><div class="gh-label">Followers</div></div>
       </div>
 
-      <div style="margin-bottom:18px;">
-        <div style="font-family:var(--mono);font-size:9px;letter-spacing:1px;color:var(--mid);text-transform:uppercase;margin-bottom:8px;">Top Languages</div>
-        <div class="gh-langs">
-          ${topLangs.map(lang => `<span class="gh-lang-tag">${lang}</span>`).join('')}
-          ${Object.keys(langCount).length > 6 ? `<span class="gh-lang-tag" style="border-style:dashed;">+${Object.keys(langCount).length-6} more</span>` : ''}
+      <div style="display:flex;flex-wrap:wrap;align-items:center;gap:18px;margin:8px 0 20px;">
+        <div style="font-family:var(--mono);font-size:9px;letter-spacing:1px;color:var(--mid);text-transform:uppercase;">Top Languages</div>
+        <div class="top-langs">
+          ${topLangs.map(lang => `
+            <span class="lang-tag" style="border-left:4px solid ${langColors[lang] || '#7a5cff'};">
+              ${lang}
+            </span>
+          `).join('')}
+          ${Object.keys(langCount).length > 8 ? `<span class="lang-tag" style="border-style:dashed;">+${Object.keys(langCount).length-8} more</span>` : ''}
         </div>
       </div>
 
-      <div>
-        <div style="font-family:var(--mono);font-size:9px;letter-spacing:1px;color:var(--mid);text-transform:uppercase;margin-bottom:8px;">Most Starred Repos</div>
-        <div class="gh-repos">
-          ${topRepos.map(r => `
-            <a href="${r.html_url}" target="_blank" class="gh-repo">
-              <span>${r.name}</span>
-              <span class="gh-star">⭐ ${r.stargazers_count || 0}</span>
-            </a>
-          `).join('')}
-        </div>
+      <div style="font-family:var(--mono);font-size:10px;letter-spacing:1px;color:var(--mid);text-transform:uppercase;margin:8px 0 14px;">All Repositories (${repos.length})</div>
+
+      <div class="repo-grid">
+        ${repos.map(r => `
+          <div class="repo-card">
+            <div class="repo-name">${r.name}</div>
+            ${r.description ? `<div class="repo-desc">${r.description}</div>` : ''}
+            <div class="repo-meta">
+              ${r.language ? `<span><span class="lang-dot" style="background:${langColors[r.language] || '#7a5cff'};"></span> ${r.language}</span>` : ''}
+              <span>⭐ ${r.stargazers_count || 0}</span>
+              <span>🍴 ${r.forks_count || 0}</span>
+              <span>👁 ${r.watchers_count || 0}</span>
+              <span>📅 ${new Date(r.updated_at).toLocaleDateString()}</span>
+            </div>
+            <div class="repo-links">
+              <a href="${r.html_url}" target="_blank">View Repo</a>
+              ${r.homepage ? `<a href="${r.homepage}" target="_blank">Live Demo</a>` : ''}
+            </div>
+          </div>
+        `).join('')}
       </div>
     `;
   } catch (err) {
     container.innerHTML = `
-      <div style="display:flex;justify-content:center;padding:28px 0;color:var(--mid);font-family:var(--mono);font-size:12px;">
+      <div style="display:flex;justify-content:center;padding:48px 0;color:var(--mid);font-family:var(--mono);font-size:13px;">
         ⚡ couldn't reach GitHub — check your network
       </div>
     `;
   }
 }
-fetchGitHubStats();
+fetchFullGitHub();
 
 // ══════════════════════════════════════════════════════════════
 // THREE.JS — FULL PAGE PARTICLE NETWORK BACKGROUND
@@ -1794,7 +1797,6 @@ fetchGitHubStats();
   const points = new THREE.Points(pointsGeo, pointsMat);
   scene.add(points);
 
-  // Line connections (rebuilt each frame from proximity)
   const maxLines = COUNT * 4;
   const linePositions = new Float32Array(maxLines * 2 * 3);
   const lineGeo = new THREE.BufferGeometry();
@@ -1861,7 +1863,7 @@ fetchGitHubStats();
 })();
 
 // ══════════════════════════════════════════════════════════════
-// THREE.JS — SIDEBAR ROTATING WIREFRAME (behind avatar)
+// THREE.JS — SIDEBAR ROTATING WIREFRAME
 // ══════════════════════════════════════════════════════════════
 (function initSideScene() {
   const canvas = document.getElementById('side-canvas');
@@ -1920,7 +1922,7 @@ fetchGitHubStats();
 // 3D TILT ON HOVER FOR CARDS
 // ══════════════════════════════════════════════════════════════
 (function initTilt() {
-  const selectors = '.proj-card, .skill-block, .exp-item, .contact-card, .stat-box, .info-block, .edu-card, .term-card';
+  const selectors = '.proj-card, .skill-block, .exp-item, .contact-card, .stat-box, .info-block, .edu-card, .term-card, .repo-card';
   document.querySelectorAll(selectors).forEach(card => {
     card.classList.add('tilt');
     let rect;
@@ -1931,7 +1933,6 @@ fetchGitHubStats();
       const py = (e.clientY - rect.top) / rect.height - 0.5;
       const rotY = px * 10;
       const rotX = -py * 10;
-      card.style.transform += ''; // keep existing hover transform chain minimal
       card.style.transform = `translate(-4px,-4px) perspective(900px) rotateX(${rotX}deg) rotateY(${rotY}deg)`;
     });
     card.addEventListener('mouseleave', () => {
