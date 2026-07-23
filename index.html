@@ -1242,7 +1242,7 @@ body::before {
           </div>
           <div class="info-block reveal">
             <div class="ib-title">// WHAT I DO</div>
-            <div class="ib-text">I design and build RESTful APIs, multi-tenant SaaS architectures with per-tenant data isolation, and JWT/RBAC authentication systems with fine-grained role control. On the real-time side, I've built video calling, live GPS tracking, and instant notifications with Socket.io, PeerJS, and Redis. I also build cross-platform mobile apps with React Native (Expo), terminal/CLI tools with Node.js, work on niche builds like a DICOM medical imaging viewer, Razorpay payment integrations, and PDF generation pipelines — and I handle my own DevOps: Linux VPS setup, Nginx, PM2, and CI/CD with GitHub Actions.</div>
+            <div class="ib-text">I design and build RESTful APIs, multi-tenant SaaS architectures with per-tenant data isolation, and JWT/RBAC authentication systems with fine-grained role control. On the real-time side, I've built video calling, live GPS tracking, and instant notifications with Socket.io, PeerJS, and Redis. I also build cross-platform mobile apps with React Native (Expo), terminal/CLI tools with Node.js, data-visualization dashboards with Chart.js and Three.js, work on niche builds like a DICOM medical imaging viewer, Razorpay payment integrations, and PDF generation pipelines — and I handle my own DevOps: Linux VPS setup, Nginx, PM2, and CI/CD with GitHub Actions.</div>
           </div>
         </div>
       </div>
@@ -1329,6 +1329,8 @@ body::before {
             <span class="sk-tag">Postman</span><span class="sk-tag">Puppeteer</span>
             <span class="sk-tag">OpenWeatherMap</span><span class="sk-tag">remove.bg</span>
             <span class="sk-tag">npm Publishing</span><span class="sk-tag">CLI (Ink)</span>
+            <span class="sk-tag">Chart.js</span><span class="sk-tag">Three.js</span>
+            <span class="sk-tag">Gemini API</span><span class="sk-tag">GitHub API</span>
           </div>
         </div>
       </div>
@@ -1554,6 +1556,37 @@ body::before {
             </a>
           </div>
         </div>
+
+        <!-- GitHub Personality Analyzer -->
+        <div class="proj-card wide reveal" data-num="07">
+          <div class="p-name">GitHub Personality Analyzer</div>
+          <div class="p-tagline">AI-Powered Developer Profile Report · MERN + Gemini API</div>
+          <div class="p-desc">A full-stack web app that takes any GitHub username and generates a "developer personality" report — profile stats, personality badges, language breakdown, a commit heatmap, top repos, and an AI-written summary powered by Google's Gemini API. Includes a side-by-side compare mode for two developers.</div>
+          <ul class="p-feature-list">
+            <li>6-axis personality radar chart — open-source score, docs quality, night-owl/early-bird activity, weekend activity, bug-hunting</li>
+            <li>Commit heatmap with streak badges, plus Commit Rhythm charts (hour-of-day / day-of-week) from GitHub's push-event data</li>
+            <li>Per-repo personality tags ("Well documented," "Actively maintained," "Stale") computed client-side</li>
+            <li>AI-written personality summary via the Gemini API, with a side-by-side compare mode for two developers</li>
+            <li>Light/dark theme toggle, an animated three.js constellation background with mouse parallax, export-as-image, and "Copy as Markdown"</li>
+            <li>Backend caching (node-cache, 15-min TTL) to stay within GitHub's API rate limits</li>
+          </ul>
+          <div class="p-stack">
+            <span class="p-tag">React</span><span class="p-tag">Node.js</span>
+            <span class="p-tag">Express</span><span class="p-tag">GitHub API</span>
+            <span class="p-tag">Gemini API</span><span class="p-tag">Chart.js</span>
+            <span class="p-tag">Three.js</span><span class="p-tag">Tailwind CSS</span>
+          </div>
+          <div class="p-links">
+            <a class="p-link" href="https://ghanalyzer.prahladsingh.in/" target="_blank">
+              <svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+              LIVE DEMO
+            </a>
+            <a class="p-link" href="https://github.com/PrahladWebDev/github-analyzer" target="_blank">
+              <svg viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+              GITHUB
+            </a>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -1707,8 +1740,8 @@ function counter(el, target, suffix) {
   }, 35);
 }
 counter(document.getElementById('cnt-exp'), 1, '+');
-counter(document.getElementById('cnt-proj'), 6, '+');
-counter(document.getElementById('cnt-stack'), 20, '+');
+counter(document.getElementById('cnt-proj'), 7, '+');
+counter(document.getElementById('cnt-stack'), 25, '+');
 
 // ── SKILL BARS ───────────────────────────────────────────────────
 function animateBars() {
