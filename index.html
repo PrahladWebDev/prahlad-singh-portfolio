@@ -3,7 +3,92 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Prahlad Singh — Full-Stack Developer</title>
+
+<!-- ══════════════════════ PRIMARY SEO META TAGS ══════════════════════ -->
+<title>Prahlad Singh | Full-Stack MERN/MEVN Developer in Gurgaon, India</title>
+<meta name="title" content="Prahlad Singh | Full-Stack MERN/MEVN Developer in Gurgaon, India">
+<meta name="description" content="Prahlad Singh is a full-stack developer based in Gurgaon, India, specializing in MERN/MEVN stack, multi-tenant SaaS architecture, real-time apps, and React Native. Explore projects, GitHub repos, skills, and experience.">
+<meta name="keywords" content="Prahlad Singh, full stack developer, MERN stack developer, MEVN stack developer, React developer Gurgaon, Node.js developer India, Vue.js developer, React Native developer, JavaScript developer portfolio, backend developer Gurugram, multi-tenant SaaS developer">
+<meta name="author" content="Prahlad Singh">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<meta name="googlebot" content="index, follow">
+<link rel="canonical" href="https://prahladsingh.in/">
+<meta name="language" content="English">
+<meta name="revisit-after" content="7 days">
+
+<!-- ══════════════════════ OPEN GRAPH / FACEBOOK ══════════════════════ -->
+<meta property="og:type" content="profile">
+<meta property="og:url" content="https://prahladsingh.in/">
+<meta property="og:title" content="Prahlad Singh | Full-Stack MERN/MEVN Developer">
+<meta property="og:description" content="Full-stack developer specializing in MERN/MEVN, multi-tenant SaaS platforms, real-time systems, and React Native apps. See projects, GitHub stats, and experience.">
+<meta property="og:image" content="https://prahladsingh.in/Prahlad-og-image.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Prahlad Singh — Full-Stack Developer portfolio preview">
+<meta property="og:site_name" content="Prahlad Singh Portfolio">
+<meta property="og:locale" content="en_US">
+<meta property="profile:first_name" content="Prahlad">
+<meta property="profile:last_name" content="Singh">
+
+<!-- ══════════════════════ TWITTER CARD ══════════════════════ -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:url" content="https://prahladsingh.in/">
+<meta name="twitter:title" content="Prahlad Singh | Full-Stack MERN/MEVN Developer">
+<meta name="twitter:description" content="Full-stack developer specializing in MERN/MEVN, multi-tenant SaaS platforms, real-time systems, and React Native apps.">
+<meta name="twitter:image" content="https://prahladsingh.in/Prahlad-og-image.jpg">
+<meta name="twitter:image:alt" content="Prahlad Singh — Full-Stack Developer portfolio preview">
+
+<!-- ══════════════════════ FAVICON / ICONS ══════════════════════ -->
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+<meta name="theme-color" content="#0d0d0d">
+
+<!-- ══════════════════════ STRUCTURED DATA (JSON-LD) ══════════════════════ -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Prahlad Singh",
+  "url": "https://prahladsingh.in/",
+  "image": "https://prahladsingh.in/Prahlad.jpg",
+  "jobTitle": "Full-Stack Developer",
+  "description": "Full-stack developer specializing in MERN/MEVN stack, multi-tenant SaaS architecture, real-time systems, and React Native mobile apps.",
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Gurgaon",
+    "addressRegion": "Haryana",
+    "addressCountry": "IN"
+  },
+  "email": "mailto:prahlad.singh.dev@gmail.com",
+  "worksFor": {
+    "@type": "Organization",
+    "name": "Lifelayer Health Solutions Pvt. Ltd."
+  },
+  "alumniOf": [
+    {
+      "@type": "CollegeOrUniversity",
+      "name": "Dr. A.P.J. Abdul Kalam Technical University"
+    },
+    {
+      "@type": "CollegeOrUniversity",
+      "name": "Mahatma Jyotiba Phule Rohilkhand University"
+    }
+  ],
+  "sameAs": [
+    "https://www.linkedin.com/in/prahlad-singh-52162b232",
+    "https://github.com/PrahladWebDev",
+    "https://prahladsingh.in/"
+  ],
+  "knowsAbout": [
+    "MERN Stack", "MEVN Stack", "React.js", "Vue.js", "Node.js", "Express.js",
+    "MongoDB", "React Native", "TypeScript", "Socket.io", "JWT Authentication",
+    "Multi-Tenant SaaS Architecture", "DevOps", "Nginx", "PM2"
+  ]
+}
+</script>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap');
@@ -1116,19 +1201,21 @@ body::before {
 <div id="cursor-glow"></div>
 
 <!-- Three.js full-page background -->
-<canvas id="bg-canvas"></canvas>
+<canvas id="bg-canvas" role="presentation" aria-hidden="true" title="Animated particle network background"></canvas>
 
 <!-- Floating doodles -->
-<svg class="doodle d1" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+<svg class="doodle d1" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Decorative triangle sketch doodle">
+  <title>Decorative triangle sketch doodle</title>
   <polygon points="50,5 95,95 5,95" stroke="#000" stroke-width="5" fill="none"/>
   <polygon points="50,20 80,80 20,80" stroke="#000" stroke-width="3" fill="none"/>
 </svg>
-<svg class="doodle d2" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+<svg class="doodle d2" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Decorative dashed circle sketch doodle">
+  <title>Decorative dashed circle sketch doodle</title>
   <circle cx="50" cy="50" r="42" stroke="#000" stroke-width="5" fill="none" stroke-dasharray="8 4"/>
 </svg>
 
 <!-- Mobile nav -->
-<nav class="mobile-nav" id="mnav">
+<nav class="mobile-nav" id="mnav" aria-label="Mobile section navigation">
   <div class="mn-item active" onclick="go('about',this)">About</div>
   <div class="mn-item" onclick="go('skills',this)">Skills</div>
   <div class="mn-item" onclick="go('experience',this)">XP</div>
@@ -1142,9 +1229,9 @@ body::before {
   <!-- SIDEBAR -->
   <aside class="sidebar">
     <div class="sidebar-top">
-      <canvas id="side-canvas"></canvas>
+      <canvas id="side-canvas" role="presentation" aria-hidden="true" title="Rotating 3D wireframe decoration"></canvas>
       <div class="avatar">
-        <img src="Prahlad.jpg" alt="Prahlad Singh" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <img src="Prahlad.jpg" alt="Prahlad Singh — Full-Stack MERN/MEVN Developer based in Gurgaon, India" title="Prahlad Singh, Full-Stack Developer" loading="eager" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
         <span style="display:none;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-size:28px;font-weight:800;color:#0d0d0d;width:100%;height:100%">PS</span>
       </div>
       <div class="s-name">Prahlad Singh</div>
@@ -1152,7 +1239,7 @@ body::before {
       <div class="s-location">📍 Gurgaon, Haryana</div>
     </div>
 
-    <nav class="sidebar-nav">
+    <nav class="sidebar-nav" aria-label="Main section navigation">
       <div class="nav-item active" id="nav-about" style="--ni:0" onclick="go('about',this)">
         About <span class="nav-num">01</span>
       </div>
@@ -1178,23 +1265,23 @@ body::before {
 
     <div class="sidebar-footer">
       <div class="socials">
-        <a class="soc" href="mailto:prahlad.singh.dev@gmail.com" title="Email">
-          <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+        <a class="soc" href="mailto:prahlad.singh.dev@gmail.com" title="Email Prahlad Singh" aria-label="Email Prahlad Singh">
+          <svg viewBox="0 0 24 24" role="img" aria-hidden="true"><title>Email icon</title><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
         </a>
-        <a class="soc" href="https://www.linkedin.com/in/prahlad-singh-52162b232" target="_blank" title="LinkedIn">
-          <svg viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.761 0 5-2.239 5-5v-14c0-2.761-2.239-5-5-5zm-11 19h-3v-10h3v10zm-1.5-11.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.784 1.764-1.75 1.764zm13.5 11.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-10h3v1.604c1.396-2.586 7-2.777 7 2.476v5.92z"/></svg>
+        <a class="soc" href="https://www.linkedin.com/in/prahlad-singh-52162b232" target="_blank" title="Prahlad Singh on LinkedIn" aria-label="Prahlad Singh on LinkedIn" rel="me noopener">
+          <svg viewBox="0 0 24 24" role="img" aria-hidden="true"><title>LinkedIn icon</title><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.761 0 5-2.239 5-5v-14c0-2.761-2.239-5-5-5zm-11 19h-3v-10h3v10zm-1.5-11.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.784 1.764-1.75 1.764zm13.5 11.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-10h3v1.604c1.396-2.586 7-2.777 7 2.476v5.92z"/></svg>
         </a>
-        <a class="soc" href="https://prahladsingh.in/" target="_blank" title="Portfolio">
-          <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm6.93 6h-2.95a15.65 15.65 0 0 0-1.23-3.04A8.03 8.03 0 0 1 18.93 8zM12 4c.84 1.17 1.5 2.53 1.93 4H10.07C10.5 6.53 11.16 5.17 12 4zM4.26 14A7.82 7.82 0 0 1 4 12c0-.69.1-1.35.26-2h3.38c-.07.66-.11 1.32-.11 2s.04 1.34.11 2H4.26zm.81 2h2.95a15.65 15.65 0 0 0 1.23 3.04A8.03 8.03 0 0 1 5.07 16zM7.64 8H4.69a8.03 8.03 0 0 1 4.18-3.04A15.65 15.65 0 0 0 7.64 8zM12 20c-.84-1.17-1.5-2.53-1.93-4h3.86C13.5 17.47 12.84 18.83 12 20zm2.29-6H9.71c-.08-.66-.14-1.32-.14-2s.06-1.34.14-2h4.58c.08.66.14 1.32.14 2s-.06 1.34-.14 2zm.86 4.04A15.65 15.65 0 0 0 16.36 16h2.95a8.03 8.03 0 0 1-4.18 3.04zM16.36 8a15.65 15.65 0 0 0-1.23-3.04A8.03 8.03 0 0 1 19.31 8h-2.95zM16.62 14c.07-.66.11-1.32.11-2s-.04-1.34-.11-2h3.38c.16.65.26 1.31.26 2s-.1 1.35-.26 2h-3.38z"/></svg>
+        <a class="soc" href="https://prahladsingh.in/" target="_blank" title="Prahlad Singh Portfolio Website" aria-label="Prahlad Singh Portfolio Website" rel="me noopener">
+          <svg viewBox="0 0 24 24" role="img" aria-hidden="true"><title>Portfolio website icon</title><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm6.93 6h-2.95a15.65 15.65 0 0 0-1.23-3.04A8.03 8.03 0 0 1 18.93 8zM12 4c.84 1.17 1.5 2.53 1.93 4H10.07C10.5 6.53 11.16 5.17 12 4zM4.26 14A7.82 7.82 0 0 1 4 12c0-.69.1-1.35.26-2h3.38c-.07.66-.11 1.32-.11 2s.04 1.34.11 2H4.26zm.81 2h2.95a15.65 15.65 0 0 0 1.23 3.04A8.03 8.03 0 0 1 5.07 16zM7.64 8H4.69a8.03 8.03 0 0 1 4.18-3.04A15.65 15.65 0 0 0 7.64 8zM12 20c-.84-1.17-1.5-2.53-1.93-4h3.86C13.5 17.47 12.84 18.83 12 20zm2.29-6H9.71c-.08-.66-.14-1.32-.14-2s.06-1.34.14-2h4.58c.08.66.14 1.32.14 2s-.06 1.34-.14 2zm.86 4.04A15.65 15.65 0 0 0 16.36 16h2.95a8.03 8.03 0 0 1-4.18 3.04zM16.36 8a15.65 15.65 0 0 0-1.23-3.04A8.03 8.03 0 0 1 19.31 8h-2.95zM16.62 14c.07-.66.11-1.32.11-2s-.04-1.34-.11-2h3.38c.16.65.26 1.31.26 2s-.1 1.35-.26 2h-3.38z"/></svg>
         </a>
-        <a class="soc" href="https://wa.me/919149062842" target="_blank" title="WhatsApp">
-          <svg viewBox="0 0 32 32"><path d="M16 .5C7.44.5.5 7.44.5 16c0 2.82.74 5.56 2.16 7.97L.5 31.5l7.69-2.04A15.42 15.42 0 0 0 16 31.5C24.56 31.5 31.5 24.56 31.5 16S24.56.5 16 .5zm0 28c-2.62 0-5.18-.7-7.41-2.03l-.53-.32-4.56 1.21 1.22-4.44-.35-.57A12.93 12.93 0 0 1 3 16c0-7.17 5.83-13 13-13s13 5.83 13 13-5.83 13-13 13zm7.14-9.26c-.39-.2-2.31-1.14-2.67-1.27-.36-.13-.62-.2-.88.2-.26.39-1.01 1.27-1.24 1.54-.23.26-.46.29-.85.1-.39-.2-1.64-.6-3.12-1.92-1.15-1.03-1.93-2.3-2.16-2.69-.23-.39-.02-.6.17-.79.17-.17.39-.46.59-.69.2-.23.26-.39.39-.65.13-.26.07-.49-.03-.69-.1-.2-.88-2.13-1.21-2.91-.32-.78-.65-.67-.88-.67h-.75c-.26 0-.69.1-1.05.49-.36.39-1.38 1.35-1.38 3.29 0 1.94 1.42 3.81 1.62 4.07.2.26 2.79 4.26 6.77 5.98 3.98 1.72 3.98 1.15 4.7 1.08.72-.07 2.31-.92 2.64-1.82.33-.92.33-1.7.23-1.89-.1-.2-.36-.3-.75-.49z"/></svg>
+        <a class="soc" href="https://wa.me/919149062842" target="_blank" title="Message Prahlad Singh on WhatsApp" aria-label="Message Prahlad Singh on WhatsApp" rel="noopener">
+          <svg viewBox="0 0 32 32" role="img" aria-hidden="true"><title>WhatsApp icon</title><path d="M16 .5C7.44.5.5 7.44.5 16c0 2.82.74 5.56 2.16 7.97L.5 31.5l7.69-2.04A15.42 15.42 0 0 0 16 31.5C24.56 31.5 31.5 24.56 31.5 16S24.56.5 16 .5zm0 28c-2.62 0-5.18-.7-7.41-2.03l-.53-.32-4.56 1.21 1.22-4.44-.35-.57A12.93 12.93 0 0 1 3 16c0-7.17 5.83-13 13-13s13 5.83 13 13-5.83 13-13 13zm7.14-9.26c-.39-.2-2.31-1.14-2.67-1.27-.36-.13-.62-.2-.88.2-.26.39-1.01 1.27-1.24 1.54-.23.26-.46.29-.85.1-.39-.2-1.64-.6-3.12-1.92-1.15-1.03-1.93-2.3-2.16-2.69-.23-.39-.02-.6.17-.79.17-.17.39-.46.59-.69.2-.23.26-.39.39-.65.13-.26.07-.49-.03-.69-.1-.2-.88-2.13-1.21-2.91-.32-.78-.65-.67-.88-.67h-.75c-.26 0-.69.1-1.05.49-.36.39-1.38 1.35-1.38 3.29 0 1.94 1.42 3.81 1.62 4.07.2.26 2.79 4.26 6.77 5.98 3.98 1.72 3.98 1.15 4.7 1.08.72-.07 2.31-.92 2.64-1.82.33-.92.33-1.7.23-1.89-.1-.2-.36-.3-.75-.49z"/></svg>
         </a>
-        <a class="soc" href="https://github.com/PrahladWebDev" target="_blank" title="GitHub">
-          <svg viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+        <a class="soc" href="https://github.com/PrahladWebDev" target="_blank" title="Prahlad Singh on GitHub" aria-label="Prahlad Singh on GitHub" rel="me noopener">
+          <svg viewBox="0 0 24 24" role="img" aria-hidden="true"><title>GitHub icon</title><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
         </a>
       </div>
-      <a href="prahlad_resume.pdf" download class="resume-btn">
+      <a href="prahlad_resume.pdf" download class="resume-btn" title="Download Prahlad Singh's Resume PDF">
         ↓ DOWNLOAD RESUME
       </a>
     </div>
@@ -1393,12 +1480,12 @@ body::before {
             <span class="p-tag">OpenWeatherMap API</span><span class="p-tag">remove.bg</span>
           </div>
           <div class="p-links">
-            <a class="p-link" href="https://sharevault.prahladsingh.in/share/009c99b900946f86bbf2feed8358e5efda6eeb44e0da7c57" target="_blank">
-              <svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+            <a class="p-link" href="https://sharevault.prahladsingh.in/share/009c99b900946f86bbf2feed8358e5efda6eeb44e0da7c57" target="_blank" title="Download Wardrobe Manager APK" rel="noopener">
+              <svg viewBox="0 0 24 24" role="img" aria-hidden="true"><title>Download icon</title><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
               DOWNLOAD APK
             </a>
-            <a class="p-link" href="https://github.com/PrahladWebDev/wardrobe-manager-react-native" target="_blank">
-              <svg viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+            <a class="p-link" href="https://github.com/PrahladWebDev/wardrobe-manager-react-native" target="_blank" title="Wardrobe Manager source code on GitHub" rel="noopener">
+              <svg viewBox="0 0 24 24" role="img" aria-hidden="true"><title>GitHub icon</title><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
               GITHUB
             </a>
           </div>
@@ -1424,12 +1511,12 @@ body::before {
             <span class="p-tag">React Query</span><span class="p-tag">Node Cron</span>
           </div>
           <div class="p-links">
-            <a class="p-link" href="https://sharevault.prahladsingh.in/" target="_blank">
-              <svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+            <a class="p-link" href="https://sharevault.prahladsingh.in/" target="_blank" title="ShareVault live demo" rel="noopener">
+              <svg viewBox="0 0 24 24" role="img" aria-hidden="true"><title>External link icon</title><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
               LIVE DEMO
             </a>
-            <a class="p-link" href="https://github.com/PrahladWebDev/share-vault.git" target="_blank">
-              <svg viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+            <a class="p-link" href="https://github.com/PrahladWebDev/share-vault.git" target="_blank" title="ShareVault source code on GitHub" rel="noopener">
+              <svg viewBox="0 0 24 24" role="img" aria-hidden="true"><title>GitHub icon</title><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
               GITHUB
             </a>
           </div>
@@ -1454,12 +1541,12 @@ body::before {
             <span class="p-tag">Cloudinary</span><span class="p-tag">JWT</span>
           </div>
           <div class="p-links">
-            <a class="p-link" href="https://mythlok.prahladsingh.in/" target="_blank">
-              <svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+            <a class="p-link" href="https://mythlok.prahladsingh.in/" target="_blank" title="MythLok live demo" rel="noopener">
+              <svg viewBox="0 0 24 24" role="img" aria-hidden="true"><title>External link icon</title><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
               LIVE DEMO
             </a>
-            <a class="p-link" href="https://github.com/PrahladWebDev/mythlok.git" target="_blank">
-              <svg viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+            <a class="p-link" href="https://github.com/PrahladWebDev/mythlok.git" target="_blank" title="MythLok source code on GitHub" rel="noopener">
+              <svg viewBox="0 0 24 24" role="img" aria-hidden="true"><title>GitHub icon</title><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
               GITHUB
             </a>
           </div>
@@ -1485,12 +1572,12 @@ body::before {
             <span class="p-tag">Multi-Tenant</span>
           </div>
           <div class="p-links">
-            <a class="p-link" href="https://schoolerp.prahladsingh.in/" target="_blank">
-              <svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+            <a class="p-link" href="https://schoolerp.prahladsingh.in/" target="_blank" title="School ERP live demo" rel="noopener">
+              <svg viewBox="0 0 24 24" role="img" aria-hidden="true"><title>External link icon</title><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
               LIVE DEMO
             </a>
-            <a class="p-link" href="https://github.com/PrahladWebDev/school-erp-mern.git" target="_blank">
-              <svg viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+            <a class="p-link" href="https://github.com/PrahladWebDev/school-erp-mern.git" target="_blank" title="School ERP source code on GitHub" rel="noopener">
+              <svg viewBox="0 0 24 24" role="img" aria-hidden="true"><title>GitHub icon</title><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
               GITHUB
             </a>
           </div>
@@ -1517,12 +1604,12 @@ body::before {
             <span class="p-tag">Algorithm Design</span>
           </div>
           <div class="p-links">
-            <a class="p-link" href="https://ziprouter.prahladsingh.in/" target="_blank">
-              <svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+            <a class="p-link" href="https://ziprouter.prahladsingh.in/" target="_blank" title="Zip Router live demo" rel="noopener">
+              <svg viewBox="0 0 24 24" role="img" aria-hidden="true"><title>External link icon</title><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
               LIVE DEMO
             </a>
-            <a class="p-link" href="https://github.com/PrahladWebDev/zip-router" target="_blank">
-              <svg viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+            <a class="p-link" href="https://github.com/PrahladWebDev/zip-router" target="_blank" title="Zip Router source code on GitHub" rel="noopener">
+              <svg viewBox="0 0 24 24" role="img" aria-hidden="true"><title>GitHub icon</title><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
               GITHUB
             </a>
           </div>
@@ -1547,12 +1634,12 @@ body::before {
             <span class="p-tag">CLI</span><span class="p-tag">npm Package</span>
           </div>
           <div class="p-links">
-            <a class="p-link" href="https://www.npmjs.com/package/grabvid-cli" target="_blank">
-              <svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+            <a class="p-link" href="https://www.npmjs.com/package/grabvid-cli" target="_blank" title="GrabVid npm package" rel="noopener">
+              <svg viewBox="0 0 24 24" role="img" aria-hidden="true"><title>External link icon</title><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
               NPM PACKAGE
             </a>
-            <a class="p-link" href="https://github.com/PrahladWebDev/grab-vid" target="_blank">
-              <svg viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+            <a class="p-link" href="https://github.com/PrahladWebDev/grab-vid" target="_blank" title="GrabVid source code on GitHub" rel="noopener">
+              <svg viewBox="0 0 24 24" role="img" aria-hidden="true"><title>GitHub icon</title><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
               GITHUB
             </a>
           </div>
@@ -1578,12 +1665,12 @@ body::before {
             <span class="p-tag">Three.js</span><span class="p-tag">Tailwind CSS</span>
           </div>
           <div class="p-links">
-            <a class="p-link" href="https://ghanalyzer.prahladsingh.in/" target="_blank">
-              <svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+            <a class="p-link" href="https://ghanalyzer.prahladsingh.in/" target="_blank" title="GitHub Personality Analyzer live demo" rel="noopener">
+              <svg viewBox="0 0 24 24" role="img" aria-hidden="true"><title>External link icon</title><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
               LIVE DEMO
             </a>
-            <a class="p-link" href="https://github.com/PrahladWebDev/github-analyzer" target="_blank">
-              <svg viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+            <a class="p-link" href="https://github.com/PrahladWebDev/github-analyzer" target="_blank" title="GitHub Personality Analyzer source code on GitHub" rel="noopener">
+              <svg viewBox="0 0 24 24" role="img" aria-hidden="true"><title>GitHub icon</title><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
               GITHUB
             </a>
           </div>
@@ -1611,12 +1698,12 @@ body::before {
             <span class="p-tag">Tailwind CSS</span><span class="p-tag">JWT</span>
           </div>
           <div class="p-links">
-            <a class="p-link" href="https://brainvault.prahladsingh.in/" target="_blank">
-              <svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+            <a class="p-link" href="https://brainvault.prahladsingh.in/" target="_blank" title="BrainVault live demo" rel="noopener">
+              <svg viewBox="0 0 24 24" role="img" aria-hidden="true"><title>External link icon</title><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
               LIVE DEMO
             </a>
-            <a class="p-link" href="https://github.com/PrahladWebDev/brain-vault" target="_blank">
-              <svg viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+            <a class="p-link" href="https://github.com/PrahladWebDev/brain-vault" target="_blank" title="BrainVault source code on GitHub" rel="noopener">
+              <svg viewBox="0 0 24 24" role="img" aria-hidden="true"><title>GitHub icon</title><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
               GITHUB
             </a>
           </div>
@@ -1644,12 +1731,12 @@ body::before {
             <span class="p-tag">JWT</span><span class="p-tag">Tailwind CSS</span>
           </div>
           <div class="p-links">
-            <a class="p-link" href="https://interviewvault.prahladsingh.in/library" target="_blank">
-              <svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+            <a class="p-link" href="https://interviewvault.prahladsingh.in/library" target="_blank" title="InterviewVault live demo" rel="noopener">
+              <svg viewBox="0 0 24 24" role="img" aria-hidden="true"><title>External link icon</title><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
               LIVE DEMO
             </a>
-            <a class="p-link" href="https://github.com/PrahladWebDev/interview-vault.git" target="_blank">
-              <svg viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+            <a class="p-link" href="https://github.com/PrahladWebDev/interview-vault.git" target="_blank" title="InterviewVault source code on GitHub" rel="noopener">
+              <svg viewBox="0 0 24 24" role="img" aria-hidden="true"><title>GitHub icon</title><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
               GITHUB
             </a>
           </div>
@@ -1678,7 +1765,7 @@ body::before {
 
       <div class="edu-list">
         <div class="edu-card reveal">
-          <div class="edu-ico">🎓</div>
+          <div class="edu-ico" title="Master's degree icon">🎓</div>
           <div>
             <div class="edu-degree">Master of Computer Applications (MCA)</div>
             <div class="edu-uni">Dr. A.P.J. Abdul Kalam Technical University</div>
@@ -1686,7 +1773,7 @@ body::before {
           <div class="edu-year">2022 – 2024</div>
         </div>
         <div class="edu-card reveal">
-          <div class="edu-ico">🏫</div>
+          <div class="edu-ico" title="Bachelor's degree icon">🏫</div>
           <div>
             <div class="edu-degree">Bachelor of Computer Applications (BCA)</div>
             <div class="edu-uni">Mahatma Jyotiba Phule Rohilkhand University</div>
@@ -1703,43 +1790,43 @@ body::before {
       <p class="sec-sub">Open to new opportunities — let's build something together</p>
 
       <div class="contact-grid">
-        <a class="contact-card reveal" href="mailto:prahlad.singh.dev@gmail.com">
-          <div class="cc-icon">✉️</div>
+        <a class="contact-card reveal" href="mailto:prahlad.singh.dev@gmail.com" title="Email Prahlad Singh">
+          <div class="cc-icon" title="Email icon">✉️</div>
           <div>
             <div class="cc-lbl">EMAIL</div>
             <div class="cc-val">prahlad.singh.dev@gmail.com</div>
           </div>
         </a>
-        <a class="contact-card reveal" href="https://www.linkedin.com/in/prahlad-singh-52162b232" target="_blank">
-          <div class="cc-icon">💼</div>
+        <a class="contact-card reveal" href="https://www.linkedin.com/in/prahlad-singh-52162b232" target="_blank" title="Prahlad Singh on LinkedIn" rel="me noopener">
+          <div class="cc-icon" title="LinkedIn icon">💼</div>
           <div>
             <div class="cc-lbl">LINKEDIN</div>
             <div class="cc-val">Prahlad Singh</div>
           </div>
         </a>
-        <a class="contact-card reveal" href="https://wa.me/919149062842" target="_blank">
-          <div class="cc-icon">💬</div>
+        <a class="contact-card reveal" href="https://wa.me/919149062842" target="_blank" title="Message Prahlad Singh on WhatsApp" rel="noopener">
+          <div class="cc-icon" title="WhatsApp icon">💬</div>
           <div>
             <div class="cc-lbl">WHATSAPP</div>
             <div class="cc-val">+91 91490 62842</div>
           </div>
         </a>
-        <a class="contact-card reveal" href="https://github.com/PrahladWebDev" target="_blank">
-          <div class="cc-icon">⌨️</div>
+        <a class="contact-card reveal" href="https://github.com/PrahladWebDev" target="_blank" title="Prahlad Singh on GitHub" rel="me noopener">
+          <div class="cc-icon" title="GitHub icon">⌨️</div>
           <div>
             <div class="cc-lbl">GITHUB</div>
             <div class="cc-val">PrahladWebDev</div>
           </div>
         </a>
-        <a class="contact-card reveal" href="https://prahladsingh.in/" target="_blank">
-          <div class="cc-icon">🌐</div>
+        <a class="contact-card reveal" href="https://prahladsingh.in/" target="_blank" title="Prahlad Singh Portfolio Website" rel="me noopener">
+          <div class="cc-icon" title="Portfolio icon">🌐</div>
           <div>
             <div class="cc-lbl">PORTFOLIO</div>
             <div class="cc-val">prahladsingh.in</div>
           </div>
         </a>
-        <a class="contact-card reveal" href="prahlad_resume.pdf" download>
-          <div class="cc-icon">📄</div>
+        <a class="contact-card reveal" href="prahlad_resume.pdf" download title="Download Prahlad Singh's Resume PDF">
+          <div class="cc-icon" title="Resume icon">📄</div>
           <div>
             <div class="cc-lbl">RESUME</div>
             <div class="cc-val">Download PDF</div>
@@ -1891,13 +1978,13 @@ async function fetchFullGitHub() {
 
     container.innerHTML = `
       <div class="profile-header">
-        <img src="${user.avatar_url}" alt="${user.login}">
+        <img src="${user.avatar_url}" alt="${user.name || user.login} — GitHub profile avatar" title="${user.name || user.login} on GitHub" loading="lazy">
         <div>
           <div class="gh-name">${user.name || user.login}</div>
           <div class="gh-handle">@${user.login} · ${user.public_repos} public repositories</div>
           <div style="font-size:12px;color:var(--mid);margin-top:2px;">${user.bio || ''}</div>
         </div>
-        <a href="https://github.com/PrahladWebDev" target="_blank" style="margin-left:auto;font-family:var(--mono);font-size:10px;font-weight:700;color:var(--black);text-decoration:none;border:2px solid var(--black);padding:6px 16px;border-radius:3px;background:var(--white);">VIEW PROFILE →</a>
+        <a href="https://github.com/PrahladWebDev" target="_blank" rel="noopener" title="View full GitHub profile" style="margin-left:auto;font-family:var(--mono);font-size:10px;font-weight:700;color:var(--black);text-decoration:none;border:2px solid var(--black);padding:6px 16px;border-radius:3px;background:var(--white);">VIEW PROFILE →</a>
       </div>
 
       <div class="gh-summary">
@@ -1928,15 +2015,15 @@ async function fetchFullGitHub() {
             <div class="repo-name">${r.name}</div>
             ${r.description ? `<div class="repo-desc">${r.description}</div>` : ''}
             <div class="repo-meta">
-              ${r.language ? `<span><span class="lang-dot" style="background:${langColors[r.language] || '#7a5cff'};"></span> ${r.language}</span>` : ''}
+              ${r.language ? `<span><span class="lang-dot" style="background:${langColors[r.language] || '#7a5cff'};" title="${r.language}"></span> ${r.language}</span>` : ''}
               <span>⭐ ${r.stargazers_count || 0}</span>
               <span>🍴 ${r.forks_count || 0}</span>
               <span>👁 ${r.watchers_count || 0}</span>
               <span>📅 ${new Date(r.updated_at).toLocaleDateString()}</span>
             </div>
             <div class="repo-links">
-              <a href="${r.html_url}" target="_blank">View Repo</a>
-              ${r.homepage ? `<a href="${r.homepage}" target="_blank">Live Demo</a>` : ''}
+              <a href="${r.html_url}" target="_blank" rel="noopener" title="View ${r.name} repository on GitHub">View Repo</a>
+              ${r.homepage ? `<a href="${r.homepage}" target="_blank" rel="noopener" title="${r.name} live demo">Live Demo</a>` : ''}
             </div>
           </div>
         `).join('')}
