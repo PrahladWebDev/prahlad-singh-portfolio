@@ -152,7 +152,7 @@ body::before {
   border-right: 1px solid var(--line);
 }
 
-.sidebar-top { padding: 36px 26px 24px; border-bottom: 1px solid var(--line); position: relative; overflow: hidden; }
+.sidebar-top { padding: 36px 26px 24px; border-bottom: 1px solid var(--line); position: relative; overflow: hidden; flex-shrink: 0; }
 #side-canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; opacity: 0.85; }
 .sidebar-top > * { position: relative; z-index: 1; }
 
@@ -239,7 +239,7 @@ body::before {
 .nav-item.active .nav-tag { color: var(--accent); opacity: .8; }
 
 /* Socials */
-.sidebar-footer { padding: 18px 22px 22px; border-top: 1px solid var(--line); }
+.sidebar-footer { padding: 18px 22px 22px; border-top: 1px solid var(--line); flex-shrink: 0; }
 .socials { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 14px; }
 .soc {
   width: 32px; height: 32px; border-radius: 9px;
