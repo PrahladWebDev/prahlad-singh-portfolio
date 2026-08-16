@@ -151,7 +151,9 @@ body::before {
   border-right: 1px solid var(--line);
 }
 
-.sidebar-top { padding: 36px 26px 24px; border-bottom: 1px solid var(--line); position: relative; }
+.sidebar-top { padding: 36px 26px 24px; border-bottom: 1px solid var(--line); position: relative; overflow: hidden; }
+#side-canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; opacity: 0.85; }
+.sidebar-top > * { position: relative; z-index: 1; }
 
 .avatar-wrap { position: relative; width: 68px; height: 68px; margin-bottom: 18px; }
 .avatar {
@@ -588,6 +590,7 @@ body::before {
   <!-- SIDEBAR -->
   <aside class="sidebar">
     <div class="sidebar-top">
+      <canvas id="side-canvas" role="presentation" aria-hidden="true" title="Rotating 3D wireframe decoration"></canvas>
       <div class="avatar-wrap">
         <div class="avatar-ring"></div>
         <div class="avatar">
@@ -1176,17 +1179,22 @@ function type() {
 }
 setTimeout(type, 650);
 
-// Live uptime counter
-let uptimeSec = 0;
+// Live uptime counter — counts up from a fixed deploy timestamp, same for every visitor
+// Update SITE_LAUNCH whenever you redeploy, or leave it as your original go-live date.
+const SITE_LAUNCH = new Date('2026-08-16T00:00:00Z').getTime();
 function startTelemetry() {
-  setInterval(() => {
-    uptimeSec++;
-    const h = String(Math.floor(uptimeSec / 3600)).padStart(2, '0');
+  const startedAt = SITE_LAUNCH;
+  function renderUptime() {
+    const uptimeSec = Math.max(0, Math.floor((Date.now() - startedAt) / 1000));
+    const days = Math.floor(uptimeSec / 86400);
+    const h = String(Math.floor((uptimeSec % 86400) / 3600)).padStart(2, '0');
     const m = String(Math.floor((uptimeSec % 3600) / 60)).padStart(2, '0');
     const s = String(uptimeSec % 60).padStart(2, '0');
     const el = document.getElementById('uptime');
-    if (el) el.textContent = `${h}:${m}:${s}`;
-  }, 1000);
+    if (el) el.textContent = (days > 0 ? days + 'd ' : '') + `${h}:${m}:${s}`;
+  }
+  renderUptime();
+  setInterval(renderUptime, 1000);
 
   // Live latency sparkline — simulated random-walk representing socket/ws round-trip
   const points = new Array(24).fill(24);
@@ -1423,6 +1431,62 @@ fetchFullGitHub();
     camera.aspect = window.innerWidth / window.innerHeight;
     camera.updateProjectionMatrix();
     renderer.setSize(window.innerWidth, window.innerHeight);
+  });
+})();
+
+// ══════════════════════════════════════════════════════════════
+// THREE.JS — SIDEBAR ROTATING WIREFRAME
+// ══════════════════════════════════════════════════════════════
+(function initSideScene() {
+  const canvas = document.getElementById('side-canvas');
+  if (!canvas || typeof THREE === 'undefined') return;
+  const parent = canvas.parentElement;
+  const w = parent.clientWidth, h = parent.clientHeight;
+
+  const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  renderer.setSize(w, h);
+
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(50, w / h, 0.1, 100);
+  camera.position.set(0, 0, 9);
+
+  const geo = new THREE.IcosahedronGeometry(3.2, 1);
+  const mat = new THREE.MeshBasicMaterial({ color: 0xf2a93b, wireframe: true, transparent: true, opacity: 0.2 });
+  const mesh = new THREE.Mesh(geo, mat);
+  mesh.position.set(2.5, -0.6, -2);
+  scene.add(mesh);
+
+  const geo2 = new THREE.OctahedronGeometry(1.15, 0);
+  const mat2 = new THREE.MeshBasicMaterial({ color: 0x3ee6a8, wireframe: true, transparent: true, opacity: 0.16 });
+  const mesh2 = new THREE.Mesh(geo2, mat2);
+  mesh2.position.set(-2.3, 2, -1);
+  scene.add(mesh2);
+
+  let mx = 0, my = 0;
+  window.addEventListener('mousemove', (e) => {
+    mx = (e.clientX / window.innerWidth - 0.5);
+    my = (e.clientY / window.innerHeight - 0.5);
+  });
+
+  function animateSide() {
+    mesh.rotation.x += 0.003;
+    mesh.rotation.y += 0.004;
+    mesh2.rotation.x -= 0.002;
+    mesh2.rotation.y += 0.003;
+    camera.position.x += (mx * 1.5 - camera.position.x) * 0.02;
+    camera.position.y += (-my * 1.5 - camera.position.y) * 0.02;
+    camera.lookAt(0, 0, 0);
+    renderer.render(scene, camera);
+    requestAnimationFrame(animateSide);
+  }
+  animateSide();
+
+  window.addEventListener('resize', () => {
+    const nw = parent.clientWidth, nh = parent.clientHeight;
+    camera.aspect = nw / nh;
+    camera.updateProjectionMatrix();
+    renderer.setSize(nw, nh);
   });
 })();
 
