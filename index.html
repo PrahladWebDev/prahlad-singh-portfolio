@@ -117,6 +117,7 @@ body {
   font-family: var(--body);
   min-height: 100vh;
   overflow-x: hidden;
+  transition: background 0.35s ease, color 0.35s ease;
 }
 
 body::before {
@@ -294,6 +295,22 @@ body::before {
 }
 .avail-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--signal); animation: sonar 1.8s ease-out infinite; }
 
+/* ── THEME PICKER ── */
+.theme-picker { display: flex; align-items: center; gap: 7px; padding: 5px 10px; background: var(--panel-2); border: 1px solid var(--line-strong); border-radius: 20px; }
+.theme-picker-lbl { font-family: var(--mono); font-size: 9px; color: var(--faint); letter-spacing: 1px; text-transform: uppercase; margin-right: 2px; }
+.theme-swatch {
+  width: 16px; height: 16px; border-radius: 50%;
+  border: 1.5px solid var(--line-strong);
+  background: var(--sw);
+  cursor: pointer; padding: 0;
+  transition: transform 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+  flex-shrink: 0;
+}
+.theme-swatch:hover { transform: scale(1.2); }
+.theme-swatch.active { border-color: var(--text); box-shadow: 0 0 0 2px var(--panel-2), 0 0 0 3px var(--sw); transform: scale(1.15); }
+@media (max-width: 900px) { .theme-picker-lbl { display: none; } }
+@media (max-width: 620px) { .theme-picker { gap: 5px; padding: 4px 8px; } }
+
 /* ── SECTIONS ── */
 .section { display: none; padding: 52px 44px 80px; animation: fadeUp 0.5s cubic-bezier(0.16,1,0.3,1); }
 .section.active { display: block; }
@@ -372,7 +389,7 @@ body::before {
 .ib-icon { width: 26px; height: 26px; border-radius: 7px; background: rgba(242,169,59,0.1); border: 1px solid rgba(242,169,59,0.3); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
 .ib-icon svg { width: 13px; height: 13px; stroke: var(--accent); fill: none; stroke-width: 1.8; }
 .ib-title { font-family: var(--mono); font-size: 9.5px; letter-spacing: 1.6px; color: var(--muted); text-transform: uppercase; }
-.ib-text { font-size: 13.5px; color: #c3c8db; line-height: 1.7; }
+.ib-text { font-size: 13.5px; color: var(--muted); line-height: 1.7; }
 
 /* Stats row */
 .stats-row { display: grid; grid-template-columns: repeat(4,1fr); gap: 14px; }
@@ -456,7 +473,7 @@ body::before {
 .exp-meta span { display: flex; align-items: center; gap: 6px; }
 .exp-meta svg { width: 12px; height: 12px; stroke: var(--faint); fill: none; stroke-width: 1.8; }
 .exp-list { list-style: none; display: flex; flex-direction: column; gap: 11px; }
-.exp-list li { font-size: 13px; color: #c3c8db; padding-left: 22px; position: relative; line-height: 1.65; }
+.exp-list li { font-size: 13px; color: var(--muted); padding-left: 22px; position: relative; line-height: 1.65; }
 .exp-list li::before { content: ''; position: absolute; left: 0; top: 7px; width: 8px; height: 1.5px; background: var(--accent); }
 
 /* ── PROJECTS ── */
@@ -475,7 +492,7 @@ body::before {
 .p-tagline { font-family: var(--mono); font-size: 10px; color: var(--faint); letter-spacing: 0.4px; margin-top: -8px; }
 .p-desc { font-size: 12.5px; color: var(--muted); line-height: 1.7; }
 .p-feature-list { list-style: none; display: flex; flex-direction: column; gap: 7px; margin: 2px 0 4px; }
-.p-feature-list li { font-size: 12px; color: #c3c8db; padding-left: 18px; position: relative; line-height: 1.55; }
+.p-feature-list li { font-size: 12px; color: var(--muted); padding-left: 18px; position: relative; line-height: 1.55; }
 .p-feature-list li::before { content: ''; position: absolute; left: 0; top: 7px; width: 7px; height: 7px; border: 1.5px solid var(--signal); border-radius: 2px; }
 .p-stack { display: flex; flex-wrap: wrap; gap: 6px; }
 .p-tag { padding: 4px 10px; border: 1px solid var(--line-strong); border-radius: 5px; font-family: var(--mono); font-size: 10px; font-weight: 600; background: var(--panel-2); color: var(--muted); transition: all 0.15s; }
@@ -510,7 +527,7 @@ body::before {
 @media (max-width: 900px) {
   .sidebar { display: none; }
   .main { margin-left: 0; }
-  .section { padding: 74px 20px 60px; }
+  .section { padding: 118px 20px 60px; }
   .stats-row { grid-template-columns: repeat(2,1fr); }
   .skills-wrap, .proj-grid, .about-hero, .contact-grid { grid-template-columns: 1fr; }
   .proj-card.wide { grid-column: auto; }
@@ -527,6 +544,27 @@ body::before {
   .mn-item { display: flex; align-items: center; gap: 6px; padding: 6px 13px; border-radius: 20px; font-family: var(--mono); font-size: 10px; font-weight: 700; color: var(--muted); cursor: pointer; white-space: nowrap; transition: all 0.2s; border: 1px solid transparent; }
   .mn-item svg { width: 12px; height: 12px; stroke: currentColor; fill: none; stroke-width: 1.8; }
   .mn-item.active { color: #14100a; background: var(--accent); }
+
+  /* ── FIX: topbar (theme picker + availability badge) was hidden underneath
+     the mobile-nav bar because both were pinned to top:0 with mobile-nav's
+     higher z-index painting over it. Give the topbar its own row instead. ── */
+  .topbar {
+    position: fixed;
+    top: 54px;
+    left: 0;
+    right: 0;
+    z-index: 150;
+    padding: 0 14px;
+    background: rgba(8,12,23,0.92);
+    backdrop-filter: blur(10px);
+  }
+  .topbar > span:not(.topbar-right) {
+    display: none;
+  }
+  .topbar-right {
+    width: 100%;
+    justify-content: flex-end;
+  }
 }
 
 /* ── SCROLL REVEAL ── */
@@ -563,6 +601,88 @@ body::before {
 @keyframes shellIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
 .sidebar-nav .nav-item { opacity: 0; animation: navIn 0.5s ease forwards; animation-delay: calc(var(--ni) * 0.05s + 0.25s); }
 @keyframes navIn { from { opacity: 0; transform: translateX(-12px); } to { opacity: 1; transform: translateX(0); } }
+
+/* ══════════════════════ THEMES ══════════════════════ */
+html[data-theme="light"] {
+  --bg: #f5f6fa;
+  --panel: #ffffff;
+  --panel-2: #eef0f7;
+  --raised: #e4e7f1;
+  --text: #1a1d29;
+  --muted: #5c6178;
+  --faint: #9297ab;
+  --accent: #c9670a;
+  --accent-dim: #f3dcb8;
+  --signal: #0e9e6d;
+  --signal-dim: #bdead9;
+  --danger: #d6373f;
+  --line: rgba(26,29,41,0.09);
+  --line-strong: rgba(26,29,41,0.18);
+}
+html[data-theme="dracula"] {
+  --bg: #282a36;
+  --panel: #2d303e;
+  --panel-2: #343746;
+  --raised: #3c3f52;
+  --text: #f8f8f2;
+  --muted: #a9adc7;
+  --faint: #6272a4;
+  --accent: #ff79c6;
+  --accent-dim: #7a3b5c;
+  --signal: #50fa7b;
+  --signal-dim: #1f5c34;
+  --danger: #ff5555;
+  --line: rgba(248,248,242,0.09);
+  --line-strong: rgba(248,248,242,0.17);
+}
+html[data-theme="forest"] {
+  --bg: #0f1a13;
+  --panel: #142218;
+  --panel-2: #18291d;
+  --raised: #1e3324;
+  --text: #e6f0e8;
+  --muted: #93b399;
+  --faint: #4f6b56;
+  --accent: #9bd66b;
+  --accent-dim: #4c6338;
+  --signal: #4ecdc4;
+  --signal-dim: #205c56;
+  --danger: #ff7a6b;
+  --line: rgba(230,240,232,0.08);
+  --line-strong: rgba(230,240,232,0.16);
+}
+html[data-theme="nord"] {
+  --bg: #2e3440;
+  --panel: #333a48;
+  --panel-2: #3b4252;
+  --raised: #434c5e;
+  --text: #eceff4;
+  --muted: #b7bfd0;
+  --faint: #7386a4;
+  --accent: #88c0d0;
+  --accent-dim: #3f5b66;
+  --signal: #a3be8c;
+  --signal-dim: #4a5c3d;
+  --danger: #bf616a;
+  --line: rgba(236,239,244,0.08);
+  --line-strong: rgba(236,239,244,0.16);
+}
+html[data-theme="synthwave"] {
+  --bg: #1a1025;
+  --panel: #221530;
+  --panel-2: #2c1b3e;
+  --raised: #38224e;
+  --text: #f4eaff;
+  --muted: #c19fe0;
+  --faint: #6f4a8e;
+  --accent: #ff6ec7;
+  --accent-dim: #6b2c56;
+  --signal: #01cdfe;
+  --signal-dim: #0a4a5c;
+  --danger: #ff5277;
+  --line: rgba(244,234,255,0.09);
+  --line-strong: rgba(244,234,255,0.18);
+}
 </style>
 </head>
 <body>
@@ -670,6 +790,15 @@ body::before {
       <span class="topbar-sep">/</span>
       <span class="topbar-path" id="tpath">about.md</span>
       <div class="topbar-right">
+        <div class="theme-picker" id="themePicker" role="group" aria-label="Choose color theme">
+          <span class="theme-picker-lbl">THEME</span>
+          <button class="theme-swatch active" data-theme="midnight" style="--sw:#f2a93b" title="Midnight" aria-label="Midnight theme"></button>
+          <button class="theme-swatch" data-theme="light" style="--sw:#c9670a" title="Light" aria-label="Light theme"></button>
+          <button class="theme-swatch" data-theme="dracula" style="--sw:#ff79c6" title="Dracula" aria-label="Dracula theme"></button>
+          <button class="theme-swatch" data-theme="forest" style="--sw:#9bd66b" title="Forest" aria-label="Forest theme"></button>
+          <button class="theme-swatch" data-theme="nord" style="--sw:#88c0d0" title="Nord" aria-label="Nord theme"></button>
+          <button class="theme-swatch" data-theme="synthwave" style="--sw:#ff6ec7" title="Synthwave" aria-label="Synthwave theme"></button>
+        </div>
         <div class="avail-badge"><div class="avail-dot"></div>OPEN TO WORK</div>
       </div>
     </div>
@@ -1253,6 +1382,34 @@ window.addEventListener('mousemove', (e) => { gx = e.clientX; gy = e.clientY; })
   gcx += (gx - gcx) * 0.12; gcy += (gy - gcy) * 0.12;
   glow.style.left = gcx + 'px'; glow.style.top = gcy + 'px';
   requestAnimationFrame(glowLoop);
+})();
+
+// ══════════════════════════════════════════════════════════════
+// THEME SWITCHER — Midnight (default), Light, Dracula, Forest, Nord, Synthwave
+// ══════════════════════════════════════════════════════════════
+(function initThemeSwitcher() {
+  const THEME_KEY = 'prahlad-portfolio-theme';
+  const swatches = document.querySelectorAll('.theme-swatch');
+
+  function applyTheme(name, persist) {
+    if (name === 'midnight') {
+      document.documentElement.removeAttribute('data-theme');
+    } else {
+      document.documentElement.setAttribute('data-theme', name);
+    }
+    swatches.forEach(b => b.classList.toggle('active', b.dataset.theme === name));
+    if (persist) {
+      try { localStorage.setItem(THEME_KEY, name); } catch (e) {}
+    }
+  }
+
+  swatches.forEach(btn => {
+    btn.addEventListener('click', () => applyTheme(btn.dataset.theme, true));
+  });
+
+  let saved = 'midnight';
+  try { saved = localStorage.getItem(THEME_KEY) || 'midnight'; } catch (e) {}
+  applyTheme(saved, false);
 })();
 
 // ══════════════════════════════════════════════════════════════
