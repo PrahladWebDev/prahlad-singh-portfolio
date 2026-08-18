@@ -145,7 +145,8 @@ body::before {
 /* ── SIDEBAR ── */
 .sidebar {
   width: 288px;
-  height: 100vh;
+ height: 100dvh;
+overflow: hidden;
   position: fixed;
   top: 0; left: 0; bottom: 0;
   background: var(--panel);
@@ -208,7 +209,13 @@ body::before {
 .sidebar-close { display: none; }
 
 /* Nav */
-.sidebar-nav { flex: 1 1 auto; min-height: 0; padding: 18px 14px; overflow-y: auto; }
+.sidebar-nav {
+  flex: 1;
+  min-height: 0;
+  padding: 10px 14px;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
 .nav-item {
   display: flex; align-items: center; gap: 13px;
   padding: 11px 14px;
@@ -580,9 +587,11 @@ body::before {
    for the same space. */
 @media (max-width: 900px) {
   .sidebar {
-    transform: translateX(-100%);
-    box-shadow: 0 0 40px rgba(0,0,0,0.5);
-  }
+  transform: translateX(-100%);
+  box-shadow: 0 0 40px rgba(0,0,0,0.5);
+  height: 100dvh;
+  overflow: hidden;
+}
   .sidebar.open { transform: translateX(0); }
   .sidebar-backdrop { display: block; }
   .sidebar-close {
@@ -603,6 +612,20 @@ body::before {
   .exp-item { padding: 22px; }
   .console-status { grid-template-columns: 1fr; }
   .proj-summary { grid-template-columns: repeat(2,1fr); }
+  .sidebar-nav {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 10px 14px;
+}
+
+.sidebar-top {
+  padding: 22px 26px 16px;
+}
+
+.sidebar-footer {
+  padding: 12px 22px 14px;
+}
 
   /* Topbar is the only fixed header row on mobile now. */
   .topbar {
