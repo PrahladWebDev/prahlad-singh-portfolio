@@ -136,7 +136,11 @@ body::before {
 ::selection { background: var(--accent); color: #14100a; }
 
 /* ── LAYOUT ── */
-.shell { display: flex; min-height: 100vh; position: relative; z-index: 2; }
+.shell { 
+  display: flex; 
+  min-height: 100vh; 
+  position: relative; 
+}
 
 /* ── SIDEBAR ── */
 .sidebar {
@@ -148,8 +152,9 @@ body::before {
   color: var(--text);
   display: flex;
   flex-direction: column;
-  z-index: 100;
+  z-index: 300;
   border-right: 1px solid var(--line);
+  transition: transform 0.32s cubic-bezier(0.16,1,0.3,1);
 }
 
 .sidebar-top { padding: 36px 26px 24px; border-bottom: 1px solid var(--line); position: relative; overflow: hidden; flex-shrink: 0; }
@@ -169,6 +174,7 @@ body::before {
   position: relative;
 }
 .avatar img { width: 100%; height: 100%; object-fit: cover; border-radius: 15px; }
+.avatar-fallback { display: none; align-items: center; justify-content: center; width: 100%; height: 100%; }
 .avatar-ring {
   position: absolute; inset: -5px;
   border-radius: 19px;
@@ -198,6 +204,8 @@ body::before {
 .s-role { font-family: var(--mono); font-size: 10.5px; color: var(--accent); margin-top: 6px; letter-spacing: 1px; }
 .s-location { display: flex; align-items: center; gap: 6px; font-size: 11.5px; color: var(--muted); margin-top: 10px; }
 .s-location svg { width: 12px; height: 12px; stroke: var(--muted); flex-shrink: 0; }
+
+.sidebar-close { display: none; }
 
 /* Nav */
 .sidebar-nav { flex: 1 1 auto; min-height: 0; padding: 18px 14px; overflow-y: auto; }
@@ -268,6 +276,19 @@ body::before {
 .resume-btn svg { width: 13px; height: 13px; stroke: #14100a; fill: none; stroke-width: 2; }
 .resume-btn:hover { background: #ffbf5c; transform: translateY(-2px); }
 
+/* ── SIDEBAR BACKDROP (mobile) ── */
+.sidebar-backdrop {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.45);
+  z-index: 250;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+.sidebar-backdrop.visible { opacity: 1; pointer-events: auto; }
+
 /* ── MAIN ── */
 .main { margin-left: 288px; flex: 1; min-height: 100vh; position: relative; perspective: 1400px; }
 
@@ -294,6 +315,19 @@ body::before {
   font-size: 10px; font-weight: 700; letter-spacing: 0.5px;
 }
 .avail-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--signal); animation: sonar 1.8s ease-out infinite; }
+
+/* ── HAMBURGER (mobile sidebar toggle) ── */
+.hamburger-btn {
+  display: none;
+  align-items: center; justify-content: center;
+  width: 34px; height: 34px;
+  background: var(--panel-2);
+  border: 1px solid var(--line-strong);
+  border-radius: 9px;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+.hamburger-btn svg { width: 16px; height: 16px; stroke: var(--text); fill: none; stroke-width: 2; }
 
 /* ── THEME PICKER ── */
 .theme-picker { display: flex; align-items: center; gap: 7px; padding: 5px 10px; background: var(--panel-2); border: 1px solid var(--line-strong); border-radius: 20px; }
@@ -476,6 +510,20 @@ body::before {
 .exp-list li { font-size: 13px; color: var(--muted); padding-left: 22px; position: relative; line-height: 1.65; }
 .exp-list li::before { content: ''; position: absolute; left: 0; top: 7px; width: 8px; height: 1.5px; background: var(--accent); }
 
+/* ── PROJECTS SUMMARY BAR ── */
+.proj-summary { display: grid; grid-template-columns: repeat(5,1fr); gap: 14px; margin-bottom: 26px; }
+.proj-summary .ps-box {
+  border: 1px solid var(--line); border-radius: var(--radius); padding: 18px 14px;
+  background: var(--panel); text-align: center; transition: transform 0.25s, border-color 0.25s;
+}
+.proj-summary .ps-box:hover { transform: translateY(-4px); border-color: var(--accent-dim); }
+.proj-summary .ps-n { font-family: var(--display); font-size: 28px; font-weight: 800; line-height: 1; color: var(--text); }
+.proj-summary .ps-l { font-size: 10px; color: var(--muted); margin-top: 6px; font-family: var(--mono); letter-spacing: 0.4px; }
+.proj-type-legend { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 30px; }
+.ptl-chip { display: flex; align-items: center; gap: 7px; padding: 7px 14px; border: 1px solid var(--line-strong); border-radius: 20px; background: var(--panel-2); font-family: var(--mono); font-size: 10.5px; color: var(--muted); }
+.ptl-chip .ptl-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+.ptl-chip b { color: var(--text); }
+
 /* ── PROJECTS ── */
 .proj-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 18px; }
 .proj-card {
@@ -485,8 +533,11 @@ body::before {
 }
 .proj-card:hover { transform: translateY(-4px); border-color: var(--line-strong); }
 .proj-card.wide { grid-column: 1 / -1; }
-.p-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.p-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
 .p-name { font-family: var(--display); font-size: 21px; font-weight: 800; letter-spacing: -0.4px; color: var(--text); }
+.p-badges { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+.p-type-badge { display: flex; align-items: center; gap: 6px; font-family: var(--mono); font-size: 9px; font-weight: 700; letter-spacing: 0.4px; padding: 5px 10px; border-radius: 20px; border: 1px solid var(--line-strong); background: var(--panel-2); color: var(--muted); }
+.p-type-badge .ptl-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
 .p-live { display: flex; align-items: center; gap: 6px; font-family: var(--mono); font-size: 9px; color: var(--signal); flex-shrink: 0; }
 .p-live .dot { width: 5px; height: 5px; border-radius: 50%; background: var(--signal); animation: sonar 2s ease-out infinite; }
 .p-tagline { font-family: var(--mono); font-size: 10px; color: var(--faint); letter-spacing: 0.4px; margin-top: -8px; }
@@ -522,35 +573,41 @@ body::before {
 .cc-lbl { font-family: var(--mono); font-size: 9px; letter-spacing: 1.6px; color: var(--muted); margin-bottom: 3px; }
 .cc-val { font-size: 13.5px; font-weight: 600; }
 
-/* ── MOBILE NAV ── */
-.mobile-nav { display: none; }
+/* ── MOBILE NAV ──
+   There is only ONE navigation UI on mobile: the full sidebar, opened via
+   the hamburger button in the topbar and shown as a slide-in drawer. The
+   old separate top nav strip has been removed to avoid two navs competing
+   for the same space. */
 @media (max-width: 900px) {
-  .sidebar { display: none; }
+  .sidebar {
+    transform: translateX(-100%);
+    box-shadow: 0 0 40px rgba(0,0,0,0.5);
+  }
+  .sidebar.open { transform: translateX(0); }
+  .sidebar-backdrop { display: block; }
+  .sidebar-close {
+    display: flex; align-items: center; justify-content: center;
+    position: absolute; top: 18px; right: 18px;
+    width: 30px; height: 30px; border-radius: 8px;
+    background: var(--panel-2); border: 1px solid var(--line-strong);
+    cursor: pointer; z-index: 2;
+  }
+  .sidebar-close svg { width: 14px; height: 14px; stroke: var(--muted); fill: none; stroke-width: 2; }
+  .hamburger-btn { display: flex; }
   .main { margin-left: 0; }
-  .section { padding: 118px 20px 60px; }
+  .section { padding: 84px 20px 60px; }
   .stats-row { grid-template-columns: repeat(2,1fr); }
   .skills-wrap, .proj-grid, .about-hero, .contact-grid { grid-template-columns: 1fr; }
   .proj-card.wide { grid-column: auto; }
   .sec-title { font-size: 38px; }
   .exp-item { padding: 22px; }
   .console-status { grid-template-columns: 1fr; }
-  .mobile-nav {
-    display: flex; position: fixed; top: 0; left: 0; right: 0;
-    background: rgba(8,12,23,0.92); backdrop-filter: blur(10px);
-    z-index: 200; padding: 0 14px; height: 54px;
-    align-items: center; gap: 6px; overflow-x: auto;
-    border-bottom: 1px solid var(--line);
-  }
-  .mn-item { display: flex; align-items: center; gap: 6px; padding: 6px 13px; border-radius: 20px; font-family: var(--mono); font-size: 10px; font-weight: 700; color: var(--muted); cursor: pointer; white-space: nowrap; transition: all 0.2s; border: 1px solid transparent; }
-  .mn-item svg { width: 12px; height: 12px; stroke: currentColor; fill: none; stroke-width: 1.8; }
-  .mn-item.active { color: #14100a; background: var(--accent); }
+  .proj-summary { grid-template-columns: repeat(2,1fr); }
 
-  /* ── FIX: topbar (theme picker + availability badge) was hidden underneath
-     the mobile-nav bar because both were pinned to top:0 with mobile-nav's
-     higher z-index painting over it. Give the topbar its own row instead. ── */
+  /* Topbar is the only fixed header row on mobile now. */
   .topbar {
     position: fixed;
-    top: 54px;
+    top: 0;
     left: 0;
     right: 0;
     z-index: 150;
@@ -563,8 +620,13 @@ body::before {
   }
   .topbar-right {
     width: 100%;
-    justify-content: flex-end;
+    justify-content: space-between;
   }
+}
+
+@media (max-width: 480px) {
+  .proj-summary { grid-template-columns: repeat(2,1fr); }
+  .ptl-chip { font-size: 9.5px; padding: 6px 11px; }
 }
 
 /* ── SCROLL REVEAL ── */
@@ -597,8 +659,14 @@ body::before {
 @media (max-width: 900px) { #cursor-glow { display: none; } }
 
 /* ── ENTRANCE ── */
-.sidebar, .main { animation: shellIn 0.7s cubic-bezier(0.16,1,0.3,1) both; }
+.main { animation: shellIn 0.7s cubic-bezier(0.16,1,0.3,1) both; }
 @keyframes shellIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+/* Sidebar gets an opacity-only entrance — it must NOT animate `transform`,
+   since transform is what the mobile drawer (open/closed) relies on. An
+   animation with fill-mode "both" would otherwise permanently pin transform
+   to its end-of-animation value and the drawer could never hide again. */
+.sidebar { animation: sidebarFadeIn 0.5s ease both; }
+@keyframes sidebarFadeIn { from { opacity: 0; } to { opacity: 1; } }
 .sidebar-nav .nav-item { opacity: 0; animation: navIn 0.5s ease forwards; animation-delay: calc(var(--ni) * 0.05s + 0.25s); }
 @keyframes navIn { from { opacity: 0; transform: translateX(-12px); } to { opacity: 1; transform: translateX(0); } }
 
@@ -695,27 +763,21 @@ html[data-theme="synthwave"] {
 <div id="cursor-glow"></div>
 <canvas id="bg-canvas" role="presentation" aria-hidden="true" title="Animated node network background"></canvas>
 
-<!-- Mobile nav -->
-<nav class="mobile-nav" id="mnav" aria-label="Mobile section navigation">
-  <div class="mn-item active" onclick="go('about',this)"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>About</div>
-  <div class="mn-item" onclick="go('skills',this)"><svg viewBox="0 0 24 24"><polygon points="12 2 22 8 12 14 2 8 12 2"/><polyline points="2 14 12 20 22 14"/></svg>Skills</div>
-  <div class="mn-item" onclick="go('experience',this)"><svg viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>XP</div>
-  <div class="mn-item" onclick="go('projects',this)"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="8" height="8"/><rect x="13" y="3" width="8" height="8"/><rect x="3" y="13" width="8" height="8"/><rect x="13" y="13" width="8" height="8"/></svg>Projects</div>
-  <div class="mn-item" onclick="go('github',this)"><svg viewBox="0 0 24 24"><circle cx="6" cy="6" r="2.5"/><circle cx="6" cy="18" r="2.5"/><circle cx="18" cy="12" r="2.5"/><path d="M6 8.5v7M8 6.5c4 0 6 1.5 6 5.5"/></svg>GitHub</div>
-  <div class="mn-item" onclick="go('education',this)"><svg viewBox="0 0 24 24"><path d="M2 6l10-4 10 4-10 4-10-4z"/><path d="M6 10v6c0 1.5 3 3 6 3s6-1.5 6-3v-6"/></svg>Edu</div>
-  <div class="mn-item" onclick="go('contact',this)"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>Contact</div>
-</nav>
+<div class="sidebar-backdrop" id="sidebarBackdrop" onclick="closeSidebar()"></div>
 
 <div class="shell">
   <!-- SIDEBAR -->
-  <aside class="sidebar">
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-close" onclick="closeSidebar()" title="Close menu" aria-label="Close menu">
+      <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </div>
     <div class="sidebar-top">
       <canvas id="side-canvas" role="presentation" aria-hidden="true" title="Rotating 3D wireframe decoration"></canvas>
       <div class="avatar-wrap">
         <div class="avatar-ring"></div>
         <div class="avatar">
           <img src="Prahlad.jpg" alt="Prahlad Singh — Full-Stack MERN/MEVN Developer based in Gurgaon, India" title="Prahlad Singh, Full-Stack Developer" loading="eager" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-          <span style="display:none;align-items:center;justify-content:center;width:100%;height:100%">PS</span>
+          <span class="avatar-fallback">PS</span>
         </div>
         <div class="status-chip" title="Available for work"></div>
       </div>
@@ -790,6 +852,9 @@ html[data-theme="synthwave"] {
       <span class="topbar-sep">/</span>
       <span class="topbar-path" id="tpath">about.md</span>
       <div class="topbar-right">
+        <button class="hamburger-btn" id="hamburgerBtn" onclick="openSidebar()" title="Open menu" aria-label="Open menu">
+          <svg viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        </button>
         <div class="theme-picker" id="themePicker" role="group" aria-label="Choose color theme">
           <span class="theme-picker-lbl">THEME</span>
           <button class="theme-swatch active" data-theme="midnight" style="--sw:#f2a93b" title="Midnight" aria-label="Midnight theme"></button>
@@ -972,6 +1037,9 @@ html[data-theme="synthwave"] {
       <h2 class="sec-title">Things I<br><em>Built.</em></h2>
       <p class="sec-sub">Full-stack MERN/MEVN systems — architected, built, and shipped end to end</p>
 
+      <div class="proj-summary reveal" id="proj-summary"></div>
+      <div class="proj-type-legend reveal" id="proj-type-legend"></div>
+
       <div class="proj-grid" id="proj-grid"></div>
     </section>
 
@@ -1058,10 +1126,21 @@ const ICO = {
   npm: '<svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>'
 };
 
+// ── PROJECT TYPE TAXONOMY ───────────────────────────────────────
+// Every project is tagged with a `type` (what kind of build it is) and a
+// `deployed` object describing how/where it's live in the real world.
+// This drives the summary counters + legend + per-card badges below.
+const PROJECT_TYPES = {
+  'Web App':    { color: '#3ee6a8' },
+  'Mobile App': { color: '#f2a93b' },
+  'CLI Tool':   { color: '#88c0d0' }
+};
+
 // ── PROJECT DATA ────────────────────────────────────────────────
 const PROJECTS = [
   {
-    name: 'Wardrobe Manager', num: '01',
+    name: 'Wardrobe Manager', num: '01', type: 'Mobile App',
+    deployed: { status: true, label: 'DEPLOYED · APK DOWNLOAD' },
     tagline: 'Mobile Wardrobe &amp; Outfit Planning App · React Native (Expo) + MERN',
     desc: 'A full-stack mobile app for organizing your closet, building outfits, and getting weather-aware suggestions — built with React Native (Expo) on the front end and a Node.js/Express/MongoDB backend. Combines everyday wardrobe management with data-driven insights into what you actually wear.',
     features: [
@@ -1077,7 +1156,8 @@ const PROJECTS = [
     links: [{label:'DOWNLOAD APK', icon:'demo', url:'https://sharevault.prahladsingh.in/share/009c99b900946f86bbf2feed8358e5efda6eeb44e0da7c57'}, {label:'GITHUB', icon:'github', url:'https://github.com/PrahladWebDev/wardrobe-manager-react-native'}]
   },
   {
-    name: 'ShareVault', num: '02',
+    name: 'ShareVault', num: '02', type: 'Web App',
+    deployed: { status: true, label: 'LIVE ON VPS' },
     tagline: 'Secure File &amp; Video Sharing Platform · MERN',
     desc: 'A production-ready file sharing platform with auto-expiring links, role-based access, and a dedicated admin Video Vault. Built the full system — from JWT auth and rate-limited uploads to a cron-based cleanup engine that purges expired files off the VPS filesystem every 10 minutes.',
     features: [
@@ -1092,7 +1172,8 @@ const PROJECTS = [
     links: [{label:'LIVE DEMO', icon:'demo', url:'https://sharevault.prahladsingh.in/'}, {label:'GITHUB', icon:'github', url:'https://github.com/PrahladWebDev/share-vault.git'}]
   },
   {
-    name: 'MythLok', num: '03',
+    name: 'MythLok', num: '03', type: 'Web App',
+    deployed: { status: true, label: 'LIVE ON VPS' },
     tagline: 'World Folklore &amp; Mythology Platform · MERN',
     desc: 'A community platform for discovering and contributing world folklore — ghost stories, mythological creatures, and regional legends from 20+ countries. Led the full architecture, including a large-scale refactor migrating the entire app from Indian state-wise to country-wise organization.',
     features: [
@@ -1106,7 +1187,8 @@ const PROJECTS = [
     links: [{label:'LIVE DEMO', icon:'demo', url:'https://mythlok.prahladsingh.in/'}, {label:'GITHUB', icon:'github', url:'https://github.com/PrahladWebDev/mythlok.git'}]
   },
   {
-    name: 'School ERP', num: '04',
+    name: 'School ERP', num: '04', type: 'Web App',
+    deployed: { status: true, label: 'LIVE ON VPS' },
     tagline: 'Multi-Tenant School Management System · MERN',
     desc: 'A full multi-tenant ERP for schools covering academics, attendance, fees, and communication — built with a shared-database, tenant-scoped data model so a single deployment can serve many schools securely and independently.',
     features: [
@@ -1121,7 +1203,8 @@ const PROJECTS = [
     links: [{label:'LIVE DEMO', icon:'demo', url:'https://schoolerp.prahladsingh.in/'}, {label:'GITHUB', icon:'github', url:'https://github.com/PrahladWebDev/school-erp-mern.git'}]
   },
   {
-    name: 'Zip Router', num: '05',
+    name: 'Zip Router', num: '05', type: 'Web App',
+    deployed: { status: true, label: 'LIVE ON VPS' },
     tagline: 'Single-Line Grid Puzzle Game · MERN',
     desc: 'A full MERN-stack puzzle game where players trace a single continuous line through every cell of a grid, hitting numbered checkpoints in order without crossing blocked edges. Built a procedural puzzle generator that guarantees a solvable, unique board for every level.',
     features: [
@@ -1136,7 +1219,8 @@ const PROJECTS = [
     links: [{label:'LIVE DEMO', icon:'demo', url:'https://ziprouter.prahladsingh.in/'}, {label:'GITHUB', icon:'github', url:'https://github.com/PrahladWebDev/zip-router'}]
   },
   {
-    name: 'GrabVid', num: '06',
+    name: 'GrabVid', num: '06', type: 'CLI Tool',
+    deployed: { status: true, label: 'PUBLISHED ON NPM' },
     tagline: 'Terminal Video Downloader CLI · Node.js + Ink (React for CLI)',
     desc: 'A terminal app for downloading videos from YouTube, X, Instagram, and more — built with Ink (React for CLI interfaces) instead of a typical scripting approach, giving it a real interactive UI inside the terminal. Published to npm as a globally installable CLI tool.',
     features: [
@@ -1151,7 +1235,8 @@ const PROJECTS = [
     links: [{label:'NPM PACKAGE', icon:'npm', url:'https://www.npmjs.com/package/grabvid-cli'}, {label:'GITHUB', icon:'github', url:'https://github.com/PrahladWebDev/grab-vid'}]
   },
   {
-    name: 'GitHub Personality Analyzer', num: '07',
+    name: 'GitHub Personality Analyzer', num: '07', type: 'Web App',
+    deployed: { status: true, label: 'LIVE ON VPS' },
     tagline: 'AI-Powered Developer Profile Report · MERN + Gemini API',
     desc: 'A full-stack web app that takes any GitHub username and generates a "developer personality" report — profile stats, personality badges, language breakdown, a commit heatmap, top repos, and an AI-written summary powered by Google\'s Gemini API. Includes a side-by-side compare mode.',
     features: [
@@ -1166,7 +1251,8 @@ const PROJECTS = [
     links: [{label:'LIVE DEMO', icon:'demo', url:'https://ghanalyzer.prahladsingh.in/'}, {label:'GITHUB', icon:'github', url:'https://github.com/PrahladWebDev/github-analyzer'}]
   },
   {
-    name: 'BrainVault', num: '08',
+    name: 'BrainVault', num: '08', type: 'Web App',
+    deployed: { status: true, label: 'LIVE ON VPS' },
     tagline: 'AI-Powered Knowledge Management &amp; Graph · MERN + TypeScript + Gemini API',
     desc: 'An AI-powered knowledge management system — save any URL from across the web and let AI extract, summarize, tag, and connect it into an interactive, Obsidian-style knowledge graph. Built the full save-URL pipeline, an auto-computed relationship engine, and a force-directed graph UI.',
     features: [
@@ -1181,7 +1267,8 @@ const PROJECTS = [
     links: [{label:'LIVE DEMO', icon:'demo', url:'https://brainvault.prahladsingh.in/'}, {label:'GITHUB', icon:'github', url:'https://github.com/PrahladWebDev/brain-vault'}]
   },
   {
-    name: 'InterviewVault', num: '09',
+    name: 'InterviewVault', num: '09', type: 'Web App',
+    deployed: { status: true, label: 'LIVE ON VPS' },
     tagline: 'Interview-Prep Vault with Spaced Repetition &amp; AI Coaching · MERN + Monaco + Gemini API',
     desc: 'A dark-themed, glassmorphism interview-prep vault — track coding questions, write solutions in multiple languages with a real in-browser code runner, run a spaced-repetition revision schedule, and visualize progress on a GitHub-style activity heatmap.',
     features: [
@@ -1196,7 +1283,8 @@ const PROJECTS = [
     links: [{label:'LIVE DEMO', icon:'demo', url:'https://interviewvault.prahladsingh.in/library'}, {label:'GITHUB', icon:'github', url:'https://github.com/PrahladWebDev/interview-vault.git'}]
   },
   {
-    name: 'Clipboard Cloud', num: '10',
+    name: 'Clipboard Cloud', num: '10', type: 'Web App',
+    deployed: { status: true, label: 'LIVE ON VPS' },
     tagline: 'Real-Time Cross-Device Clipboard Sync · Next.js + NestJS + Socket.IO',
     desc: 'Instant clipboard sync between devices — pair with a QR code or 6-digit code and anything copied on one device appears on the other in real time, no login required. Built the full pairing/session system, the Socket.IO sync engine, and client-side end-to-end encryption.',
     features: [
@@ -1211,7 +1299,8 @@ const PROJECTS = [
     links: [{label:'LIVE DEMO', icon:'demo', url:'https://clipboard.prahladsingh.in/'}, {label:'GITHUB', icon:'github', url:'https://github.com/PrahladWebDev/clipboard-cloud-'}]
   },
   {
-    name: 'Assessment Platform', num: '11',
+    name: 'Assessment Platform', num: '11', type: 'Web App',
+    deployed: { status: true, label: 'LIVE ON VPS' },
     tagline: 'Online Exam &amp; Proctoring Platform · MERN (Vue 3 + Node/Express/MongoDB)',
     desc: 'A full online assessment system built as three coordinated apps — a Vue 3 + Vuetify admin dashboard, a proctored Vue 3 candidate exam app with a Monaco code editor, and a Node.js/Express/MongoDB backend with Socket.IO.',
     features: [
@@ -1226,7 +1315,8 @@ const PROJECTS = [
     links: [{label:'LIVE DEMO', icon:'demo', url:'https://admin.assessment.prahladsingh.in/'}, {label:'GITHUB', icon:'github', url:'https://github.com/PrahladWebDev/assessment-platform'}]
   },
   {
-    name: 'Codebase Detective', num: '12',
+    name: 'Codebase Detective', num: '12', type: 'Web App',
+    deployed: { status: true, label: 'LIVE ON VPS' },
     tagline: 'Deterministic Codebase Analysis &amp; Architecture Reports · MERN + Babel AST + React Flow',
     desc: 'A full-stack developer tool that takes a project — a ZIP upload or a public GitHub repo URL — and produces an interactive report on structure, dependencies, architectural risks, suspicious files, git history, and codebase statistics, computed deterministically with no AI in the analysis loop.',
     features: [
@@ -1242,13 +1332,46 @@ const PROJECTS = [
   }
 ];
 
+// ── PROJECTS SUMMARY (count / deployed / by-type) ────────────────
+function renderProjectSummary() {
+  const total = PROJECTS.length;
+  const deployedCount = PROJECTS.filter(p => p.deployed && p.deployed.status).length;
+  const byType = {};
+  PROJECTS.forEach(p => { byType[p.type] = (byType[p.type] || 0) + 1; });
+
+  const webCount = byType['Web App'] || 0;
+  const mobileCount = byType['Mobile App'] || 0;
+  const cliCount = byType['CLI Tool'] || 0;
+
+  const summaryEl = document.getElementById('proj-summary');
+  summaryEl.innerHTML = `
+    <div class="ps-box"><div class="ps-n">${total}</div><div class="ps-l">TOTAL PROJECTS</div></div>
+    <div class="ps-box"><div class="ps-n">${deployedCount}</div><div class="ps-l">DEPLOYED / LIVE</div></div>
+    <div class="ps-box"><div class="ps-n">${webCount}</div><div class="ps-l">WEB APPS</div></div>
+    <div class="ps-box"><div class="ps-n">${mobileCount}</div><div class="ps-l">MOBILE APP${mobileCount === 1 ? '' : 'S'}</div></div>
+    <div class="ps-box"><div class="ps-n">${cliCount}</div><div class="ps-l">CLI TOOL${cliCount === 1 ? '' : 'S'}</div></div>
+  `;
+
+  const legendEl = document.getElementById('proj-type-legend');
+  legendEl.innerHTML = Object.entries(byType).map(([type, count]) => {
+    const color = (PROJECT_TYPES[type] || {}).color || '#8891ab';
+    return `<div class="ptl-chip"><span class="ptl-dot" style="background:${color}"></span><b>${count}</b>&nbsp;${type}${count === 1 ? '' : 's'}</div>`;
+  }).join('') + `<div class="ptl-chip"><span class="ptl-dot" style="background:var(--signal)"></span>${deployedCount} of ${total} currently <b>deployed / live</b></div>`;
+}
+
 function renderProjects() {
   const grid = document.getElementById('proj-grid');
-  grid.innerHTML = PROJECTS.map(p => `
+  grid.innerHTML = PROJECTS.map(p => {
+    const typeColor = (PROJECT_TYPES[p.type] || {}).color || '#8891ab';
+    const isDeployed = p.deployed && p.deployed.status;
+    return `
     <div class="proj-card wide reveal">
       <div class="p-head">
         <div class="p-name">${p.name}</div>
-        <div class="p-live"><span class="dot"></span>SHIPPED</div>
+        <div class="p-badges">
+          <span class="p-type-badge"><span class="ptl-dot" style="background:${typeColor}"></span>${p.type}</span>
+          ${isDeployed ? `<div class="p-live"><span class="dot"></span>${p.deployed.label}</div>` : ''}
+        </div>
       </div>
       <div class="p-tagline">${p.tagline}</div>
       <div class="p-desc">${p.desc}</div>
@@ -1258,8 +1381,10 @@ function renderProjects() {
         ${p.links.map(l => `<a class="p-link" href="${l.url}" target="_blank" rel="noopener" title="${p.name} — ${l.label.toLowerCase()}">${ICO[l.icon]}${l.label}</a>`).join('')}
       </div>
     </div>
-  `).join('');
+  `;
+  }).join('');
 }
+renderProjectSummary();
 renderProjects();
 
 // ── NAV ──────────────────────────────────────────────────────────
@@ -1267,7 +1392,7 @@ const paths = { about:'about.md', skills:'skills.json', experience:'experience.l
 
 function go(id, el) {
   document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-  document.querySelectorAll('.nav-item, .mn-item').forEach(n => n.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
   document.getElementById('section-' + id).classList.add('active');
   const sideNav = document.getElementById('nav-' + id);
   if (sideNav) sideNav.classList.add('active');
@@ -1275,7 +1400,26 @@ function go(id, el) {
   document.getElementById('tpath').textContent = paths[id] || id;
   if (id === 'skills') setTimeout(animateBars, 100);
   setTimeout(triggerReveals, 60);
+  closeSidebar();
 }
+
+// ── MOBILE SIDEBAR DRAWER ─────────────────────────────────────────
+const sidebarEl = document.getElementById('sidebar');
+const sidebarBackdropEl = document.getElementById('sidebarBackdrop');
+function openSidebar() {
+  sidebarEl.classList.add('open');
+  sidebarBackdropEl.classList.add('visible');
+  document.body.style.overflow = 'hidden';
+}
+function closeSidebar() {
+  sidebarEl.classList.remove('open');
+  sidebarBackdropEl.classList.remove('visible');
+  document.body.style.overflow = '';
+}
+// Close drawer automatically if the viewport is resized back to desktop width
+window.addEventListener('resize', () => {
+  if (window.innerWidth > 900) closeSidebar();
+});
 
 // ── LIVE CONSOLE: BOOT SEQUENCE + LIVE TELEMETRY ─────────────────
 const termLines = [
@@ -1354,7 +1498,7 @@ function counter(el, target, suffix) {
   }, 35);
 }
 counter(document.getElementById('cnt-exp'), 1, '+');
-counter(document.getElementById('cnt-proj'), 12, '+');
+counter(document.getElementById('cnt-proj'), PROJECTS.length, '+');
 counter(document.getElementById('cnt-stack'), 25, '+');
 
 // ── SKILL BARS ───────────────────────────────────────────────────
