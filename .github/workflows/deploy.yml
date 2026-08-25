@@ -1,69 +1,28 @@
 name: Deploy Website
 
-
 on:
-
- push:
-
-  branches:
-
-   - main
-
-
+  push:
+    branches:
+      - main
 
 jobs:
+  deploy:
+    runs-on: ubuntu-latest
 
+    steps:
+      - uses: actions/checkout@v4
 
- deploy:
-
-
-  runs-on: ubuntu-latest
-
-
-
-  steps:
-
-
-  - uses: actions/checkout@v4
-
-
-
-  - name: Deploy to VPS
-
-
-    uses: appleboy/ssh-action@v1.0.3
-
-
-
-    with:
-
-
-      host: ${{ secrets.SERVER_IP }}
-
-
-      username: prahlad
-
-
-      password: ${{ secrets.SERVER_PASSWORD }}
-
-
-
-      script: |
-
-
-        set -e
-
-
-        cd /var/www/prahladsingh.in
-
-
-        git pull origin main
-
-
-        sudo nginx -t
-
-
-        sudo systemctl reload nginx
-
-
-        echo "Deployment completed"
+      - name: Deploy to VPS
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.SERVER_IP }}
+          username: ${{ secrets.SERVER_USER }}
+          key: ${{ secrets.SERVER_SSH_KEY }}
+          port: 22
+          script: |
+            set -e
+            cd /var/www/prahladsingh.in
+            git pull origin main
+            sudo nginx -t
+            sudo systemctl reload nginx
+            echo "Deployment completed"
