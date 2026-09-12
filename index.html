@@ -373,7 +373,7 @@ overflow: hidden;
 .sec-sub { font-size: 14px; color: var(--muted); margin-bottom: 48px; font-family: var(--mono); }
 
 /* ── ABOUT ── */
-.about-hero { display: grid; grid-template-columns: 1.05fr 1fr; gap: 22px; margin-bottom: 36px; align-items: start; }
+.about-hero { display: grid; grid-template-columns: 1fr; gap: 22px; margin-bottom: 36px; align-items: start; }
 
 .console {
   background: var(--panel);
@@ -415,6 +415,49 @@ overflow: hidden;
 .conn-row:nth-child(4) .conn-dot { animation-delay: .9s; }
 .conn-name { color: var(--text); }
 .conn-latency { margin-left: auto; color: var(--faint); }
+
+/* Mascot chat box (replaces the old whoami/status terminal) */
+.mascot-body { padding: 20px 22px; min-height: 168px; }
+.mascot-row { display: flex; gap: 13px; align-items: flex-start; }
+.mascot-avatar {
+  width: 42px; height: 42px; border-radius: 50%; flex-shrink: 0;
+  background: var(--panel-2); border: 1px solid var(--line-strong);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 20px; box-shadow: 0 0 0 0 rgba(62,230,168,.55);
+  animation: sonar 2.6s ease-out infinite;
+}
+.mascot-chat { display: flex; flex-direction: column; gap: 10px; flex: 1; min-width: 0; }
+.chat-bubble {
+  background: var(--panel-2); border: 1px solid var(--line);
+  border-radius: 13px; border-top-left-radius: 4px;
+  padding: 10px 14px; font-family: var(--body); font-size: 12.5px;
+  color: var(--text); line-height: 1.55;
+  opacity: 0; transform: translateY(6px);
+  animation: bubbleIn 0.35s ease forwards;
+}
+.chat-typing {
+  display: inline-flex; gap: 4px; align-items: center;
+  padding: 12px 14px; width: fit-content;
+  background: var(--panel-2); border: 1px solid var(--line);
+  border-radius: 13px; border-top-left-radius: 4px;
+}
+.chat-typing span { width: 5px; height: 5px; border-radius: 50%; background: var(--faint); animation: typingDot 1.1s ease-in-out infinite; }
+.chat-typing span:nth-child(2) { animation-delay: 0.15s; }
+.chat-typing span:nth-child(3) { animation-delay: 0.3s; }
+@keyframes typingDot { 0%,60%,100% { opacity: 0.3; transform: translateY(0); } 30% { opacity: 1; transform: translateY(-3px); } }
+@keyframes bubbleIn { to { opacity: 1; transform: translateY(0); } }
+.mascot-status { grid-template-columns: 1fr; }
+
+.mascot-choices { display: flex; flex-wrap: wrap; gap: 8px; padding-left: 55px; margin-top: 2px; }
+.mascot-choice-btn {
+  font-family: var(--mono); font-size: 10.5px; font-weight: 700; letter-spacing: 0.3px;
+  color: var(--text); background: var(--panel-2); border: 1px solid var(--line-strong);
+  border-radius: 20px; padding: 7px 14px; cursor: pointer; transition: all 0.2s;
+  opacity: 0; transform: translateY(6px); animation: bubbleIn 0.35s ease forwards;
+}
+.mascot-choice-btn:hover { background: var(--accent); color: #14100a; border-color: var(--accent); transform: translateY(-2px); }
+.mascot-choice-btn:disabled { opacity: 0.35; cursor: default; transform: none; }
+.mascot-choice-btn:disabled:hover { background: var(--panel-2); color: var(--text); border-color: var(--line-strong); }
 
 .about-info { display: flex; flex-direction: column; gap: 16px; }
 .info-block {
@@ -901,45 +944,20 @@ html[data-theme="synthwave"] {
         <div class="console">
           <div class="console-bar">
             <span class="cbar-dot cd-r"></span><span class="cbar-dot cd-y"></span><span class="cbar-dot cd-g"></span>
-            <span class="cbar-title">system://prahlad-singh</span>
+            <span class="cbar-title">mascot://pixel-bot</span>
             <span class="cbar-live"><span class="dot"></span>LIVE</span>
           </div>
-          <div class="console-body">
-            <div id="term-out"></div>
+          <div class="console-body mascot-body">
+            <div class="mascot-row">
+              <div class="mascot-avatar">🤖</div>
+              <div class="mascot-chat" id="mascot-chat"></div>
+            </div>
           </div>
-          <div class="console-status">
+          <div class="console-status mascot-status">
             <div class="stat-tile">
               <div class="lbl">Session Uptime</div>
               <div class="val" id="uptime">00:00:00</div>
             </div>
-            <div class="stat-tile">
-              <div class="lbl">Live Latency</div>
-              <div class="val" id="latency-val">—</div>
-              <svg class="spark" viewBox="0 0 100 26" preserveAspectRatio="none"><path id="spark-path" d=""/></svg>
-            </div>
-            <div class="conn-list">
-              <div class="conn-row"><span class="conn-dot"></span><span class="conn-name">socket.io</span><span>real-time channel</span><span class="conn-latency">connected</span></div>
-              <div class="conn-row"><span class="conn-dot"></span><span class="conn-name">webrtc / peerjs</span><span>media stream</span><span class="conn-latency">connected</span></div>
-              <div class="conn-row"><span class="conn-dot"></span><span class="conn-name">redis</span><span>session store</span><span class="conn-latency">connected</span></div>
-              <div class="conn-row"><span class="conn-dot"></span><span class="conn-name">mongodb</span><span>tenant db pool</span><span class="conn-latency">connected</span></div>
-            </div>
-          </div>
-        </div>
-
-        <div class="about-info">
-          <div class="info-block reveal">
-            <div class="ib-head">
-              <span class="ib-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg></span>
-              <span class="ib-title">Who I Am</span>
-            </div>
-            <div class="ib-text">Full-stack developer based in Gurgaon, specializing in the MERN/MEVN stack. I work across the entire lifecycle of a product — designing MongoDB schemas and multi-tenant architecture on one end, and shipping pixel-perfect, responsive React/Vue interfaces on the other. I care about writing code that's secure, maintainable, and actually holds up in production, not just in a demo.</div>
-          </div>
-          <div class="info-block reveal">
-            <div class="ib-head">
-              <span class="ib-icon"><svg viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></span>
-              <span class="ib-title">What I Do</span>
-            </div>
-            <div class="ib-text">I design and build RESTful APIs, multi-tenant SaaS architectures with per-tenant data isolation, and JWT/RBAC authentication systems with fine-grained role control. On the real-time side, I've built video calling, live GPS tracking, and instant notifications with Socket.io, PeerJS, and Redis. I also build cross-platform mobile apps with React Native (Expo), terminal/CLI tools with Node.js, data-visualization dashboards with Chart.js and Three.js, work on niche builds like a DICOM medical imaging viewer, Razorpay payment integrations, and PDF generation pipelines — and I handle my own DevOps: Linux VPS setup, Nginx, PM2, and CI/CD with GitHub Actions.</div>
           </div>
         </div>
       </div>
@@ -1468,41 +1486,100 @@ window.addEventListener('resize', () => {
   if (window.innerWidth > 900) closeSidebar();
 });
 
-// ── LIVE CONSOLE: BOOT SEQUENCE + LIVE TELEMETRY ─────────────────
-const termLines = [
-  { text: '$ whoami', color: '#8891ab' },
-  { text: 'prahlad-singh — full-stack developer', color: '#e9ecf6' },
-  { text: '$ status --check', color: '#8891ab' },
-  { text: 'stack      → MERN · MEVN · React Native', color: '#f2a93b' },
-  { text: 'location   → Gurgaon, Haryana, IN', color: '#f2a93b' },
-  { text: 'availability → OPEN_FOR_HIRE [ok]', color: '#3ee6a8' },
+// ── MASCOT CHAT: PIXEL INTRODUCES HIMSELF, THEN OFFERS TOPIC BUTTONS ──
+// Instead of dumping every line at once, Pixel says a short intro and then
+// shows tappable topic buttons (About / Skills / Projects / Experience).
+// Picking one reveals just that topic's detail as a new bubble, then the
+// buttons reappear (with the picked one dimmed) so another topic can be
+// explored without re-reading everything from scratch.
+const MASCOT_INTRO = [
+  "Hey 👋 I'm Pixel — Prahlad's portfolio sidekick.",
+  "Pick a topic below and I'll fill you in 👇"
 ];
-const termOut = document.getElementById('term-out');
-let li = 0, ci = 0, curEl = null;
-function type() {
-  if (li >= termLines.length) {
-    const p = document.createElement('div');
-    p.innerHTML = '<span class="t-signal">$</span> <span class="cursor-blink"></span>';
-    termOut.appendChild(p);
-    startTelemetry();
-    return;
+const MASCOT_TOPICS = {
+  about: {
+    label: 'About',
+    detail: "Prahlad's a full-stack developer based in Gurgaon, specializing in the MERN/MEVN stack. He works across the whole product lifecycle — MongoDB schemas and multi-tenant architecture on one end, pixel-perfect React/Vue interfaces on the other — and cares about code that holds up in production, not just in a demo."
+  },
+  skills: {
+    label: 'Skills',
+    detail: "His stack: React, Vue, React Native &amp; Next.js on the frontend; Node.js, Express, NestJS, Socket.io, PeerJS &amp; Redis on the backend; MongoDB &amp; MySQL for data; and he runs his own DevOps — Linux VPS, Nginx, PM2, and CI/CD with GitHub Actions."
+  },
+  projects: {
+    label: 'Projects',
+    detail: `He's shipped ${PROJECTS.length}+ full-stack projects solo — from a mobile wardrobe planner and a folklore community platform to a DICOM medical imaging viewer and a terminal video-downloader CLI published on npm. Most are live on his own VPS.`
+  },
+  experience: {
+    label: 'Experience',
+    detail: "Currently full-stack @ Lifelayer Health Solutions, building a multi-tenant healthcare platform — telemedicine video calls, live ambulance GPS tracking, Razorpay payments, and a DICOM medical imaging viewer, all with JWT/RBAC auth and his own Linux/Nginx/PM2 deployments."
   }
-  if (ci === 0) {
-    curEl = document.createElement('div');
-    curEl.style.color = termLines[li].color;
-    termOut.appendChild(curEl);
-  }
-  curEl.textContent = termLines[li].text.slice(0, ci + 1);
-  ci++;
-  if (ci >= termLines[li].text.length) { li++; ci = 0; setTimeout(type, 110); }
-  else setTimeout(type, 20);
+};
+const mascotChat = document.getElementById('mascot-chat');
+let mascotAskedOnce = false;
+
+function mascotAddBubble(html) {
+  return new Promise(resolve => {
+    const typing = document.createElement('div');
+    typing.className = 'chat-typing';
+    typing.innerHTML = '<span></span><span></span><span></span>';
+    mascotChat.appendChild(typing);
+    setTimeout(() => {
+      typing.remove();
+      const bubble = document.createElement('div');
+      bubble.className = 'chat-bubble';
+      bubble.innerHTML = html;
+      mascotChat.appendChild(bubble);
+      resolve();
+    }, 550);
+  });
 }
-setTimeout(type, 650);
+
+function mascotRemoveChoices() {
+  const old = mascotChat.querySelector('.mascot-choices');
+  if (old) old.remove();
+}
+
+function mascotShowChoices(justPickedKey) {
+  mascotRemoveChoices();
+  const row = document.createElement('div');
+  row.className = 'mascot-choices';
+  Object.entries(MASCOT_TOPICS).forEach(([key, topic], i) => {
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'mascot-choice-btn';
+    btn.textContent = topic.label;
+    btn.style.animationDelay = (i * 0.06) + 's';
+    if (key === justPickedKey) btn.disabled = true;
+    btn.addEventListener('click', () => mascotPickTopic(key));
+    row.appendChild(btn);
+  });
+  mascotChat.appendChild(row);
+}
+
+async function mascotPickTopic(key) {
+  const topic = MASCOT_TOPICS[key];
+  if (!topic) return;
+  mascotRemoveChoices();
+  await mascotAddBubble(topic.detail);
+  mascotShowChoices(key);
+  if (!mascotAskedOnce) { mascotAskedOnce = true; startTelemetry(); }
+}
+
+async function initMascot() {
+  for (const line of MASCOT_INTRO) {
+    await mascotAddBubble(line);
+  }
+  mascotShowChoices(null);
+}
+setTimeout(initMascot, 650);
 
 // Live uptime counter — counts up from a fixed deploy timestamp, same for every visitor
 // Update SITE_LAUNCH whenever you redeploy, or leave it as your original go-live date.
 const SITE_LAUNCH = new Date('2026-08-16T00:00:00Z').getTime();
+let telemetryStarted = false;
 function startTelemetry() {
+  if (telemetryStarted) return;
+  telemetryStarted = true;
   const startedAt = SITE_LAUNCH;
   function renderUptime() {
     const uptimeSec = Math.max(0, Math.floor((Date.now() - startedAt) / 1000));
@@ -1515,23 +1592,6 @@ function startTelemetry() {
   }
   renderUptime();
   setInterval(renderUptime, 1000);
-
-  // Live latency sparkline — simulated random-walk representing socket/ws round-trip
-  const points = new Array(24).fill(24);
-  const path = document.getElementById('spark-path');
-  const val = document.getElementById('latency-val');
-  function step() {
-    const last = points[points.length - 1];
-    let next = last + (Math.random() * 10 - 5);
-    next = Math.max(6, Math.min(24, next));
-    points.shift();
-    points.push(next);
-    const d = points.map((p, i) => `${i === 0 ? 'M' : 'L'} ${(i / (points.length - 1)) * 100} ${26 - p}`).join(' ');
-    if (path) path.setAttribute('d', d);
-    if (val) val.textContent = Math.round(12 + (24 - next) * 2) + ' ms';
-  }
-  step();
-  setInterval(step, 900);
 }
 
 // ── COUNTERS ─────────────────────────────────────────────────────
