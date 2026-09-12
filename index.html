@@ -1515,7 +1515,6 @@ const MASCOT_TOPICS = {
   }
 };
 const mascotChat = document.getElementById('mascot-chat');
-let mascotAskedOnce = false;
 
 function mascotAddBubble(html) {
   return new Promise(resolve => {
@@ -1562,7 +1561,6 @@ async function mascotPickTopic(key) {
   mascotRemoveChoices();
   await mascotAddBubble(topic.detail);
   mascotShowChoices(key);
-  if (!mascotAskedOnce) { mascotAskedOnce = true; startTelemetry(); }
 }
 
 async function initMascot() {
@@ -1593,6 +1591,7 @@ function startTelemetry() {
   renderUptime();
   setInterval(renderUptime, 1000);
 }
+startTelemetry();
 
 // ── COUNTERS ─────────────────────────────────────────────────────
 function counter(el, target, suffix) {
