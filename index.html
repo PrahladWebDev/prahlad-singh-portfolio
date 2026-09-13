@@ -461,6 +461,30 @@ overflow: hidden;
 .mascot-choice-btn:disabled { opacity: 0.35; cursor: default; transform: none; }
 .mascot-choice-btn:disabled:hover { background: var(--panel-2); color: var(--text); border-color: var(--line-strong); }
 
+.mascot-input-row { display: flex; gap: 8px; padding-left: 55px; margin-top: 4px; }
+.mascot-input-row input {
+  flex: 1; background: var(--panel-2); border: 1px solid var(--line-strong);
+  border-radius: 20px; padding: 9px 16px; font-family: var(--body);
+  font-size: 12.5px; color: var(--text); outline: none; transition: border-color 0.2s;
+}
+.mascot-input-row input:focus { border-color: var(--accent); }
+.mascot-input-row input::placeholder { color: var(--faint); }
+.mascot-input-row button {
+  background: var(--accent); color: #14100a; border: none; border-radius: 50%;
+  width: 34px; height: 34px; display: flex; align-items: center; justify-content: center;
+  cursor: pointer; flex-shrink: 0; transition: transform 0.15s, opacity 0.15s;
+}
+.mascot-input-row button:hover:not(:disabled) { transform: scale(1.08); }
+.mascot-input-row button:disabled { opacity: 0.35; cursor: default; }
+.mascot-input-row button svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2.2; }
+.chat-cursor { display: inline-block; width: 6px; height: 12px; background: var(--accent); margin-left: 2px; vertical-align: -2px; animation: blink 0.9s step-end infinite; }
+.chat-sources { display: flex; flex-wrap: wrap; gap: 6px; padding-left: 55px; margin-top: -4px; }
+.chat-source-chip {
+  font-family: var(--mono); font-size: 9px; color: var(--faint); background: var(--panel-2);
+  border: 1px solid var(--line); border-radius: 10px; padding: 3px 9px;
+}
+.chat-error { color: var(--danger); font-size: 11.5px; padding-left: 55px; font-family: var(--mono); }
+
 .about-info { display: flex; flex-direction: column; gap: 16px; }
 .info-block {
   border: 1px solid var(--line);
@@ -1494,82 +1518,179 @@ window.addEventListener('resize', () => {
 // Picking one reveals just that topic's detail as a new bubble, then the
 // buttons reappear (with the picked one dimmed) so another topic can be
 // explored without re-reading everything from scratch.
+const AGENT_API_BASE = 'https://aiagent.prahladsingh.in/api';
+
 const MASCOT_INTRO = [
-  "Hey 👋 I'm Pixel — Prahlad's portfolio sidekick.",
-  "Pick a topic below and I'll fill you in 👇"
+  "Hey 👋 I'm Pixel — ask me anything about Prahlad, live.",
+  "Try a quick topic below, or just type your own question."
 ];
-const MASCOT_TOPICS = {
-  about: {
-    label: 'About',
-    detail: "Prahlad's a full-stack developer based in Gurgaon, specializing in the MERN/MEVN stack. He works across the whole product lifecycle — MongoDB schemas and multi-tenant architecture on one end, pixel-perfect React/Vue interfaces on the other — and cares about code that holds up in production, not just in a demo."
-  },
-  skills: {
-    label: 'Skills',
-    detail: "His stack: React, Vue, React Native &amp; Next.js on the frontend; Node.js, Express, NestJS, Socket.io, PeerJS &amp; Redis on the backend; MongoDB &amp; MySQL for data; and he runs his own DevOps — Linux VPS, Nginx, PM2, and CI/CD with GitHub Actions."
-  },
-  projects: {
-    label: 'Projects',
-    detail: `He's shipped ${PROJECTS.length}+ full-stack projects solo — from a mobile wardrobe planner and a folklore community platform to a DICOM medical imaging viewer and a terminal video-downloader CLI published on npm. Most are live on his own VPS.`
-  },
-  experience: {
-    label: 'Experience',
-    detail: "Currently full-stack @ Lifelayer Health Solutions, building a multi-tenant healthcare platform — telemedicine video calls, live ambulance GPS tracking, Razorpay payments, and a DICOM medical imaging viewer, all with JWT/RBAC auth and his own Linux/Nginx/PM2 deployments."
-  }
-};
+const QUICK_TOPICS = [
+  { label: 'About',      question: 'Tell me about yourself.' },
+  { label: 'Skills',     question: "What's your tech stack?" },
+  { label: 'Projects',   question: 'What have you built recently?' },
+  { label: 'Experience', question: "What's your current work experience?" }
+];
+
 const mascotChat = document.getElementById('mascot-chat');
+let agentConversationId = null;
+try { agentConversationId = sessionStorage.getItem('pixelConvoId') || null; } catch (e) {}
 
 function mascotAddBubble(html) {
-  return new Promise(resolve => {
-    const typing = document.createElement('div');
-    typing.className = 'chat-typing';
-    typing.innerHTML = '<span></span><span></span><span></span>';
-    mascotChat.appendChild(typing);
-    setTimeout(() => {
-      typing.remove();
-      const bubble = document.createElement('div');
-      bubble.className = 'chat-bubble';
-      bubble.innerHTML = html;
-      mascotChat.appendChild(bubble);
-      resolve();
-    }, 550);
-  });
+  const bubble = document.createElement('div');
+  bubble.className = 'chat-bubble';
+  bubble.innerHTML = html;
+  mascotChat.appendChild(bubble);
+  return bubble;
 }
 
-function mascotRemoveChoices() {
-  const old = mascotChat.querySelector('.mascot-choices');
-  if (old) old.remove();
+function mascotTyping() {
+  const typing = document.createElement('div');
+  typing.className = 'chat-typing';
+  typing.innerHTML = '<span></span><span></span><span></span>';
+  mascotChat.appendChild(typing);
+  return typing;
 }
 
-function mascotShowChoices(justPickedKey) {
-  mascotRemoveChoices();
+function mascotSources(sources) {
+  if (!sources || !sources.length) return;
+  const row = document.createElement('div');
+  row.className = 'chat-sources';
+  row.innerHTML = sources
+    .slice(0, 4)
+    .map(s => `<span class="chat-source-chip">${s.label || s.sourceType}</span>`)
+    .join('');
+  mascotChat.appendChild(row);
+}
+
+function setInputEnabled(enabled) {
+  const input = document.getElementById('pixel-input');
+  const btn = document.getElementById('pixel-send');
+  if (input) input.disabled = !enabled;
+  if (btn) btn.disabled = !enabled;
+}
+
+async function askPixel(question) {
+  const trimmed = (question || '').trim();
+  if (!trimmed) return;
+
+  mascotAddBubble(trimmed.replace(/</g, '&lt;'));
+  const input = document.getElementById('pixel-input');
+  if (input) input.value = '';
+  setInputEnabled(false);
+
+  const typing = mascotTyping();
+  let answerBubble = null;
+  let answerText = '';
+
+  try {
+    const res = await fetch(`${AGENT_API_BASE}/ai/chat`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ message: trimmed, conversationId: agentConversationId })
+    });
+
+    if (!res.ok || !res.body) throw new Error('Agent unavailable');
+
+    const reader = res.body.getReader();
+    const decoder = new TextDecoder();
+    let buffer = '';
+    let sources = [];
+
+    for (;;) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      buffer += decoder.decode(value, { stream: true });
+
+      const events = buffer.split('\n\n');
+      buffer = events.pop() ?? '';
+
+      for (const raw of events) {
+        const lines = raw.split('\n');
+        const eventLine = lines.find(l => l.startsWith('event:'));
+        const dataLine = lines.find(l => l.startsWith('data:'));
+        if (!dataLine) continue;
+
+        const eventName = eventLine ? eventLine.replace('event:', '').trim() : 'message';
+        const data = JSON.parse(dataLine.replace('data:', '').trim());
+
+        if (eventName === 'token') {
+          if (!answerBubble) {
+            typing.remove();
+            answerBubble = mascotAddBubble('');
+          }
+          answerText += data;
+          answerBubble.innerHTML = answerText.replace(/</g, '&lt;') + '<span class="chat-cursor"></span>';
+          mascotChat.scrollTop = mascotChat.scrollHeight;
+        } else if (eventName === 'sources') {
+          sources = data;
+        } else if (eventName === 'done') {
+          if (data && data.conversationId) {
+            agentConversationId = data.conversationId;
+            try { sessionStorage.setItem('pixelConvoId', agentConversationId); } catch (e) {}
+          }
+        }
+      }
+    }
+
+    if (answerBubble) answerBubble.innerHTML = answerText.replace(/</g, '&lt;');
+    mascotSources(sources);
+  } catch (err) {
+    typing.remove();
+    if (!answerBubble) {
+      const errEl = document.createElement('div');
+      errEl.className = 'chat-error';
+      errEl.textContent = "Pixel can't reach the agent right now — try again in a moment.";
+      mascotChat.appendChild(errEl);
+    }
+  } finally {
+    setInputEnabled(true);
+    mascotChat.scrollTop = mascotChat.scrollHeight;
+    const input2 = document.getElementById('pixel-input');
+    if (input2) input2.focus();
+  }
+}
+
+function mascotShowTopics() {
   const row = document.createElement('div');
   row.className = 'mascot-choices';
-  Object.entries(MASCOT_TOPICS).forEach(([key, topic], i) => {
+  QUICK_TOPICS.forEach((t, i) => {
     const btn = document.createElement('button');
     btn.type = 'button';
     btn.className = 'mascot-choice-btn';
-    btn.textContent = topic.label;
+    btn.textContent = t.label;
     btn.style.animationDelay = (i * 0.06) + 's';
-    if (key === justPickedKey) btn.disabled = true;
-    btn.addEventListener('click', () => mascotPickTopic(key));
+    btn.addEventListener('click', () => askPixel(t.question));
     row.appendChild(btn);
   });
   mascotChat.appendChild(row);
 }
 
-async function mascotPickTopic(key) {
-  const topic = MASCOT_TOPICS[key];
-  if (!topic) return;
-  mascotRemoveChoices();
-  await mascotAddBubble(topic.detail);
-  mascotShowChoices(key);
+function mascotShowInput() {
+  const row = document.createElement('div');
+  row.className = 'mascot-input-row';
+  row.innerHTML = `
+    <input id="pixel-input" type="text" placeholder="Ask Pixel something..." maxlength="500" autocomplete="off">
+    <button id="pixel-send" type="button" title="Send" aria-label="Send">
+      <svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+    </button>
+  `;
+  mascotChat.appendChild(row);
+  const input = row.querySelector('#pixel-input');
+  const btn = row.querySelector('#pixel-send');
+  const send = () => askPixel(input.value);
+  btn.addEventListener('click', send);
+  input.addEventListener('keydown', e => { if (e.key === 'Enter') send(); });
 }
 
 async function initMascot() {
   for (const line of MASCOT_INTRO) {
-    await mascotAddBubble(line);
+    const typing = mascotTyping();
+    await new Promise(r => setTimeout(r, 550));
+    typing.remove();
+    mascotAddBubble(line);
   }
-  mascotShowChoices(null);
+  mascotShowTopics();
+  mascotShowInput();
 }
 setTimeout(initMascot, 650);
 
