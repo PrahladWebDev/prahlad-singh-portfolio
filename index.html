@@ -430,7 +430,10 @@ overflow: hidden;
   overflow: hidden;
 }
 .mascot-avatar img { width: 100%; height: 100%; object-fit: cover; }
-.mascot-chat { display: flex; flex-direction: column; gap: 10px; flex: 1; min-width: 0; }
+.mascot-chat { display: flex; flex-direction: column; gap: 10px; flex: 1; min-width: 0; max-height: 380px; overflow-y: auto; scroll-behavior: smooth; padding-right: 4px; }
+.mascot-chat::-webkit-scrollbar { width: 6px; }
+.mascot-chat::-webkit-scrollbar-track { background: transparent; }
+.mascot-chat::-webkit-scrollbar-thumb { background: var(--line-strong); border-radius: 3px; }
 .chat-bubble {
   background: var(--panel-2); border: 1px solid var(--line);
   border-radius: 13px; border-top-left-radius: 4px;
@@ -1551,11 +1554,16 @@ const mascotChat = document.getElementById('mascot-chat');
 let agentConversationId = null;
 try { agentConversationId = sessionStorage.getItem('pixelConvoId') || null; } catch (e) {}
 
+function mascotScrollToBottom() {
+  mascotChat.scrollTop = mascotChat.scrollHeight;
+}
+
 function mascotAddBubble(html) {
   const bubble = document.createElement('div');
   bubble.className = 'chat-bubble';
   bubble.innerHTML = html;
   mascotChat.appendChild(bubble);
+  mascotScrollToBottom();
   return bubble;
 }
 
@@ -1564,6 +1572,7 @@ function mascotTyping() {
   typing.className = 'chat-typing';
   typing.innerHTML = '<span></span><span></span><span></span>';
   mascotChat.appendChild(typing);
+  mascotScrollToBottom();
   return typing;
 }
 
@@ -1576,6 +1585,7 @@ function mascotSources(sources) {
     .map(s => `<span class="chat-source-chip">${s.label || s.sourceType}</span>`)
     .join('');
   mascotChat.appendChild(row);
+  mascotScrollToBottom();
 }
 
 // Renders the model's Markdown (bold, lists, tables, code) into sanitized HTML.
