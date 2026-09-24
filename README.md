@@ -5,7 +5,8 @@ A single-page, dark-sidebar developer portfolio built as one self-contained HTML
 ## ✨ Features
 
 - **Single-file build** — all HTML, CSS, and JS live in one `index.html`, no build step required.
-- **Sections**: About, Skills, Experience, Projects, GitHub, Education, Contact — client-side tab routing (no page reloads).
+- **Sections**: About, Skills, Experience, Projects, Web Store, GitHub, Education, Contact — client-side tab routing (no page reloads).
+- **Web Store** — Microsoft-Store-style download hub for APK/EXE builds (Gathalok, Foldd). Edit the `STORE_APPS` array in `index.html`; set `url` to enable a download, `null` shows "Coming soon". Icons live in `store/`.
 - **Live GitHub integration** — fetches profile + all public repos from `api.github.com` at runtime (stats, languages, stars, forks, links).
 - **Three.js visuals** — animated particle-network canvas behind the whole page, plus a rotating wireframe icosahedron/octahedron in the sidebar.
 - **Terminal typewriter intro** on the About section.
@@ -19,6 +20,7 @@ A single-page, dark-sidebar developer portfolio built as one self-contained HTML
 ```
 index.html      → everything (markup, styles, scripts) in a single file
 Prahlad.jpg     → profile avatar (falls back to "PS" initials if missing)
+store/          → Web Store app icons (webp)
 prahlad_resume.pdf → resume, linked from sidebar + contact section
 ```
 
