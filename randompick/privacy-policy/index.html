@@ -23,6 +23,9 @@
     border-bottom:1px solid var(--line); padding-bottom:.5rem; margin-top:2.4rem; }
   a{ color:var(--purple); text-decoration:underline; text-decoration-color:var(--purple-2); text-underline-offset:3px; }
   .box{ background:#fff; border:1px solid var(--line); border-radius:10px; padding:1.2rem 1.4rem; margin:1.2rem 0; }
+  table{ width:100%; border-collapse:collapse; margin:1rem 0; font-size:.92rem; }
+  th, td{ text-align:left; padding:.55rem .6rem; border-bottom:1px solid var(--line); vertical-align:top; }
+  th{ font-family:"Trebuchet MS",sans-serif; color:var(--purple); font-size:.82rem; }
   ul{ padding-left:1.2rem; }
   li{ margin-bottom:.5rem; }
   .updated{ color:var(--muted); font-size:.85rem; }
@@ -36,40 +39,60 @@
   <p class="updated">Last updated: 26 September 2026</p>
 </header>
 <main>
-  <p>Random Person Picker is a simple tool for randomly picking a name from a list — for games,
-  chores, giveaways, or anything else you need a fair random pick for.</p>
+  <p>Random Person Picker lets you create an account so your list of people (names and photos)
+  is saved and available whenever you sign in. This policy explains what we collect and why.</p>
 
-  <div class="box">
-    <strong>The short version:</strong> Random Person Picker doesn't collect, store, or transmit
-    any of your data anywhere. There are no accounts, no servers, and no internet connection
-    involved in how the app works.
-  </div>
+  <h2>Information we collect</h2>
+  <table>
+    <tr><th>Category</th><th>What it includes</th></tr>
+    <tr><td>Account info</td><td>Your email address and password (stored encrypted, never in plain text).</td></tr>
+    <tr><td>Your list</td><td>The names and, optionally, photos of the people you add to your list.</td></tr>
+  </table>
 
-  <h2>What the app does with your information</h2>
+  <h2>App permissions</h2>
   <ul>
-    <li><strong>Names and photos you add</strong> for people in your list stay entirely on your
-    own device, held only in the app's memory while it's open. Nothing is uploaded, saved to a
-    server, or shared with us or anyone else.</li>
-    <li><strong>Photo library access</strong> is requested only when you choose to add a photo
-    for someone in your list. The app never accesses your photos without you actively picking
-    one, and never uploads them anywhere — the photo is just displayed within the app itself.</li>
-    <li>Closing the app clears this information, since it isn't saved to permanent storage.</li>
+    <li><strong>Photo library / camera</strong> — used only when you choose to attach a photo to
+    someone in your list. Nothing is accessed or uploaded unless you take that action.</li>
   </ul>
 
+  <h2>How we use your information</h2>
+  <ul>
+    <li>To create and secure your account, and verify your email with a one-time code.</li>
+    <li>To save your list of people and sync it back to you whenever you sign in.</li>
+    <li>To send account-related emails (email verification, password reset codes).</li>
+  </ul>
+  <p>We do not sell your information, and we do not use it for advertising.</p>
+
   <h2>Third-party services</h2>
-  <p>None. Random Person Picker doesn't use analytics, advertising, crash reporting, or any
-  other third-party service that would receive data about you or your device.</p>
+  <ul>
+    <li><strong>Cloudinary</strong> — stores and serves the photos you upload for people in your
+    list, as a processor acting on our behalf. It does not use your photos for its own purposes.</li>
+    <li>Our own backend server, which stores your account and list data.</li>
+  </ul>
+
+  <h2>Data storage and security</h2>
+  <p>Your password is stored in encrypted (hashed) form — we cannot see your actual password.
+  Data is transmitted over encrypted (HTTPS) connections.</p>
+
+  <h2>Your choices and rights</h2>
+  <ul>
+    <li>You can edit or remove any person (and their photo) from your list at any time within
+    the app.</li>
+    <li>To delete your account and all associated data, see
+    <a href="https://prahladsingh.in/randompick/delete-account/">how to delete your account</a>.</li>
+  </ul>
 
   <h2>Children's privacy</h2>
-  <p>Random Person Picker doesn't collect any personal information from anyone, including
-  children.</p>
+  <p>Random Person Picker's account features are intended for users aged 13 and over. We do not
+  knowingly collect information from children under 13. If you believe a child has created an
+  account, contact us and we will remove it.</p>
 
   <h2>Changes to this policy</h2>
-  <p>If this ever changes — for example, if a future version adds an optional online feature —
-  this page will be updated first, with a new "Last updated" date.</p>
+  <p>We may update this policy as the app changes. Material changes will be reflected here with
+  an updated "Last updated" date.</p>
 
   <h2>Contact us</h2>
-  <p>Questions about this policy? Reach out at
+  <p>Questions about this policy or your data? Reach out at
   <a href="mailto:prahlad.singh.dev@gmail.com">prahlad.singh.dev@gmail.com</a>.</p>
 </main>
 <footer>
