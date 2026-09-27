@@ -749,7 +749,8 @@ overflow: hidden;
 }
 
 /* ── WEB STORE ── */
-.store-hero { position: relative; overflow: hidden; border: 1px solid var(--line-strong); border-radius: 14px; padding: 34px; display: grid; grid-template-columns: 1fr auto; gap: 28px; align-items: center; background: #0b1020; color: #e9ecf6; margin-bottom: 24px; min-height: 230px; }
+.store-hero { position: relative; overflow: hidden; border: 1px solid var(--line-strong); border-radius: 14px; padding: 34px; display: grid; grid-template-columns: 1fr auto; gap: 28px; align-items: center; background: #0b1020; color: #e9ecf6; margin-bottom: 24px; min-height: 230px; transition: opacity .25s ease; }
+.store-hero.sh-fade { opacity: 0; }
 .store-hero::before { content: ''; position: absolute; inset: 0; background: var(--hero-img) center/cover; opacity: .4; transform: scale(1.05); }
 .store-hero::after { content: ''; position: absolute; inset: 0; background: linear-gradient(90deg, #0b1020 15%, rgba(11,16,32,.6) 62%, rgba(11,16,32,.15)); }
 .store-hero > * { position: relative; z-index: 1; }
@@ -1199,20 +1200,7 @@ html[data-theme="synthwave"] {
       <h2 class="sec-title">Get the<br><em>Apps.</em></h2>
       <p class="sec-sub">Download my apps — Android APKs &amp; Windows installers</p>
 
-      <div class="store-hero" style="--hero-img:url('store/gathalok-exe.webp')">
-        <div>
-          <div class="sh-badge">FEATURED APP</div>
-          <div class="sh-title">Gathalok</div>
-          <div class="sh-sub">Legends live everywhere</div>
-          <p class="sh-desc">A community platform for discovering, reading and contributing world folklore — ghost stories, mythological creatures, tribal legends and sacred places from every country.</p>
-          <div class="sh-actions">
-            <span class="get-btn soon" aria-disabled="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 14"/></svg>COMING SOON</span>
-            <span class="plat-chip"><svg viewBox="0 0 24 24"><path d="M7 2h10a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2zm5 17a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"/></svg>Android · APK</span>
-            <span class="plat-chip"><svg viewBox="0 0 24 24"><path d="M3 3h8.5v8.5H3zM12.5 3H21v8.5h-8.5zM3 12.5h8.5V21H3zM12.5 12.5H21V21h-8.5z"/></svg>Windows · EXE</span>
-          </div>
-        </div>
-        <img class="sh-icon" src="store/gathalok-exe.webp" alt="Gathalok app icon" width="160" height="160">
-      </div>
+      <div class="store-hero" id="store-hero"></div>
 
       <div class="store-bar">
         <label class="store-search">
@@ -1308,7 +1296,9 @@ html[data-theme="synthwave"] {
 const ICO = {
   demo: '<svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>',
   github: '<svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>',
-  npm: '<svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>'
+  npm: '<svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>',
+  android: '<svg viewBox="0 0 24 24"><path d="M7 2h10a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2zm5 17a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"/></svg>',
+  windows: '<svg viewBox="0 0 24 24"><path d="M3 3h8.5v8.5H3zM12.5 3H21v8.5h-8.5zM3 12.5h8.5V21H3zM12.5 12.5H21V21h-8.5z"/></svg>'
 };
 
 // ── PROJECT TYPE TAXONOMY ───────────────────────────────────────
@@ -1338,7 +1328,11 @@ const PROJECTS = [
       'Optional automatic background removal on item photos (remove.bg) and an in-app Server Settings screen'
     ],
     stack: ['React Native','Expo','Node.js','Express','MongoDB','react-native-svg','OpenWeatherMap API','remove.bg'],
-    links: [{label:'DOWNLOAD APK', icon:'demo', url:'https://sharevault.prahladsingh.in/share/f8ef4de8ab4865b7adc021b2fb2b45c4a68da4b1459076b5'}, {label:'GITHUB', icon:'github', url:'https://github.com/PrahladWebDev/wardrobe-manager-react-native'}]
+    links: [
+      {label:'DOWNLOAD APK', icon:'demo', url:'https://sharevault.prahladsingh.in/share/f8ef4de8ab4865b7adc021b2fb2b45c4a68da4b1459076b5'},
+      {label:'ANDROID APK', icon:'android', onclick:"go('store', document.getElementById('nav-store'))"},
+      {label:'GITHUB', icon:'github', url:'https://github.com/PrahladWebDev/wardrobe-manager-react-native'}
+    ]
   },
   {
     name: 'ShareVault', num: '02', type: 'Web App',
@@ -1369,7 +1363,12 @@ const PROJECTS = [
       'JWT auth with 4 roles, Redux Toolkit state, Cloudinary image uploads'
     ],
     stack: ['React 18','Redux Toolkit','Node.js','Express','MongoDB','Cloudinary','JWT'],
-    links: [{label:'LIVE DEMO', icon:'demo', url:'https://gathalok.prahladsingh.in/'}, {label:'GITHUB', icon:'github', url:'https://github.com/PrahladWebDev/gathalok.git'}]
+    links: [
+      {label:'LIVE ON WEB', icon:'demo', url:'https://gathalok.prahladsingh.in/'},
+      {label:'ANDROID APK', icon:'android', onclick:"go('store', document.getElementById('nav-store'))"},
+      {label:'WINDOWS EXE', icon:'windows', onclick:"go('store', document.getElementById('nav-store'))"},
+      {label:'GITHUB', icon:'github', url:'https://github.com/PrahladWebDev/gathalok.git'}
+    ]
   },
   {
     name: 'School ERP', num: '04', type: 'Web App',
@@ -1533,6 +1532,22 @@ const PROJECTS = [
     ],
     stack: ['Java 21','Spring Boot 3','Spring Security','Spring Data JPA','MySQL','React 19','TypeScript','Vite','TanStack Query','OCR.space API','Tailwind CSS'],
     links: [{label:'LIVE DEMO', icon:'demo', url:'https://expensetracker.prahladsingh.in/'}, {label:'GITHUB', icon:'github', url:'https://github.com/PrahladWebDev/expense-tracker-java'}]
+  },
+  {
+    name: 'Random Person Picker', num: '14', type: 'Mobile App',
+    deployed: { status: false, label: 'ANDROID APK · COMING SOON' },
+    tagline: 'Random Winner Picker with Saved People &amp; Contacts Import · React Native (Expo) + MERN',
+    desc: 'A React Native (Expo) app that picks a random winner from a list of people — add names with optional photos, import straight from your phone contacts, or reuse a saved list tied to your account. Paired with an Express/MongoDB/Cloudinary backend for OTP-verified accounts and cross-session saved people.',
+    features: [
+      'Full flow — number of people → add people (name + optional photo) → review → animated shuffle with sound → winner, with Pick Again re-shuffling instead of instantly swapping',
+      '"Import from Contacts" via expo-contacts — search &amp; multi-select straight from the phone\'s own contact list, staying on-device unless explicitly saved',
+      '"Saved People" backed by an Express + MongoDB + Cloudinary API — one JWT-authenticated account per user, so saved names/photos never cross accounts',
+      'Email OTP account flow — 6-digit codes for registration, verification, and forgot/reset password',
+      'Equal-probability winner selection with a tick sound on every shuffle step, a chime + haptics on the winner',
+      'Automatic light/dark mode (useColorScheme); built on Expo SDK 57 / React Native 0.86 / React 19.2, New Architecture only'
+    ],
+    stack: ['React Native','Expo SDK 57','Node.js','Express','MongoDB','Cloudinary','JWT','expo-contacts','expo-audio'],
+    links: [{label:'ANDROID APK', icon:'android', onclick:"go('store', document.getElementById('nav-store'))"}]
   }
 ];
 
@@ -1582,7 +1597,10 @@ function renderProjects() {
       <ul class="p-feature-list">${p.features.map(f => `<li>${f}</li>`).join('')}</ul>
       <div class="p-stack">${p.stack.map(s => `<span class="p-tag">${s}</span>`).join('')}</div>
       <div class="p-links">
-        ${p.links.map(l => `<a class="p-link" href="${l.url}" target="_blank" rel="noopener" title="${p.name} — ${l.label.toLowerCase()}">${ICO[l.icon]}${l.label}</a>`).join('')}
+        ${p.links.map(l => l.onclick
+          ? `<a class="p-link" href="#" onclick="${l.onclick};return false;" title="${p.name} — ${l.label.toLowerCase()}">${ICO[l.icon]}${l.label}</a>`
+          : `<a class="p-link" href="${l.url}" target="_blank" rel="noopener" title="${p.name} — ${l.label.toLowerCase()}">${ICO[l.icon]}${l.label}</a>`
+        ).join('')}
       </div>
     </div>
   `;
@@ -1595,13 +1613,13 @@ renderProjects();
 // To enable a download, set `url` to the APK/EXE link — the button switches
 // from "COMING SOON" to a real download button automatically.
 const STORE_APPS = [
-  { name:'Gathalok', cat:'Folklore & Mythology', platform:'android', format:'APK', req:'Android', icon:'store/gathalok-apk.webp', tile:'#0d1424', priv:'gathalok/privacy-policy/', url:null,
+  { name:'Gathalok', cat:'Folklore & Mythology', platform:'android', format:'APK', req:'Android', icon:'store/gathalok-apk.webp', tile:'#0d1424', priv:'gathalok/privacy-policy/', url:null, tagline:'Legends live everywhere',
     desc:'Discover, read and contribute world folklore — ghost stories, mythological creatures, tribal legends and sacred places from every country.' },
-  { name:'Gathalok', cat:'Folklore & Mythology', platform:'windows', format:'EXE', req:'Windows', icon:'store/gathalok-exe.webp', tile:'#0d1424', priv:'gathalok/privacy-policy/', url:null,
+  { name:'Gathalok', cat:'Folklore & Mythology', platform:'windows', format:'EXE', req:'Windows', icon:'store/gathalok-exe.webp', tile:'#0d1424', priv:'gathalok/privacy-policy/', url:null, tagline:'Legends live everywhere',
     desc:'The desktop edition of Gathalok — browse and contribute legends from every corner of the world on your PC.' },
-  { name:'Foldd', cat:'Wardrobe Manager', platform:'android', format:'APK', req:'Android', icon:'store/foldd.webp', tile:'#5a0f22', priv:'wardrobe-manager/privacy-policy/', url:null,
+  { name:'Foldd', cat:'Wardrobe Manager', platform:'android', format:'APK', req:'Android', icon:'store/foldd.webp', tile:'#5a0f22', priv:'wardrobe-manager/privacy-policy/', url:null, tagline:'Never wonder what to wear',
     desc:'Track everything you own and get outfit suggestions based on real weather — so “I have nothing to wear” stops being true.' },
-  { name:'Random Person Picker', cat:'Utilities', platform:'android', format:'APK', req:'Android', icon:'store/randompick.webp', tile:'#6C5CE7', priv:'randompick/privacy-policy/', url:null,
+  { name:'Random Person Picker', cat:'Utilities', platform:'android', format:'APK', req:'Android', icon:'store/randompick.webp', tile:'#6C5CE7', priv:'randompick/privacy-policy/', url:null, tagline:'Let fate pick for you',
     desc:'Add people with a photo, shuffle, and let the app randomly pick a winner — great for chores, raffles and group decisions.' },
 ];
 const STORE_CLOCK = '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 14"/></svg>';
@@ -1643,6 +1661,57 @@ document.getElementById('store-chips').addEventListener('click', e => {
   renderStore();
 });
 renderStore();
+
+// ── STORE FEATURED HERO ───────────────────────────────────────────
+// Auto-built from STORE_APPS (apps sharing a name, like Gathalok's
+// APK + EXE, are merged into one card) and auto-rotates through every
+// app — add a new app to STORE_APPS above and it joins the rotation
+// with no further changes needed here.
+function buildFeaturedApps() {
+  const byName = {};
+  const list = [];
+  STORE_APPS.forEach(a => {
+    if (byName[a.name]) { byName[a.name].chips.push({platform:a.platform, req:a.req, format:a.format}); return; }
+    const entry = { name:a.name, desc:a.desc, icon:a.icon, url:a.url, tagline:a.tagline || a.cat,
+      chips:[{platform:a.platform, req:a.req, format:a.format}] };
+    byName[a.name] = entry;
+    list.push(entry);
+  });
+  return list;
+}
+const FEATURED_APPS = buildFeaturedApps();
+let featuredIdx = 0;
+function renderFeaturedHero() {
+  const f = FEATURED_APPS[featuredIdx];
+  const hero = document.getElementById('store-hero');
+  hero.style.setProperty('--hero-img', `url('${f.icon}')`);
+  hero.innerHTML = `
+    <div>
+      <div class="sh-badge">FEATURED APP</div>
+      <div class="sh-title">${f.name}</div>
+      <div class="sh-sub">${f.tagline}</div>
+      <p class="sh-desc">${f.desc}</p>
+      <div class="sh-actions">
+        ${f.url
+          ? `<a class="get-btn" href="${f.url}" target="_blank" rel="noopener" download>${STORE_DL}GET APP</a>`
+          : `<span class="get-btn soon" aria-disabled="true">${STORE_CLOCK}COMING SOON</span>`}
+        ${f.chips.map(c => `<span class="plat-chip">${PLAT_ICO[c.platform]}${c.req} · ${c.format}</span>`).join('')}
+      </div>
+    </div>
+    <img class="sh-icon" src="${f.icon}" alt="${f.name} app icon" width="160" height="160">
+  `;
+}
+function rotateFeaturedHero() {
+  const hero = document.getElementById('store-hero');
+  hero.classList.add('sh-fade');
+  setTimeout(() => {
+    featuredIdx = (featuredIdx + 1) % FEATURED_APPS.length;
+    renderFeaturedHero();
+    hero.classList.remove('sh-fade');
+  }, 250);
+}
+renderFeaturedHero();
+if (FEATURED_APPS.length > 1) setInterval(rotateFeaturedHero, 6000);
 
 // ── NAV ──────────────────────────────────────────────────────────
 const paths = { about:'about.md', skills:'skills.json', experience:'experience.log', projects:'projects/', store:'store/', github:'repos.json', education:'education.md', contact:'contact.json' };
