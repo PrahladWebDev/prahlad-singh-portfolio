@@ -217,7 +217,25 @@ overflow: hidden;
   padding: 10px 14px;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
+  /* slim, themed scrollbar — invisible until hover/scroll */
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent;
+  overscroll-behavior: contain;
 }
+.sidebar-nav:hover,
+.sidebar-nav:focus-within { scrollbar-color: var(--line-strong) transparent; }
+.sidebar-nav::-webkit-scrollbar { width: 6px; }
+.sidebar-nav::-webkit-scrollbar-track { background: transparent; margin: 6px 0; }
+.sidebar-nav::-webkit-scrollbar-thumb {
+  background: transparent;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  background-clip: padding-box;
+  transition: background-color .2s;
+}
+.sidebar-nav:hover::-webkit-scrollbar-thumb,
+.sidebar-nav:focus-within::-webkit-scrollbar-thumb { background-color: var(--line-strong); }
+.sidebar-nav::-webkit-scrollbar-thumb:hover { background-color: var(--accent-dim); }
 .nav-item {
   display: flex; align-items: center; gap: 13px;
   padding: 11px 14px;
