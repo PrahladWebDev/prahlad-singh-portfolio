@@ -1298,7 +1298,21 @@ const ICO = {
   github: '<svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>',
   npm: '<svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>',
   android: '<svg viewBox="0 0 24 24"><path d="M7 2h10a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2zm5 17a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"/></svg>',
-  windows: '<svg viewBox="0 0 24 24"><path d="M3 3h8.5v8.5H3zM12.5 3H21v8.5h-8.5zM3 12.5h8.5V21H3zM12.5 12.5H21V21h-8.5z"/></svg>'
+  windows: '<svg viewBox="0 0 24 24"><path d="M3 3h8.5v8.5H3zM12.5 3H21v8.5h-8.5zM3 12.5h8.5V21H3zM12.5 12.5H21V21h-8.5z"/></svg>',
+  playstore: '<svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M3.6 2.3a1.5 1.5 0 0 0-.6 1.2v17a1.5 1.5 0 0 0 .6 1.2l9.5-9.7zM14.5 13.2l2.7 2.7-11.9 6.7zM14.5 10.8L5.3 1.4l11.9 6.7zM18.6 9.1l2.3 1.3a1.7 1.7 0 0 1 0 3.2l-2.3 1.3-3-3z"/></svg>',
+  microsoft: '<svg viewBox="0 0 24 24"><path d="M3 3h8.5v8.5H3zM12.5 3H21v8.5h-8.5zM3 12.5h8.5V21H3zM12.5 12.5H21V21h-8.5z"/></svg>'
+};
+
+// ── STORE LINKS ─────────────────────────────────────────────────
+// Paste the live Play Store / Microsoft Store URLs here. While a URL is
+// empty, its button just jumps to the Web Store section instead.
+const PLAY_STORE = {
+  gathalok: '',
+  wardrobe: '',
+  randompick: ''
+};
+const MS_STORE = {
+  gathalok: 'https://apps.microsoft.com/detail/9PP0R2RCS99W'
 };
 
 // ── PROJECT TYPE TAXONOMY ───────────────────────────────────────
@@ -1330,7 +1344,7 @@ const PROJECTS = [
     stack: ['React Native','Expo','Node.js','Express','MongoDB','react-native-svg','OpenWeatherMap API','remove.bg'],
     links: [
       {label:'DOWNLOAD APK', icon:'demo', url:'https://sharevault.prahladsingh.in/share/f8ef4de8ab4865b7adc021b2fb2b45c4a68da4b1459076b5'},
-      {label:'ANDROID APK', icon:'android', onclick:"go('store', document.getElementById('nav-store'))"},
+      {label:'PLAY STORE', icon:'playstore', url: PLAY_STORE.wardrobe},
       {label:'GITHUB', icon:'github', url:'https://github.com/PrahladWebDev/wardrobe-manager-react-native'}
     ]
   },
@@ -1365,8 +1379,8 @@ const PROJECTS = [
     stack: ['React 18','Redux Toolkit','Node.js','Express','MongoDB','Cloudinary','JWT'],
     links: [
       {label:'LIVE ON WEB', icon:'demo', url:'https://gathalok.prahladsingh.in/'},
-      {label:'ANDROID APK', icon:'android', onclick:"go('store', document.getElementById('nav-store'))"},
-      {label:'WINDOWS EXE', icon:'windows', onclick:"go('store', document.getElementById('nav-store'))"},
+      {label:'PLAY STORE', icon:'playstore', url: PLAY_STORE.gathalok},
+      {label:'MICROSOFT STORE', icon:'microsoft', url: MS_STORE.gathalok},
       {label:'GITHUB', icon:'github', url:'https://github.com/PrahladWebDev/gathalok.git'}
     ]
   },
@@ -1535,7 +1549,7 @@ const PROJECTS = [
   },
   {
     name: 'Random Person Picker', num: '14', type: 'Mobile App',
-    deployed: { status: false, label: 'ANDROID APK · COMING SOON' },
+    deployed: { status: false, label: 'PLAY STORE · COMING SOON' },
     tagline: 'Random Winner Picker with Saved People &amp; Contacts Import · React Native (Expo) + MERN',
     desc: 'A React Native (Expo) app that picks a random winner from a list of people — add names with optional photos, import straight from your phone contacts, or reuse a saved list tied to your account. Paired with an Express/MongoDB/Cloudinary backend for OTP-verified accounts and cross-session saved people.',
     features: [
@@ -1547,7 +1561,7 @@ const PROJECTS = [
       'Automatic light/dark mode (useColorScheme); built on Expo SDK 57 / React Native 0.86 / React 19.2, New Architecture only'
     ],
     stack: ['React Native','Expo SDK 57','Node.js','Express','MongoDB','Cloudinary','JWT','expo-contacts','expo-audio'],
-    links: [{label:'ANDROID APK', icon:'android', onclick:"go('store', document.getElementById('nav-store'))"}]
+    links: [{label:'PLAY STORE', icon:'playstore', url: PLAY_STORE.randompick}]
   }
 ];
 
@@ -1597,8 +1611,8 @@ function renderProjects() {
       <ul class="p-feature-list">${p.features.map(f => `<li>${f}</li>`).join('')}</ul>
       <div class="p-stack">${p.stack.map(s => `<span class="p-tag">${s}</span>`).join('')}</div>
       <div class="p-links">
-        ${p.links.map(l => l.onclick
-          ? `<a class="p-link" href="#" onclick="${l.onclick};return false;" title="${p.name} — ${l.label.toLowerCase()}">${ICO[l.icon]}${l.label}</a>`
+        ${p.links.map(l => (l.onclick || !l.url)
+          ? `<a class="p-link" href="#" onclick="${l.onclick || "go('store', document.getElementById('nav-store'))"};return false;" title="${p.name} — ${l.label.toLowerCase()}">${ICO[l.icon]}${l.label}</a>`
           : `<a class="p-link" href="${l.url}" target="_blank" rel="noopener" title="${p.name} — ${l.label.toLowerCase()}">${ICO[l.icon]}${l.label}</a>`
         ).join('')}
       </div>
@@ -1612,10 +1626,12 @@ renderProjects();
 // ── WEB STORE ────────────────────────────────────────────────────
 // To enable a download, set `url` to the APK/EXE link — the button switches
 // from "COMING SOON" to a real download button automatically.
+// Add `external:true` for store-page links (e.g. Microsoft Store) so the
+// button reads "GET ON <STORE>" and opens the page instead of downloading.
 const STORE_APPS = [
   { name:'Gathalok', cat:'Folklore & Mythology', platform:'android', format:'APK', req:'Android', icon:'store/gathalok-apk.webp', tile:'#0d1424', priv:'gathalok/privacy-policy/', url:null, tagline:'Legends live everywhere',
     desc:'Discover, read and contribute world folklore — ghost stories, mythological creatures, tribal legends and sacred places from every country.' },
-  { name:'Gathalok', cat:'Folklore & Mythology', platform:'windows', format:'EXE', req:'Windows', icon:'store/gathalok-exe.webp', tile:'#0d1424', priv:'gathalok/privacy-policy/', url:null, tagline:'Legends live everywhere',
+  { name:'Gathalok', cat:'Folklore & Mythology', platform:'windows', format:'Microsoft Store', req:'Windows', icon:'store/gathalok-exe.webp', tile:'#0d1424', priv:'gathalok/privacy-policy/', url:MS_STORE.gathalok, external:true, tagline:'Legends live everywhere',
     desc:'The desktop edition of Gathalok — browse and contribute legends from every corner of the world on your PC.' },
   { name:'Foldd', cat:'Wardrobe Manager', platform:'android', format:'APK', req:'Android', icon:'store/foldd.webp', tile:'#5a0f22', priv:'wardrobe-manager/privacy-policy/', url:null, tagline:'Never wonder what to wear',
     desc:'Track everything you own and get outfit suggestions based on real weather — so “I have nothing to wear” stops being true.' },
@@ -1648,7 +1664,9 @@ function renderStore() {
       <div class="sc-foot">
         <span class="sc-meta"><a href="${a.priv}" target="_blank" rel="noopener">Privacy policy</a></span>
         ${a.url
-          ? `<a class="get-btn" href="${a.url}" target="_blank" rel="noopener" download>${STORE_DL}GET ${a.format}</a>`
+          ? (a.external
+            ? `<a class="get-btn" href="${a.url}" target="_blank" rel="noopener">${STORE_DL}GET ON ${a.format.toUpperCase()}</a>`
+            : `<a class="get-btn" href="${a.url}" target="_blank" rel="noopener" download>${STORE_DL}GET ${a.format}</a>`)
           : `<span class="get-btn soon" aria-disabled="true">${STORE_CLOCK}COMING SOON</span>`}
       </div>
     </article>`).join('') : '<div class="store-empty">No apps match your search.</div>';
@@ -1671,8 +1689,13 @@ function buildFeaturedApps() {
   const byName = {};
   const list = [];
   STORE_APPS.forEach(a => {
-    if (byName[a.name]) { byName[a.name].chips.push({platform:a.platform, req:a.req, format:a.format}); return; }
-    const entry = { name:a.name, desc:a.desc, icon:a.icon, url:a.url, tagline:a.tagline || a.cat,
+    if (byName[a.name]) {
+      const e = byName[a.name];
+      e.chips.push({platform:a.platform, req:a.req, format:a.format});
+      if (!e.url && a.url) { e.url = a.url; e.external = !!a.external; }
+      return;
+    }
+    const entry = { name:a.name, desc:a.desc, icon:a.icon, url:a.url, external:!!a.external, tagline:a.tagline || a.cat,
       chips:[{platform:a.platform, req:a.req, format:a.format}] };
     byName[a.name] = entry;
     list.push(entry);
@@ -1693,7 +1716,9 @@ function renderFeaturedHero() {
       <p class="sh-desc">${f.desc}</p>
       <div class="sh-actions">
         ${f.url
-          ? `<a class="get-btn" href="${f.url}" target="_blank" rel="noopener" download>${STORE_DL}GET APP</a>`
+          ? (f.external
+            ? `<a class="get-btn" href="${f.url}" target="_blank" rel="noopener">${STORE_DL}GET APP</a>`
+            : `<a class="get-btn" href="${f.url}" target="_blank" rel="noopener" download>${STORE_DL}GET APP</a>`)
           : `<span class="get-btn soon" aria-disabled="true">${STORE_CLOCK}COMING SOON</span>`}
         ${f.chips.map(c => `<span class="plat-chip">${PLAT_ICO[c.platform]}${c.req} · ${c.format}</span>`).join('')}
       </div>
