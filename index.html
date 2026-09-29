@@ -611,7 +611,7 @@ overflow: hidden;
 .exp-list li::before { content: ''; position: absolute; left: 0; top: 7px; width: 8px; height: 1.5px; background: var(--accent); }
 
 /* ── PROJECTS SUMMARY BAR ── */
-.proj-summary { display: grid; grid-template-columns: repeat(5,1fr); gap: 14px; margin-bottom: 26px; }
+.proj-summary { display: grid; grid-template-columns: repeat(6,1fr); gap: 14px; margin-bottom: 26px; }
 .proj-summary .ps-box {
   border: 1px solid var(--line); border-radius: var(--radius); padding: 18px 14px;
   background: var(--panel); text-align: center; transition: transform 0.25s, border-color 0.25s;
@@ -1322,6 +1322,7 @@ const MS_STORE = {
 const PROJECT_TYPES = {
   'Web App':    { color: '#3ee6a8' },
   'Mobile App': { color: '#f2a93b' },
+  'Desktop App': { color: '#b48ead' },
   'CLI Tool':   { color: '#88c0d0' }
 };
 
@@ -1365,7 +1366,7 @@ const PROJECTS = [
     links: [{label:'LIVE DEMO', icon:'demo', url:'https://sharevault.prahladsingh.in/'}, {label:'GITHUB', icon:'github', url:'https://github.com/PrahladWebDev/share-vault.git'}]
   },
   {
-    name: 'GathaLok', num: '03', type: 'Web App',
+    name: 'GathaLok', num: '03', type: 'Web App', alsoTypes: ['Desktop App'],
     deployed: { status: true, label: 'LIVE ON VPS' },
     tagline: 'World Folklore &amp; Mythology Platform · MERN',
     desc: 'A community platform for discovering and contributing world folklore — ghost stories, mythological creatures, and regional legends from 20+ countries. Led the full architecture, including a large-scale refactor migrating the entire app from Indian state-wise to country-wise organization.',
@@ -1570,10 +1571,12 @@ function renderProjectSummary() {
   const total = PROJECTS.length;
   const deployedCount = PROJECTS.filter(p => p.deployed && p.deployed.status).length;
   const byType = {};
-  PROJECTS.forEach(p => { byType[p.type] = (byType[p.type] || 0) + 1; });
+  // A project counts once for its main `type` and once for each extra platform in `alsoTypes`
+  PROJECTS.forEach(p => [p.type, ...(p.alsoTypes || [])].forEach(t => { byType[t] = (byType[t] || 0) + 1; }));
 
   const webCount = byType['Web App'] || 0;
   const mobileCount = byType['Mobile App'] || 0;
+  const desktopCount = byType['Desktop App'] || 0;
   const cliCount = byType['CLI Tool'] || 0;
 
   const summaryEl = document.getElementById('proj-summary');
@@ -1582,6 +1585,7 @@ function renderProjectSummary() {
     <div class="ps-box"><div class="ps-n">${deployedCount}</div><div class="ps-l">DEPLOYED / LIVE</div></div>
     <div class="ps-box"><div class="ps-n">${webCount}</div><div class="ps-l">WEB APPS</div></div>
     <div class="ps-box"><div class="ps-n">${mobileCount}</div><div class="ps-l">MOBILE APP${mobileCount === 1 ? '' : 'S'}</div></div>
+    <div class="ps-box"><div class="ps-n">${desktopCount}</div><div class="ps-l">DESKTOP APP${desktopCount === 1 ? '' : 'S'}</div></div>
     <div class="ps-box"><div class="ps-n">${cliCount}</div><div class="ps-l">CLI TOOL${cliCount === 1 ? '' : 'S'}</div></div>
   `;
 
@@ -1602,7 +1606,7 @@ function renderProjects() {
       <div class="p-head">
         <div class="p-name">${p.name}</div>
         <div class="p-badges">
-          <span class="p-type-badge"><span class="ptl-dot" style="background:${typeColor}"></span>${p.type}</span>
+          <span class="p-type-badge"><span class="ptl-dot" style="background:${typeColor}"></span>${p.type}${(p.alsoTypes || []).map(t => ' + ' + t).join('')}</span>
           ${isDeployed ? `<div class="p-live"><span class="dot"></span>${p.deployed.label}</div>` : ''}
         </div>
       </div>
