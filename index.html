@@ -1095,7 +1095,7 @@ html[data-theme="synthwave"] {
       </div>
 
       <div class="stats-row reveal">
-        <div class="stat-box"><svg viewBox="0 0 24 24"><path d="M12 2l3 7h7l-5.5 4.5L18 21l-6-4-6 4 1.5-7.5L2 9h7z"/></svg><div class="stat-n" id="cnt-exp">0+</div><div class="stat-l">Years XP</div></div>
+        <div class="stat-box"><svg viewBox="0 0 24 24"><path d="M12 2l3 7h7l-5.5 4.5L18 21l-6-4-6 4 1.5-7.5L2 9h7z"/></svg><div class="stat-n" id="cnt-exp">0</div><div class="stat-l">Years XP</div></div>
         <div class="stat-box"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg><div class="stat-n" id="cnt-proj">0+</div><div class="stat-l">Projects Shipped</div></div>
         <div class="stat-box"><svg viewBox="0 0 24 24"><path d="M4 4h16v4H4zM4 10h10v4H4zM4 16h16v4H4z"/></svg><div class="stat-n" id="cnt-stack">0+</div><div class="stat-l">Technologies</div></div>
         <div class="stat-box"><svg viewBox="0 0 24 24"><path d="M18 8h1a4 4 0 010 8h-1"/><path d="M2 8h16v9a4 4 0 01-4 4H6a4 4 0 01-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg><div class="stat-n">∞</div><div class="stat-l">Coffee</div></div>
@@ -2099,7 +2099,7 @@ function counter(el, target, suffix) {
     if (v >= target) clearInterval(t);
   }, 35);
 }
-counter(document.getElementById('cnt-exp'), 1, '+');
+counter(document.getElementById('cnt-exp'), 1.8, '');
 counter(document.getElementById('cnt-proj'), PROJECTS.length, '+');
 counter(document.getElementById('cnt-stack'), 25, '+');
 
