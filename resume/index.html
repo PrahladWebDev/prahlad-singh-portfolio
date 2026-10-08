@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Resume | Prahlad Singh — Full-Stack MERN/MEVN Developer</title>
+<meta name="description" content="Resume of Prahlad Singh, full-stack MERN/MEVN developer based in Gurgaon, India. View online or download the PDF.">
+<link rel="canonical" href="https://prahladsingh.in/resume">
+<meta name="robots" content="index, follow">
+<meta name="theme-color" content="#080c17">
+<style>
+  :root { --bg:#080c17; --accent:#f2a93b; --ink:#e8e6e1; --muted:#8b93a7; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; }
+  body { background: var(--bg); color: var(--ink); font-family: system-ui, -apple-system, "Segoe UI", sans-serif; display: flex; flex-direction: column; }
+  header { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 18px; border-bottom: 1px solid #1c2336; flex-wrap: wrap; }
+  header a.back { color: var(--muted); text-decoration: none; font-size: 13px; }
+  header a.back:hover { color: var(--accent); }
+  .title { font-size: 14px; font-weight: 600; letter-spacing: .3px; }
+  .title span { color: var(--accent); }
+  .btn { background: var(--accent); color: #14100a; text-decoration: none; font-size: 12px; font-weight: 700; letter-spacing: 1px; padding: 9px 16px; border-radius: 6px; transition: transform .2s, background .2s; }
+  .btn:hover { background: #ffbf5c; transform: translateY(-2px); }
+  main { flex: 1; min-height: 0; }
+  object { width: 100%; height: 100%; border: 0; display: block; }
+  .fallback { padding: 40px 20px; text-align: center; color: var(--muted); line-height: 1.8; }
+  .fallback .btn { display: inline-block; margin-top: 14px; }
+</style>
+</head>
+<body>
+  <header>
+    <a class="back" href="/">← prahladsingh.in</a>
+    <div class="title">Prahlad Singh — <span>Resume</span></div>
+    <a class="btn" href="/prahlad_resume.pdf" download="Prahlad_Singh_Resume.pdf">DOWNLOAD PDF</a>
+  </header>
+  <main>
+    <object data="/prahlad_resume.pdf#toolbar=0&navpanes=0" type="application/pdf">
+      <div class="fallback">
+        Your browser can't preview PDFs, so the download should start automatically.<br>If it doesn't, tap below.<br>
+        <a class="btn" href="/prahlad_resume.pdf" download="Prahlad_Singh_Resume.pdf">DOWNLOAD RESUME</a>
+      </div>
+    </object>
+  </main>
+  <script>
+    // If the browser can't preview PDFs inline, download automatically
+    (function () {
+      var canPreview = navigator.pdfViewerEnabled;
+      if (canPreview === undefined) {
+        // older browsers: check the plugin/mime lists, and treat mobile as no-preview
+        var mobile = /Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent);
+        canPreview = !mobile && !!(navigator.mimeTypes && navigator.mimeTypes['application/pdf']);
+      }
+      if (!canPreview) {
+        var a = document.createElement('a');
+        a.href = '/prahlad_resume.pdf';
+        a.download = 'Prahlad_Singh_Resume.pdf';
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+      }
+    })();
+  </script>
+</body>
+</html>
