@@ -813,7 +813,7 @@ a.get-btn:hover { transform: translateY(-2px); }
 .sc-meta a { color: var(--faint); text-decoration: underline; }
 .sc-meta a:hover { color: var(--accent); }
 .labs-brand { display: flex; align-items: center; gap: 24px; border: 1px solid var(--line-strong); border-radius: 14px; padding: 18px 26px 18px 18px; background: var(--panel); margin-bottom: 24px; }
-.labs-logo { width: 132px; height: 132px; flex-shrink: 0; border-radius: 16px; background: #fff; object-fit: contain; padding: 6px; box-shadow: 0 8px 28px rgba(0,0,0,.28); }
+.labs-logo { width: 132px; height: 132px; flex-shrink: 0; border-radius: 16px; background: #fff; object-fit: cover; padding: 0; display: block; box-shadow: 0 8px 28px rgba(0,0,0,.28); }
 .labs-eyebrow { font-family: var(--mono); font-size: 9.5px; letter-spacing: 2.5px; color: var(--accent); margin-bottom: 8px; }
 .labs-name { font-family: var(--display); font-size: clamp(22px, 3vw, 30px); font-weight: 800; letter-spacing: -.6px; line-height: 1.1; color: var(--text); }
 .labs-tag { font-family: var(--mono); font-size: 11px; letter-spacing: 1.5px; color: var(--muted); margin: 6px 0 10px; }
@@ -1235,7 +1235,13 @@ html[data-theme="synthwave"] {
       <p class="sec-sub">Download my apps — Android APKs, Microsoft Store &amp; Windows installers</p>
 
       <div class="labs-brand reveal">
-        <img class="labs-logo" src="/store/prahlad-singh-labs.webp" alt="Prahlad Singh Labs logo — Ideas, Apps, Real Impact" width="132" height="132" loading="lazy">
+        <video class="labs-logo" id="labs-logo-vid" autoplay muted loop playsinline preload="metadata" poster="/store/prahlad-singh-labs-poster.webp" width="132" height="132" aria-label="Prahlad Singh Labs logo — Ideas, Apps, Real Impact">
+          <source src="/store/prahlad-singh-labs.webm" type="video/webm">
+          <source src="/store/prahlad-singh-labs.mp4" type="video/mp4">
+        </video>
+        <script>
+          (function(){var v=document.getElementById('labs-logo-vid');if(v&&window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches){v.removeAttribute('autoplay');v.pause();}})();
+        </script>
         <div>
           <div class="labs-eyebrow">PUBLISHED BY</div>
           <div class="labs-name">Prahlad Singh Labs</div>
