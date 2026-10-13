@@ -781,6 +781,12 @@ overflow: hidden;
 .plat-chip { display: inline-flex; align-items: center; gap: 6px; font-family: var(--mono); font-size: 9.5px; font-weight: 700; letter-spacing: .4px; padding: 5px 10px; border-radius: 20px; border: 1px solid var(--line-strong); background: var(--panel-2); color: var(--muted); }
 .store-hero .plat-chip { background: rgba(255,255,255,.08); border-color: rgba(255,255,255,.22); color: #dfe4f3; }
 .plat-chip svg { width: 11px; height: 11px; fill: currentColor; }
+a.plat-chip { text-decoration: none; cursor: pointer; transition: color .2s, border-color .2s, background .2s, transform .2s, box-shadow .2s; }
+.labs-chips a.plat-chip { font-size: 11.5px; padding: 9px 16px; gap: 8px; color: var(--text); border-color: var(--accent); background: rgba(242,169,59,.10); }
+.labs-chips a.plat-chip svg { width: 14px; height: 14px; }
+.labs-chips a.plat-chip::after { content: "\2197"; font-size: 13px; line-height: 1; opacity: .85; transition: transform .2s; }
+.labs-chips a.plat-chip:hover, .labs-chips a.plat-chip:focus-visible { background: var(--accent); color: #111; border-color: var(--accent); transform: translateY(-2px); box-shadow: 0 6px 18px rgba(242,169,59,.28); outline: none; }
+.labs-chips a.plat-chip:hover::after { transform: translate(2px,-2px); }
 .get-btn { display: inline-flex; align-items: center; gap: 8px; font-family: var(--mono); font-size: 10.5px; font-weight: 700; letter-spacing: .5px; padding: 9px 18px; border-radius: 7px; border: 1px solid var(--accent); background: var(--accent); color: #14100a; text-decoration: none; transition: transform .2s; }
 .get-btn svg { width: 13px; height: 13px; stroke: currentColor; fill: none; stroke-width: 2; }
 a.get-btn:hover { transform: translateY(-2px); }
@@ -1236,8 +1242,8 @@ html[data-theme="synthwave"] {
           <div class="labs-tag">IDEAS → APPS → REAL IMPACT</div>
           <p class="labs-desc">Every app below ships under the Prahlad Singh Labs name on Google Play and the Microsoft Store.</p>
           <div class="labs-chips">
-            <span class="plat-chip"><svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M3.6 2.3a1.5 1.5 0 0 0-.6 1.2v17a1.5 1.5 0 0 0 .6 1.2l9.5-9.7zM14.5 13.2l2.7 2.7-11.9 6.7zM14.5 10.8L5.3 1.4l11.9 6.7zM18.6 9.1l2.3 1.3a1.7 1.7 0 0 1 0 3.2l-2.3 1.3-3-3z"/></svg>Google Play</span>
-            <span class="plat-chip"><svg viewBox="0 0 24 24"><path d="M3 3h8.5v8.5H3zM12.5 3H21v8.5h-8.5zM3 12.5h8.5V21H3zM12.5 12.5H21V21h-8.5z"/></svg>Microsoft Store</span>
+            <a class="plat-chip" href="https://play.google.com/store/apps/dev?id=8176885441993860314&amp;hl=en_IN" target="_blank" rel="noopener noreferrer" aria-label="Prahlad Singh Labs on Google Play"><svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M3.6 2.3a1.5 1.5 0 0 0-.6 1.2v17a1.5 1.5 0 0 0 .6 1.2l9.5-9.7zM14.5 13.2l2.7 2.7-11.9 6.7zM14.5 10.8L5.3 1.4l11.9 6.7zM18.6 9.1l2.3 1.3a1.7 1.7 0 0 1 0 3.2l-2.3 1.3-3-3z"/></svg>Google Play</a>
+            <a class="plat-chip" href="https://apps.microsoft.com/search/publisher?name=Prahlad+Singh+Labs&amp;hl=en-GB&amp;gl=IN" target="_blank" rel="noopener noreferrer" aria-label="Prahlad Singh Labs on Microsoft Store"><svg viewBox="0 0 24 24"><path d="M3 3h8.5v8.5H3zM12.5 3H21v8.5h-8.5zM3 12.5h8.5V21H3zM12.5 12.5H21V21h-8.5z"/></svg>Microsoft Store</a>
           </div>
         </div>
       </div>
