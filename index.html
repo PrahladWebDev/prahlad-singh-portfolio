@@ -1482,7 +1482,7 @@ const ICO = {
 const PLAY_STORE = {
   gathalok: '',
   wardrobe: '',
-  randompick: ''
+  randompick: 'https://play.google.com/store/apps/details?id=com.prahlad.randompick&hl=en_IN'
 };
 const MS_STORE = {
   gathalok: 'https://apps.microsoft.com/detail/9PP0R2RCS99W',
@@ -1725,7 +1725,7 @@ const PROJECTS = [
   },
   {
     name: 'Random Person Picker', num: '14', type: 'Mobile App',
-    deployed: { status: false, label: 'PLAY STORE · COMING SOON' },
+    deployed: { status: true, label: 'LIVE ON GOOGLE PLAY' },
     tagline: 'Random Winner Picker with Saved People &amp; Contacts Import · React Native (Expo) + MERN',
     desc: 'A React Native (Expo) app that picks a random winner from a list of people — add names with optional photos, import straight from your phone contacts, or reuse a saved list tied to your account. Paired with an Express/MongoDB/Cloudinary backend for OTP-verified accounts and cross-session saved people.',
     features: [
@@ -1855,7 +1855,7 @@ const STORE_APPS = [
     desc:'Enter any GitHub username and get a personality score, language breakdown, commit heatmap, career timeline and an AI-written summary.' },
   { name:'Foldd', cat:'Wardrobe Manager', platform:'android', format:'APK', req:'Android', icon:'/store/foldd.webp', tile:'#5a0f22', priv:'/wardrobe-manager/privacy-policy/', url:null, tagline:'Never wonder what to wear',
     desc:'Track everything you own and get outfit suggestions based on real weather — so “I have nothing to wear” stops being true.' },
-  { name:'Random Person Picker', cat:'Utilities', platform:'android', format:'APK', req:'Android', icon:'/store/randompick.webp', tile:'#6C5CE7', priv:'/randompick/privacy-policy/', url:null, tagline:'Let fate pick for you',
+  { name:'Random Person Picker', cat:'Utilities', platform:'android', format:'Google Play', req:'Android', icon:'/store/randompick.webp', tile:'#6C5CE7', priv:'/randompick/privacy-policy/', url:PLAY_STORE.randompick, external:true, tagline:'Let fate pick for you',
     desc:'Add people with a photo, shuffle, and let the app randomly pick a winner — great for chores, raffles and group decisions.' },
 ];
 const STORE_CLOCK = '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 14"/></svg>';
