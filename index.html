@@ -1308,7 +1308,7 @@ html[data-theme="synthwave"] {
           <div class="chip-row"><span class="chip"><svg aria-hidden="true"><use href="#sk-react"/></svg>React Native</span><span class="chip"><svg aria-hidden="true"><use href="#sk-nodedotjs"/></svg>Node.js</span><span class="chip"><svg aria-hidden="true"><use href="#sk-mongodb"/></svg>MongoDB</span><span class="chip"><svg aria-hidden="true"><use href="#sk-springboot"/></svg>Spring Boot</span><span class="chip"><svg aria-hidden="true"><use href="#sk-googleplay"/></svg>Google Play</span><span class="chip"><svg aria-hidden="true"><use href="#sk-nginx"/></svg>Nginx</span><span class="chip"><svg aria-hidden="true"><use href="#sk-githubactions"/></svg>GitHub Actions</span></div>
           <ul class="exp-list">
             <li>Designed, built and shipped <b data-proj-count>14</b> full-stack projects across web, mobile, desktop and CLI.</li>
-            <li>Published apps to Google Play and the Microsoft Store, with self-hosted APK downloads and privacy policies.</li>
+            <li>Published apps to Google Play and the Microsoft Store, with privacy policies and self-hosted download options.</li>
             <li>Run self-hosted VPS deployments with Nginx and GitHub Actions auto-deploy, including this portfolio.</li>
           </ul>
         </div>
@@ -1332,7 +1332,7 @@ html[data-theme="synthwave"] {
     <section id="section-store" class="section">
       <div class="eyebrow">05 — WEB STORE</div>
       <h2 class="sec-title">Get the<br><em>Apps.</em></h2>
-      <p class="sec-sub">Download my apps — Android APKs, Microsoft Store &amp; Windows installers</p>
+      <p class="sec-sub">Download my apps — Google Play, Microsoft Store &amp; Windows installers</p>
 
       <div class="labs-brand reveal">
         <video class="labs-logo" id="labs-logo-vid" autoplay muted loop playsinline preload="metadata" poster="/store/prahlad-singh-labs-poster.webp" width="132" height="132" aria-label="Prahlad Singh Labs logo — Ideas, Apps, Real Impact">
@@ -1480,8 +1480,8 @@ const ICO = {
 // Paste the live Play Store / Microsoft Store URLs here. While a URL is
 // empty, its button just jumps to the Web Store section instead.
 const PLAY_STORE = {
-  gathalok: '',
-  wardrobe: '',
+  gathalok: 'https://play.google.com/store/apps/details?id=com.gathalok.app&hl=en_IN',
+  wardrobe: 'https://play.google.com/store/apps/details?id=com.wardrobemanager.app&hl=en_IN',
   randompick: 'https://play.google.com/store/apps/details?id=com.prahlad.randompick&hl=en_IN'
 };
 const MS_STORE = {
@@ -1504,7 +1504,7 @@ const PROJECT_TYPES = {
 const PROJECTS = [
   {
     name: 'Foldd - Wardrobe Manager', num: '01', type: 'Mobile App',
-    deployed: { status: true, label: 'DEPLOYED · APK DOWNLOAD' },
+    deployed: { status: true, label: 'LIVE ON GOOGLE PLAY' },
     tagline: 'Mobile Wardrobe &amp; Outfit Planning App · React Native (Expo) + MERN',
     desc: 'A full-stack mobile app for organizing your closet, building outfits, and getting weather-aware suggestions — built with React Native (Expo) on the front end and a Node.js/Express/MongoDB backend. Combines everyday wardrobe management with data-driven insights into what you actually wear.',
     features: [
@@ -1518,7 +1518,6 @@ const PROJECTS = [
     ],
     stack: ['React Native','Expo','Node.js','Express','MongoDB','react-native-svg','OpenWeatherMap API','remove.bg'],
     links: [
-      {label:'DOWNLOAD APK', icon:'demo', url:'https://sharevault.prahladsingh.in/share/f8ef4de8ab4865b7adc021b2fb2b45c4a68da4b1459076b5'},
       {label:'PLAY STORE', icon:'playstore', url: PLAY_STORE.wardrobe},
       {label:'GITHUB', icon:'github', url:'https://github.com/PrahladWebDev/wardrobe-manager-react-native'}
     ]
@@ -1847,13 +1846,13 @@ renderProjects();
 // Add `external:true` for store-page links (e.g. Microsoft Store) so the
 // button reads "GET ON <STORE>" and opens the page instead of downloading.
 const STORE_APPS = [
-  { name:'Gathalok', cat:'Folklore & Mythology', platform:'android', format:'APK', req:'Android', icon:'/store/gathalok-apk.webp', tile:'#0d1424', priv:'/gathalok/privacy-policy/', url:null, tagline:'Legends live everywhere',
+  { name:'Gathalok', cat:'Folklore & Mythology', platform:'android', format:'Google Play', req:'Android', icon:'/store/gathalok-apk.webp', tile:'#0d1424', priv:'/gathalok/privacy-policy/', url:PLAY_STORE.gathalok, external:true, tagline:'Legends live everywhere',
     desc:'Discover, read and contribute world folklore — ghost stories, mythological creatures, tribal legends and sacred places from every country.' },
   { name:'Gathalok', cat:'Folklore & Mythology', platform:'windows', format:'Microsoft Store', req:'Windows', icon:'/store/gathalok-exe.webp', tile:'#0d1424', priv:'/gathalok/privacy-policy/', url:MS_STORE.gathalok, external:true, tagline:'Legends live everywhere',
     desc:'The desktop edition of Gathalok — browse and contribute legends from every corner of the world on your PC.' },
   { name:'GitHub Analyzer', cat:'Developer Tools', platform:'windows', format:'Microsoft Store', req:'Windows', icon:'/store/github-analyzer.webp', tile:'#F5EFE3', priv:'/github-analyzer/privacy-policy/', url:MS_STORE.ghanalyzer || null, external:true, tagline:'Your GitHub, decoded',
     desc:'Enter any GitHub username and get a personality score, language breakdown, commit heatmap, career timeline and an AI-written summary.' },
-  { name:'Foldd', cat:'Wardrobe Manager', platform:'android', format:'APK', req:'Android', icon:'/store/foldd.webp', tile:'#5a0f22', priv:'/wardrobe-manager/privacy-policy/', url:null, tagline:'Never wonder what to wear',
+  { name:'Foldd', cat:'Wardrobe Manager', platform:'android', format:'Google Play', req:'Android', icon:'/store/foldd.webp', tile:'#5a0f22', priv:'/wardrobe-manager/privacy-policy/', url:PLAY_STORE.wardrobe, external:true, tagline:'Never wonder what to wear',
     desc:'Track everything you own and get outfit suggestions based on real weather — so “I have nothing to wear” stops being true.' },
   { name:'Random Person Picker', cat:'Utilities', platform:'android', format:'Google Play', req:'Android', icon:'/store/randompick.webp', tile:'#6C5CE7', priv:'/randompick/privacy-policy/', url:PLAY_STORE.randompick, external:true, tagline:'Let fate pick for you',
     desc:'Add people with a photo, shuffle, and let the app randomly pick a winner — great for chores, raffles and group decisions.' },
