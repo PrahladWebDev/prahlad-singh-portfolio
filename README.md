@@ -55,7 +55,7 @@ To reuse this template for someone else, update:
 | Experience timeline | `.exp-item` blocks under `#section-experience` |
 | Projects | `.proj-card` blocks under `#section-projects` (name, description, feature list, stack tags, links) |
 | Education | `.edu-card` blocks under `#section-education` |
-| Color theme | CSS custom properties in `:root` (`--black`, `--white`, `--accent`, etc.) |
+| Color theme | Default **Cloud** (cartoon, soothing) palette lives in `html:not([data-theme])`; other themes (Midnight, Light, Dracula, Forest, Nord, Synthwave) are `html[data-theme="…"]` blocks. Change `--accent`, `--butter`, `--mint`, etc. to re-tint. |
 
 ## 🧰 Tech Used
 
@@ -71,3 +71,17 @@ Modern evergreen browsers (Chrome, Firefox, Safari, Edge). Relies on `Intersecti
 ## 📄 License
 
 Personal portfolio — feel free to fork the structure/animations for your own site, but please swap out the content (name, projects, resume, links) before publishing.
+
+---
+
+## Cartoon edition — extras
+
+| Feature | Where |
+|---|---|
+| Waving cartoon mascot (blinks, eyes follow cursor, talks on click) | `#heroMascot` in the About section · JS `initHeroMascot` |
+| Cursor sparkle trail (desktop only) | JS `initTrail` |
+| Auto day/night theme by local time (click = toggle, double-click = back to Auto) | `#modeBtn` · JS `initThemeSwitcher` · key `prahlad-portfolio-theme-v3` |
+| Comic-panel page transitions | `#panel-wipe` · JS `panelWipe()` |
+| Drifting clouds + rain/snow toggle | `.drift` clouds · `#weatherBtn` · JS `initWeather` |
+| Chunky cartoon icons | `svg.toon` (nav, stats, skills, education, contact) |
+| Fun 404 page | `404.html` — add `error_page 404 /404.html;` to the nginx server block, then `sudo nginx -t && sudo systemctl reload nginx` |

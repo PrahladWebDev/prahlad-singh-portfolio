@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>404 — Page floated away | Prahlad Singh</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#fff7ec">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>☁️</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@600;700;800&display=swap">
+<script>
+/* same auto day/night logic as the main site */
+(function(){try{var s=localStorage.getItem('prahlad-portfolio-theme-v3')||'auto';if(s==='auto'){var h=new Date().getHours();s=(h>=6&&h<18)?'cloud':'midnight';}
+var night=['midnight','dracula','forest','nord','synthwave'].indexOf(s)>-1;document.documentElement.setAttribute('data-mode',night?'night':'day');}catch(e){}})();
+</script>
+<style>
+:root{--bg:#fff7ec;--card:#fff;--text:#3d3560;--muted:#6a6288;--ink:#3d3560;--shc:#3d3560;--accent:#ff8f7a;--butter:#ffe9a6;--pink:#ffc2d4;--mint:#bfeedd;--sky:#bfe3ff;--lilac:#dccfff;--glow:.4;--dot:rgba(61,53,96,.10)}
+html[data-mode="night"]{--bg:#0b1020;--card:#141b33;--text:#ece9ff;--muted:#a7a3c9;--ink:#8f89d4;--shc:rgba(0,0,0,.55);--accent:#f2a93b;--glow:.12;--dot:rgba(255,255,255,.05)}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{min-height:100%}
+body{font-family:'Nunito',system-ui,sans-serif;color:var(--text);background:
+ radial-gradient(circle at 12% 10%,color-mix(in srgb,var(--pink) calc(var(--glow)*100%),transparent) 0,transparent 38%),
+ radial-gradient(circle at 90% 20%,color-mix(in srgb,var(--sky) calc(var(--glow)*100%),transparent) 0,transparent 34%),
+ radial-gradient(circle at 70% 95%,color-mix(in srgb,var(--mint) calc(var(--glow)*100%),transparent) 0,transparent 36%),var(--bg);
+ min-height:100vh;display:flex;align-items:center;justify-content:center;padding:28px 18px;overflow-x:hidden;position:relative}
+body::before{content:'';position:fixed;inset:0;background-image:radial-gradient(var(--dot) 1.6px,transparent 1.7px);background-size:26px 26px;pointer-events:none}
+.sky{position:fixed;inset:0;pointer-events:none;overflow:hidden}
+.sky svg{position:absolute}
+.cloud{fill:var(--card);stroke:var(--ink);stroke-width:3;stroke-linejoin:round}
+.drift{left:0;opacity:.55;animation:drift var(--d,100s) linear infinite;animation-delay:var(--l,0s)}
+@keyframes drift{from{transform:translateX(-28vw)}to{transform:translateX(128vw)}}
+.orb{top:48px;right:5%;width:110px;animation:bob 6s ease-in-out infinite}
+.orb .moon{display:none}
+html[data-mode="night"] .orb .sun{display:none}
+html[data-mode="night"] .orb .moon{display:block}
+.body-fill{fill:var(--butter);stroke:var(--ink);stroke-width:3.5;stroke-linejoin:round}
+.ray{stroke:var(--ink);stroke-width:4;stroke-linecap:round}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+@keyframes spin{to{transform:rotate(360deg)}}
+main{position:relative;z-index:2;text-align:center;max-width:640px;width:100%}
+.num{display:flex;align-items:center;justify-content:center;gap:4px;font-family:'Fredoka',sans-serif;font-weight:700;font-size:clamp(96px,22vw,190px);line-height:1;letter-spacing:-4px;color:var(--text)}
+.num span{display:inline-block;text-shadow:5px 5px 0 var(--accent);animation:bob 4s ease-in-out infinite}
+.num span:last-child{animation-delay:-2s}
+.lost{width:clamp(110px,24vw,200px);flex-shrink:0;animation:bob 3.2s ease-in-out infinite;overflow:visible}
+.eye-w{fill:#fff;stroke:#2f2850;stroke-width:3}
+.pupil{fill:#2f2850;animation:look 4s ease-in-out infinite}
+@keyframes look{0%,100%{transform:translateX(-3px)}50%{transform:translateX(3px)}}
+.mouth{fill:none;stroke:#2f2850;stroke-width:3.5;stroke-linecap:round}
+.tear{fill:var(--sky);stroke:#2f2850;stroke-width:2.5;animation:tear 2.2s ease-in infinite}
+@keyframes tear{0%{transform:translateY(0);opacity:0}15%{opacity:1}80%{opacity:1}100%{transform:translateY(34px);opacity:0}}
+.q{font-family:'Fredoka',sans-serif;font-weight:700;font-size:34px;fill:var(--accent);stroke:#2f2850;stroke-width:1.5;animation:wob 2.6s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
+@keyframes wob{0%,100%{transform:rotate(-12deg)}50%{transform:rotate(12deg) translateY(-4px)}}
+h1.t{font-family:'Fredoka',sans-serif;font-weight:700;font-size:clamp(26px,5vw,38px);margin:14px 0 8px}
+h1.t em{font-style:normal;background:linear-gradient(transparent 58%,color-mix(in srgb,var(--butter) 80%,transparent) 58%,color-mix(in srgb,var(--butter) 80%,transparent) 92%,transparent 92%);padding:0 .12em}
+p.s{font-weight:700;color:var(--muted);font-size:16px;line-height:1.6;max-width:480px;margin:0 auto}
+code.path{display:inline-block;margin:14px 0 4px;padding:6px 14px;border:2.5px dashed var(--ink);border-radius:999px;font:800 13px 'Nunito',monospace;color:var(--text);background:var(--card);max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;vertical-align:middle}
+.row{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin-top:22px}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:12px 24px;border:3px solid var(--ink);border-radius:999px;background:var(--card);color:var(--text);font:800 14px 'Nunito',sans-serif;text-decoration:none;box-shadow:4px 4px 0 var(--shc);transition:transform .18s cubic-bezier(.34,1.56,.64,1),box-shadow .18s,background .18s}
+.btn.p{background:var(--accent);color:#3a3260}
+.btn:hover{transform:translate(-2px,-4px) rotate(-1.5deg);box-shadow:6px 8px 0 var(--shc);background:var(--butter);color:#3a3260}
+.btn:active{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--shc)}
+.btn:focus-visible{outline:3px solid #7458d8;outline-offset:3px}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+
+<main>
+  <div class="num" role="img" aria-label="404">
+    <span>4</span>
+    <svg class="lost" viewBox="0 0 160 130" aria-hidden="true">
+      <path class="cloud" d="M38 100c-17 0-30-11-30-25 0-13 10-23 24-25C36 36 50 27 66 27c18 0 32 10 37 25 3-1 6-2 10-2 14 0 25 11 25 25s-11 25-25 25z" style="stroke-width:4"/>
+      <ellipse class="eye-w" cx="58" cy="68" rx="13" ry="14"/><ellipse class="eye-w" cx="96" cy="68" rx="13" ry="14"/>
+      <circle class="pupil" cx="58" cy="70" r="5.5"/><circle class="pupil" cx="96" cy="70" r="5.5"/>
+      <path class="mouth" d="M64 90q13-11 26 0"/>
+      <path class="tear" d="M106 82q-6 9 0 13q6-4 0-13z"/>
+      <text class="q" x="118" y="28">?</text>
+    </svg>
+    <span>4</span>
+  </div>
+  <h1 class="t">Oops! This page <em>floated away</em></h1>
+  <p class="s">The link might be broken, or the page took a little trip to the clouds. Let’s get you back on solid ground.</p>
+  <code class="path" id="p">/…</code>
+  <div class="row">
+    <a class="btn p" href="/">🏠 Take me home</a>
+    <a class="btn" href="/projects">🧩 See projects</a>
+    <a class="btn" href="/contact">✉️ Say hi</a>
+  </div>
+</main>
+<script>document.getElementById('p').textContent=location.pathname||'/';</script>
+</body>
+</html>
