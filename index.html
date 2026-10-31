@@ -24,9 +24,10 @@
 <meta property="og:image" content="https://prahladsingh.in/Prahlad-og-image.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
+<meta property="og:image:type" content="image/jpeg">
 <meta property="og:image:alt" content="Prahlad Singh — Full-Stack Developer portfolio preview">
 <meta property="og:site_name" content="Prahlad Singh Portfolio">
-<meta property="og:locale" content="en_US">
+<meta property="og:locale" content="en_IN">
 <meta property="profile:first_name" content="Prahlad">
 <meta property="profile:last_name" content="Singh">
 
@@ -528,6 +529,45 @@ overflow: hidden;
   transition: all 0.15s; background: var(--panel-2);
 }
 #section-github .repo-card .repo-links a:hover { background: var(--accent); color: #14100a; border-color: var(--accent); }
+/* Command palette (Ctrl/Cmd+K) */
+.cmdk-btn { display: inline-flex; align-items: center; gap: 8px; font-family: var(--mono); font-size: 10px; font-weight: 700; padding: 6px 10px; border: 1px solid var(--line-strong); border-radius: 8px; background: transparent; color: var(--muted); cursor: pointer; transition: border-color .2s, color .2s, transform .2s; }
+.cmdk-btn:hover { border-color: var(--accent); color: var(--text); transform: translateY(-1px); }
+.cmdk-btn svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; flex-shrink: 0; }
+.cmdk kbd, .cmdk-btn kbd { font-family: var(--mono); font-size: 9.5px; font-weight: 700; padding: 2px 6px; border: 1px solid var(--line-strong); border-bottom-width: 2px; border-radius: 5px; background: var(--panel-2); color: var(--muted); }
+@media (max-width: 900px) { .cmdk-btn { padding: 7px; } .cmdk-btn span, .cmdk-btn kbd { display: none; } }
+.cmdk { position: fixed; inset: 0; z-index: 99970; display: flex; align-items: flex-start; justify-content: center; padding: 11vh 16px 16px; }
+.cmdk[hidden] { display: none; }
+.cmdk-backdrop { position: absolute; inset: 0; background: rgba(8,10,20,.5); backdrop-filter: blur(3px); animation: cmdkFade .15s ease both; }
+.cmdk-panel { position: relative; width: min(640px, 100%); max-height: 76vh; display: flex; flex-direction: column; background: var(--panel); border: 1px solid var(--line-strong); border-radius: var(--radius); box-shadow: 0 28px 70px rgba(0,0,0,.4); overflow: hidden; animation: cmdkPop .18s cubic-bezier(.16,1,.3,1) both; }
+.cmdk-input-row { display: flex; align-items: center; gap: 12px; padding: 14px 18px; border-bottom: 1px solid var(--line); }
+.cmdk-input-row svg { width: 18px; height: 18px; stroke: var(--faint); fill: none; stroke-width: 2; stroke-linecap: round; flex-shrink: 0; }
+.cmdk-input-row input { flex: 1; min-width: 0; background: none; border: 0; outline: none; color: var(--text); font-family: var(--body, inherit); font-size: 16px; }
+.cmdk-input-row input::placeholder { color: var(--faint); }
+.cmdk-list { overflow-y: auto; padding: 8px; overscroll-behavior: contain; }
+.cmdk-group { font-family: var(--mono); font-size: 9px; letter-spacing: 1.6px; text-transform: uppercase; color: var(--faint); padding: 12px 10px 6px; }
+.cmdk-item { display: flex; align-items: baseline; gap: 10px; padding: 10px 12px; border-radius: 10px; cursor: pointer; color: var(--text); font-size: 13.5px; }
+.cmdk-item .cl { font-weight: 700; flex-shrink: 0; }
+.cmdk-item .ch { color: var(--muted); font-size: 12px; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.cmdk-item .ck { margin-left: auto; font-family: var(--mono); font-size: 11px; color: var(--faint); opacity: 0; padding-left: 8px; }
+.cmdk-item.active { background: var(--panel-2); box-shadow: inset 3px 0 0 var(--accent); }
+.cmdk-item.active .ck { opacity: 1; }
+.cmdk-item mark { background: none; color: var(--accent); font-weight: 800; }
+.cmdk-empty { padding: 28px 12px; text-align: center; font-family: var(--mono); font-size: 12px; color: var(--muted); }
+.cmdk-foot { display: flex; flex-wrap: wrap; gap: 6px 18px; padding: 10px 18px; border-top: 1px solid var(--line); font-family: var(--mono); font-size: 10px; color: var(--faint); }
+.cmdk-foot span { display: inline-flex; align-items: center; gap: 4px; }
+@media (max-width: 560px) { .cmdk { padding-top: 7vh; } .cmdk-foot { display: none; } .cmdk-item { flex-wrap: wrap; gap: 1px 10px; } .cmdk-item .ch { flex-basis: 100%; font-size: 11px; } .cmdk-item .ck { display: none; } }
+@keyframes cmdkFade { from { opacity: 0; } to { opacity: 1; } }
+@keyframes cmdkPop { from { opacity: 0; transform: translateY(-10px) scale(.98); } to { opacity: 1; transform: none; } }
+.cmdk-flash { animation: cmdkFlash 1.7s ease; }
+@keyframes cmdkFlash { 0%,100% { box-shadow: 0 0 0 0 rgba(255,143,122,0); } 20%,60% { box-shadow: 0 0 0 5px var(--accent); } }
+html[lang] .cmdk-btn { border: 2.5px solid var(--ink); border-radius: 999px; background: var(--card); color: var(--text); }
+html[lang] .cmdk-panel { background: var(--card); border: 3px solid var(--ink); box-shadow: 6px 6px 0 var(--shc); }
+html[lang] .cmdk kbd, html[lang] .cmdk-btn kbd { border: 2px solid var(--ink); background: var(--panel-2); color: var(--text); }
+html[lang] .cmdk-input-row, html[lang] .cmdk-foot { border-color: var(--line-strong); }
+html[lang] .cmdk-item { font-weight: 700; }
+html[lang] .cmdk-item.active { background: var(--butter); color: var(--on-pastel); box-shadow: inset 0 0 0 2.5px var(--ink); }
+html[lang] .cmdk-item.active .ch, html[lang] .cmdk-item.active .ck { color: var(--on-pastel); }
+html[lang] .cmdk-item mark { color: var(--purple); }
 /* GitHub contribution heatmap */
 .gh-heat { --h1:#0e4429; --h2:#006d32; --h3:#26a641; --h4:#39d353; border: 1px solid var(--line); border-radius: var(--radius); background: var(--panel); padding: 18px 20px 14px; margin: 4px 0 22px; min-width: 0; max-width: 100%; box-sizing: border-box; }
 @supports (color: color-mix(in srgb, red, blue)) {
@@ -1729,6 +1769,10 @@ html[lang] .to-top svg, html[lang] .s-location svg, html[lang] .exp-meta svg, ht
         <button class="hamburger-btn" id="hamburgerBtn" onclick="openSidebar()" title="Open menu" aria-label="Open menu">
           <svg viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
         </button>
+        <button class="cmdk-btn" id="cmdkBtn" type="button" title="Quick search" aria-label="Open quick search" aria-haspopup="dialog">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.5" y2="16.5"/></svg>
+          <span>Search</span><kbd id="cmdkHint">Ctrl K</kbd>
+        </button>
         <div class="theme-picker" id="themePicker" role="group" aria-label="Choose color theme">
           <span class="theme-picker-lbl">THEME</span>
           <button class="theme-swatch active" data-theme="cloud" style="--sw:#ff8f7a" title="Cloud (cartoon)" aria-label="Cloud cartoon theme"></button>
@@ -2099,6 +2143,19 @@ html[lang] .to-top svg, html[lang] .s-location svg, html[lang] .exp-meta svg, ht
       </form>
     </section>
   </main>
+</div>
+
+<div class="cmdk" id="cmdk" hidden>
+  <div class="cmdk-backdrop" data-close></div>
+  <div class="cmdk-panel" role="dialog" aria-modal="true" aria-label="Quick search">
+    <div class="cmdk-input-row">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.5" y2="16.5"/></svg>
+      <input id="cmdk-input" type="text" placeholder="Search sections, projects, skills, links…" autocomplete="off" autocapitalize="off" spellcheck="false" role="combobox" aria-expanded="true" aria-controls="cmdk-list" aria-autocomplete="list">
+      <kbd>Esc</kbd>
+    </div>
+    <div class="cmdk-list" id="cmdk-list" role="listbox" aria-label="Results"></div>
+    <div class="cmdk-foot"><span><kbd>↑</kbd><kbd>↓</kbd> move</span><span><kbd>↵</kbd> open</span><span><kbd>Esc</kbd> close</span></div>
+  </div>
 </div>
 
 <script>
@@ -2758,6 +2815,201 @@ window.addEventListener('resize', () => {
     `<a class="btn${i === 0 ? ' primary' : ''}" href="${l.url}" target="_blank" rel="noopener">${l.label}</a>`
   ).join('') +
   `<button class="btn" type="button" onclick="go('projects', document.getElementById('nav-projects'))">ALL PROJECTS →</button>`;
+})();
+
+// ── COMMAND PALETTE (Ctrl/Cmd+K, or "/") ─────────────────────────
+(function initCommandPalette() {
+  const root = document.getElementById('cmdk');
+  const input = document.getElementById('cmdk-input');
+  const list = document.getElementById('cmdk-list');
+  const btn = document.getElementById('cmdkBtn');
+  if (!root || !input || !list) return;
+
+  const isMac = /Mac|iPhone|iPad/i.test(navigator.platform || navigator.userAgent);
+  const hint = document.getElementById('cmdkHint');
+  if (hint) hint.textContent = isMac ? '⌘K' : 'Ctrl K';
+
+  const dec = s => { const t = document.createElement('textarea'); t.innerHTML = s; return t.value; };
+  const esc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  const NAV = id => document.getElementById('nav-' + id);
+
+  function openProject(name) {
+    if (typeof projFilter !== 'undefined' && projFilter !== 'all' && typeof setProjFilter === 'function') setProjFilter('all');
+    go('projects', NAV('projects'));
+    let tries = 0;
+    const t = setInterval(() => {
+      const sec = document.getElementById('section-projects');
+      const card = [...document.querySelectorAll('#proj-grid .proj-card')]
+        .find(c => ((c.querySelector('.p-name') || {}).textContent || '').trim() === dec(name));
+      if (card && sec && sec.classList.contains('active')) {
+        clearInterval(t);
+        card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        card.classList.add('cmdk-flash');
+        setTimeout(() => card.classList.remove('cmdk-flash'), 1800);
+      } else if (++tries > 40) clearInterval(t);
+    }, 80);
+  }
+
+  // Built fresh on every open, so it always matches the page's data.
+  function buildItems() {
+    const items = [];
+    SECTIONS.forEach(id => items.push({
+      g: 'Sections', label: SECTION_TITLES[id] || id, hint: paths[id], kw: id,
+      run: () => go(id, NAV(id))
+    }));
+    (typeof PROJECTS !== 'undefined' ? PROJECTS : []).forEach(p => items.push({
+      g: 'Projects', label: dec(p.name), hint: dec(p.tagline || ''),
+      kw: [p.type, ...(p.alsoTypes || []), ...(p.stack || [])].join(' '),
+      run: () => openProject(p.name)
+    }));
+    const seen = new Set();
+    (typeof STORE_APPS !== 'undefined' ? STORE_APPS : []).forEach(a => {
+      if (seen.has(a.name)) return; seen.add(a.name);
+      items.push({ g: 'Apps', label: a.name, hint: a.tagline || a.cat || '', kw: (a.cat || '') + ' app download store',
+        run: () => go('store', NAV('store')) });
+    });
+    const link = (label, hint, url, kw, same) => items.push({ g: 'Links', label, hint, kw,
+      run: () => same ? (location.href = url) : window.open(url, '_blank', 'noopener') });
+    link('Resume', 'View / download PDF', '/resume', 'cv download pdf', true);
+    link('Email', 'prahlad.singh.dev@gmail.com', 'mailto:prahlad.singh.dev@gmail.com', 'mail contact hire', true);
+    link('LinkedIn', 'Prahlad Singh', 'https://www.linkedin.com/in/prahlad-singh-52162b232', 'social profile');
+    link('GitHub profile', 'github.com/PrahladWebDev', 'https://github.com/PrahladWebDev', 'code repos social');
+    link('WhatsApp', 'Message me', 'https://wa.me/919149062842', 'chat contact phone');
+    document.querySelectorAll('.theme-swatch').forEach(b => items.push({
+      g: 'Themes', label: 'Theme: ' + (b.getAttribute('title') || b.dataset.theme).replace(/\s*\(.*\)/, ''), hint: 'Switch colour theme', kw: 'theme colour color dark light mode',
+      run: () => b.click()
+    }));
+    const skills = new Set();
+    document.querySelectorAll('#section-skills .sk-item').forEach(el => {
+      const name = (el.textContent || '').replace(/\s+/g, ' ').trim();
+      if (!name || name.length > 28 || skills.has(name.toLowerCase())) return;
+      skills.add(name.toLowerCase());
+      items.push({ g: 'Skills', label: name, hint: 'Skills', kw: 'skill tech stack', deep: true, run: () => go('skills', NAV('skills')) });
+    });
+    return items;
+  }
+
+  let all = [], shown = [], active = 0, lastFocus = null;
+
+  function score(it, tokens) {
+    const label = it.label.toLowerCase();
+    const hay = (label + ' ' + (it.hint || '') + ' ' + (it.kw || '')).toLowerCase();
+    let sc = 0;
+    for (const t of tokens) {
+      if (!hay.includes(t)) return -1;
+      if (label.startsWith(t)) sc += 0;
+      else if (label.includes(' ' + t)) sc += 1;
+      else if (label.includes(t)) sc += 2;
+      else sc += 4;
+    }
+    return sc;
+  }
+
+  function highlight(text, tokens) {
+    let out = esc(text);
+    tokens.forEach(t => {
+      if (!t) return;
+      const re = new RegExp('(' + esc(t).replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + ')', 'ig');
+      out = out.replace(re, '<mark>$1</mark>');
+    });
+    return out;
+  }
+
+  function render() {
+    const q = input.value.trim().toLowerCase();
+    const tokens = q.split(/\s+/).filter(Boolean);
+    shown = tokens.length
+      ? all.map((it, i) => ({ it, i, sc: score(it, tokens) })).filter(x => x.sc >= 0)
+          .sort((a, b) => a.sc - b.sc || a.i - b.i).map(x => x.it)
+      : all.filter(it => !it.deep);
+    shown = shown.slice(0, 60);
+    if (!shown.length) {
+      list.innerHTML = '<div class="cmdk-empty">No matches — try “react”, “gathalok” or “contact”.</div>';
+      input.removeAttribute('aria-activedescendant');
+      return;
+    }
+    let html = '', lastG = '';
+    shown.forEach((it, i) => {
+      if (it.g !== lastG) { html += `<div class="cmdk-group" role="presentation">${esc(it.g)}</div>`; lastG = it.g; }
+      html += `<div class="cmdk-item" role="option" id="cmdk-o${i}" data-i="${i}" aria-selected="false">` +
+        `<span class="cl">${highlight(it.label, tokens)}</span>` +
+        (it.hint ? `<span class="ch">${highlight(it.hint, tokens)}</span>` : '') +
+        `<span class="ck">↵</span></div>`;
+    });
+    list.innerHTML = html;
+    setActive(0, false);
+  }
+
+  function setActive(i, scroll = true) {
+    if (!shown.length) return;
+    active = (i + shown.length) % shown.length;
+    list.querySelectorAll('.cmdk-item').forEach(el => {
+      const on = +el.dataset.i === active;
+      el.classList.toggle('active', on);
+      el.setAttribute('aria-selected', on ? 'true' : 'false');
+      if (on) {
+        input.setAttribute('aria-activedescendant', el.id);
+        if (scroll) el.scrollIntoView({ block: 'nearest' });
+      }
+    });
+  }
+
+  function run(i) {
+    const it = shown[i];
+    if (!it) return;
+    close(false);
+    setTimeout(() => it.run(), 60);
+  }
+
+  function open() {
+    if (!root.hidden) return;
+    lastFocus = document.activeElement;
+    all = buildItems();
+    input.value = '';
+    root.hidden = false;
+    document.body.style.overflow = 'hidden';
+    render();
+    input.focus();
+  }
+  function close(restore = true) {
+    if (root.hidden) return;
+    root.hidden = true;
+    document.body.style.overflow = '';
+    if (restore && lastFocus && lastFocus.focus) { try { lastFocus.focus(); } catch (e) {} }
+  }
+
+  input.addEventListener('input', render);
+  list.addEventListener('mousemove', e => {
+    const el = e.target.closest('.cmdk-item');
+    if (el && +el.dataset.i !== active) setActive(+el.dataset.i, false);
+  });
+  list.addEventListener('click', e => {
+    const el = e.target.closest('.cmdk-item');
+    if (el) run(+el.dataset.i);
+  });
+  root.addEventListener('click', e => { if (e.target.hasAttribute('data-close')) close(); });
+  if (btn) btn.addEventListener('click', open);
+
+  document.addEventListener('keydown', e => {
+    const k = e.key;
+    if ((e.ctrlKey || e.metaKey) && !e.altKey && k.toLowerCase() === 'k') {
+      e.preventDefault();
+      root.hidden ? open() : close();
+      return;
+    }
+    if (root.hidden) {
+      const tag = (e.target.tagName || '').toLowerCase();
+      const typing = tag === 'input' || tag === 'textarea' || tag === 'select' || e.target.isContentEditable;
+      if (k === '/' && !typing && !e.ctrlKey && !e.metaKey && !e.altKey) { e.preventDefault(); open(); }
+      return;
+    }
+    if (k === 'Escape') { e.preventDefault(); close(); }
+    else if (k === 'ArrowDown') { e.preventDefault(); setActive(active + 1); }
+    else if (k === 'ArrowUp') { e.preventDefault(); setActive(active - 1); }
+    else if (k === 'Home' && e.target !== input) { e.preventDefault(); setActive(0); }
+    else if (k === 'Enter') { e.preventDefault(); run(active); }
+    else if (k === 'Tab') { e.preventDefault(); input.focus(); }   // keep focus inside the dialog
+  });
 })();
 
 // Live uptime counter — counts up from a fixed deploy timestamp, same for every visitor
