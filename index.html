@@ -84,8 +84,6 @@
 </script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/marked/12.0.2/marked.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.1.5/purify.min.js"></script>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@500;600;700;800&family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap');
 
@@ -438,96 +436,46 @@ overflow: hidden;
 .conn-name { color: var(--text); }
 .conn-latency { margin-left: auto; color: var(--faint); }
 
-/* Mascot chat box (replaces the old whoami/status terminal) */
-.mascot-body { padding: 20px 22px; min-height: 168px; }
-.mascot-row { display: flex; gap: 13px; align-items: flex-start; }
-.mascot-avatar {
-  width: 42px; height: 42px; border-radius: 50%; flex-shrink: 0;
-  background: var(--panel-2); border: 1px solid var(--line-strong);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 20px; box-shadow: 0 0 0 0 rgba(62,230,168,.55);
-  animation: sonar 2.6s ease-out infinite;
-  overflow: hidden;
-}
-.mascot-avatar img { width: 100%; height: 100%; object-fit: cover; }
-.mascot-chat { display: flex; flex-direction: column; gap: 10px; flex: 1; min-width: 0; max-height: 380px; overflow-y: auto; overflow-x: hidden; scroll-behavior: smooth; padding-right: 4px; }
-.mascot-chat::-webkit-scrollbar { width: 6px; }
-.mascot-chat::-webkit-scrollbar-track { background: transparent; }
-.mascot-chat::-webkit-scrollbar-thumb { background: var(--line-strong); border-radius: 3px; }
-.chat-bubble {
-  background: var(--panel-2); border: 1px solid var(--line);
-  border-radius: 13px; border-top-left-radius: 4px;
-  padding: 10px 14px; font-family: var(--body); font-size: 12.5px;
-  color: var(--text); line-height: 1.55;
-  opacity: 0; transform: translateY(6px);
-  animation: bubbleIn 0.35s ease forwards;
-  max-width: 100%; overflow-wrap: anywhere; word-break: break-word;
-}
-.chat-typing {
-  display: inline-flex; gap: 4px; align-items: center;
-  padding: 12px 14px; width: fit-content;
-  background: var(--panel-2); border: 1px solid var(--line);
-  border-radius: 13px; border-top-left-radius: 4px;
-}
-.chat-typing span { width: 5px; height: 5px; border-radius: 50%; background: var(--faint); animation: typingDot 1.1s ease-in-out infinite; }
-.chat-typing span:nth-child(2) { animation-delay: 0.15s; }
-.chat-typing span:nth-child(3) { animation-delay: 0.3s; }
-@keyframes typingDot { 0%,60%,100% { opacity: 0.3; transform: translateY(0); } 30% { opacity: 1; transform: translateY(-3px); } }
-@keyframes bubbleIn { to { opacity: 1; transform: translateY(0); } }
-.mascot-status { grid-template-columns: 1fr; }
+/* Now card + featured project spotlight (replaced the old Pixel mascot chat) */
+.now-body { padding: 18px 22px 8px; display: flex; flex-direction: column; gap: 12px; min-height: 0; line-height: 1.6; }
+.now-row { display: grid; grid-template-columns: 92px 1fr; gap: 12px; align-items: baseline; font-size: 12px; }
+.now-k { font-family: var(--mono); font-size: 9.5px; letter-spacing: 1.4px; color: var(--faint); }
+.now-v { color: var(--text); min-width: 0; overflow-wrap: anywhere; }
+.now-v a { color: var(--accent); text-decoration: none; font-weight: 700; }
+.now-v a:hover { text-decoration: underline; text-underline-offset: 2px; }
+.now-badge { display: inline-flex; align-items: center; gap: 8px; padding: 3px 11px; border-radius: 999px; border: 1px solid rgba(62,230,168,.35); background: rgba(62,230,168,.1); color: var(--signal); font-weight: 700; font-size: 11.5px; }
+.now-badge::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--signal); animation: sonar 1.6s ease-out infinite; }
 
-/* Footer row (topic buttons + input) — pinned OUTSIDE the scrolling
-   message list (#mascot-chat) so new AI replies never push it around. */
-.mascot-footer { padding-left: 55px; margin-top: 10px; display: flex; flex-direction: column; gap: 10px; }
-
-.mascot-choices { display: flex; flex-wrap: wrap; gap: 8px; padding-left: 0; margin-top: 0; }
-.mascot-choice-btn {
-  font-family: var(--mono); font-size: 10.5px; font-weight: 700; letter-spacing: 0.3px;
-  color: var(--text); background: var(--panel-2); border: 1px solid var(--line-strong);
-  border-radius: 20px; padding: 7px 14px; cursor: pointer; transition: all 0.2s;
-  opacity: 0; transform: translateY(6px); animation: bubbleIn 0.35s ease forwards;
+.spotlight { margin-bottom: 36px; border: 1px solid var(--line-strong); border-radius: var(--radius); background: var(--panel); padding: 24px 26px; }
+.spot-eyebrow { font-family: var(--mono); font-size: 9.5px; letter-spacing: 2.5px; color: var(--accent); margin-bottom: 16px; }
+.spot-main { display: flex; gap: 18px; align-items: center; margin-bottom: 18px; }
+.spot-icon { width: 84px; height: 84px; flex-shrink: 0; border-radius: 20px; overflow: hidden; background: #0d1424; border: 1px solid var(--line-strong); }
+.spot-icon img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.spot-name { font-family: var(--display); font-size: 26px; font-weight: 800; letter-spacing: -.5px; color: var(--text); margin-bottom: 2px; }
+.spot-tag { font-family: var(--mono); font-size: 10.5px; color: var(--faint); margin-bottom: 8px; }
+.spot-desc { font-size: 13px; line-height: 1.7; color: var(--muted); max-width: 560px; }
+.spot-media { position: relative; margin-bottom: 18px; border: 1px solid var(--line-strong); border-radius: 14px; overflow: hidden; background: #0d1424; aspect-ratio: 1280 / 604; cursor: pointer; }
+.spot-media video { width: 100%; height: 100%; object-fit: cover; display: block; }
+.spot-media .spot-pp { position: absolute; right: 12px; bottom: 12px; width: 36px; height: 36px; border-radius: 50%; border: 1px solid var(--line-strong); background: rgba(13,20,36,.72); color: #fff; display: grid; place-items: center; opacity: 0; transition: opacity .2s; backdrop-filter: blur(4px); pointer-events: none; }
+.spot-media:hover .spot-pp, .spot-media.paused .spot-pp { opacity: 1; }
+.spot-pp svg { width: 14px; height: 14px; fill: currentColor; stroke: none; }
+.spot-pp .i-play { display: none; }
+.spot-media.paused .i-play { display: block; }
+.spot-media.paused .i-pause { display: none; }
+.spot-stats { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 16px; }
+.spot-stats div { background: var(--panel-2); border: 1px solid var(--line); border-radius: var(--radius-sm); padding: 9px 16px; display: flex; align-items: baseline; gap: 7px; }
+.spot-stats b { font-family: var(--mono); font-size: 16px; color: var(--text); }
+.spot-stats span { font-family: var(--mono); font-size: 9.5px; letter-spacing: 1px; color: var(--faint); text-transform: uppercase; }
+.spotlight .chip-row { margin-bottom: 18px; }
+.spotlight .hero-cta { margin: 0; }
+@media (max-width: 560px) {
+  .spotlight { padding: 20px 18px; }
+  .spot-media { border-radius: 10px; }
+  .spot-main { align-items: flex-start; }
+  .spot-icon { width: 64px; height: 64px; border-radius: 16px; }
+  .spot-name { font-size: 22px; }
+  .now-row { grid-template-columns: 76px 1fr; }
 }
-.mascot-choice-btn:hover { background: var(--accent); color: #14100a; border-color: var(--accent); transform: translateY(-2px); }
-.mascot-choice-btn:disabled { opacity: 0.35; cursor: default; transform: none; }
-.mascot-choice-btn:disabled:hover { background: var(--panel-2); color: var(--text); border-color: var(--line-strong); }
-
-.mascot-input-row { display: flex; gap: 8px; padding-left: 0; margin-top: 0; }
-.mascot-input-row input {
-  flex: 1; min-width: 0; background: var(--panel-2); border: 1px solid var(--line-strong);
-  border-radius: 20px; padding: 9px 16px; font-family: var(--body);
-  font-size: 12.5px; color: var(--text); outline: none; transition: border-color 0.2s;
-}
-.mascot-input-row input:focus { border-color: var(--accent); }
-.mascot-input-row input::placeholder { color: var(--faint); }
-.mascot-input-row button {
-  background: var(--accent); color: #14100a; border: none; border-radius: 50%;
-  width: 34px; height: 34px; display: flex; align-items: center; justify-content: center;
-  cursor: pointer; flex-shrink: 0; transition: transform 0.15s, opacity 0.15s;
-}
-.mascot-input-row button:hover:not(:disabled) { transform: scale(1.08); }
-.mascot-input-row button:disabled { opacity: 0.35; cursor: default; }
-.mascot-input-row button svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2.2; }
-.chat-cursor { display: inline-block; width: 6px; height: 12px; background: var(--accent); margin-left: 2px; vertical-align: -2px; animation: blink 0.9s step-end infinite; }
-.chat-sources { display: flex; flex-wrap: wrap; gap: 6px; padding-left: 55px; margin-top: -4px; }
-.chat-source-chip {
-  font-family: var(--mono); font-size: 9px; color: var(--faint); background: var(--panel-2);
-  border: 1px solid var(--line); border-radius: 10px; padding: 3px 9px;
-}
-.chat-error { color: var(--danger); font-size: 11.5px; padding-left: 55px; font-family: var(--mono); }
-
-.chat-bubble p { margin: 0 0 8px; }
-.chat-bubble p:last-child { margin-bottom: 0; }
-.chat-bubble strong { color: var(--accent); font-weight: 700; }
-.chat-bubble ul, .chat-bubble ol { margin: 6px 0 8px; padding-left: 20px; }
-.chat-bubble li { margin-bottom: 3px; }
-.chat-bubble code { font-family: var(--mono); font-size: 0.92em; background: var(--panel-2); border: 1px solid var(--line); border-radius: 4px; padding: 1px 5px; }
-.chat-bubble pre { background: var(--panel-2); border: 1px solid var(--line); border-radius: 8px; padding: 10px 12px; overflow-x: auto; margin: 6px 0 8px; }
-.chat-bubble pre code { border: none; padding: 0; background: none; }
-.chat-bubble table { border-collapse: collapse; width: 100%; margin: 6px 0 10px; font-size: 12px; }
-.chat-bubble th, .chat-bubble td { border: 1px solid var(--line-strong); padding: 6px 9px; text-align: left; }
-.chat-bubble th { background: var(--panel-2); font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.3px; }
-.chat-bubble a { color: var(--accent); text-decoration: underline; text-underline-offset: 2px; }
-.chat-source-chip { margin-right: 2px; }
 
 .about-info { display: flex; flex-direction: column; gap: 16px; }
 .info-block {
@@ -831,9 +779,6 @@ a:focus-visible,button:focus-visible,summary:focus-visible,input:focus-visible,t
 @media (max-width: 480px) {
   .proj-summary { grid-template-columns: repeat(2,1fr); }
   .ptl-chip { font-size: 9.5px; padding: 6px 11px; }
-  .mascot-avatar { width: 34px; height: 34px; }
-  .mascot-row { gap: 10px; }
-  .mascot-footer, .chat-sources, .chat-error { padding-left: 44px; }
 }
 
 /* ── WEB STORE ── */
@@ -1214,6 +1159,7 @@ html[lang] .exp-item,
 html[lang] .proj-card,
 html[lang] .store-card,
 html[lang] .labs-brand,
+html[lang] .spotlight,
 html[lang] .contact-card,
 html[lang] .contact-form,
 html[lang] .edu-card,
@@ -1269,8 +1215,9 @@ html[lang] .exp-item { background: var(--t4); }
 html[lang] .edu-card, html[lang] .contact-card { background: var(--t5); }
 html[lang] .contact-form { background: var(--t1); }
 html[lang] .labs-brand { background: var(--t2); }
+html[lang] .spot-media { border: 3px solid var(--ink); border-radius: 16px; }
 
-/* console (the "cat about.md" + mascot chat) */
+/* console (the "now" card) */
 html[lang] .console { background: var(--card); overflow: hidden; }
 html[lang] .console-bar { background: var(--lilac); border-bottom: 3px solid var(--ink); }
 html[lang] .cbar-dot { width: 13px; height: 13px; border: 2px solid var(--ink); opacity: 1; }
@@ -1281,16 +1228,8 @@ html[lang] .console-body { color: var(--text); }
 html[lang] .console-status { border-top: 3px dashed var(--line-strong); }
 html[lang] .t-accent { color: var(--purple); font-weight: 800; }
 html[lang] .t-signal { color: #2f9f7c; }
-html[lang] .cursor-blink, html[lang] .chat-cursor { background: var(--accent); border-radius: 2px; }
-html[lang] .mascot-avatar { background: var(--butter); border: 3px solid var(--ink); }
-html[lang] .chat-bubble {
-  background: var(--panel-2); border: 2.5px solid var(--ink); border-radius: 18px; border-top-left-radius: 5px;
-  box-shadow: 3px 3px 0 var(--shc); color: var(--text); font-weight: 600;
-}
-html[lang] .chat-bubble strong, html[lang] .chat-bubble a { color: var(--purple); }
-html[lang] .chat-typing { background: var(--panel-2); border: 2.5px solid var(--ink); border-radius: 18px; border-top-left-radius: 5px; }
-html[lang] .chat-typing span { background: var(--accent); }
-html[lang] .stat-tile, html[lang] .chip, html[lang] .chat-source-chip {
+html[lang] .cursor-blink { background: var(--accent); border-radius: 2px; }
+html[lang] .stat-tile, html[lang] .chip {
   background: var(--card); border: 2.5px solid var(--ink); border-radius: 14px;
 }
 html[lang] .spark path { stroke: var(--accent); stroke-width: 2.4; stroke-linecap: round; }
@@ -1301,7 +1240,6 @@ html[lang] .get-btn,
 html[lang] .resume-btn,
 html[lang] .p-link,
 html[lang] .more-btn,
-html[lang] .mascot-choice-btn,
 html[lang] .pf-btn,
 html[lang] .store-chip,
 html[lang] .plat-chip,
@@ -1330,7 +1268,6 @@ html[lang] .get-btn:hover,
 html[lang] .resume-btn:hover,
 html[lang] .p-link:hover,
 html[lang] .more-btn:hover,
-html[lang] .mascot-choice-btn:hover,
 html[lang] .pf-btn:hover,
 html[lang] .store-chip:hover,
 html[lang] a.plat-chip:hover,
@@ -1426,15 +1363,11 @@ html[lang] .gh-skel i { background: linear-gradient(90deg,var(--card) 25%,var(--
 
 /* ── forms ── */
 html[lang] .contact-form input,
-html[lang] .contact-form textarea,
-html[lang] .mascot-input-row input {
+html[lang] .contact-form textarea {
   background: var(--card); border: 2.5px solid var(--ink); border-radius: 16px; color: var(--on-pastel); font-weight: 700;
 }
-html[lang] .mascot-input-row input { border-radius: 999px; }
 html[lang] .contact-form input:focus,
-html[lang] .contact-form textarea:focus,
-html[lang] .mascot-input-row input:focus { border-color: var(--purple); box-shadow: 0 0 0 4px rgba(116,88,216,.22); outline: none; }
-html[lang] .mascot-input-row button { background: var(--accent); border: 2.5px solid var(--ink); color: var(--on-pastel); box-shadow: 2px 2px 0 var(--shc); }
+html[lang] .contact-form textarea:focus { border-color: var(--purple); box-shadow: 0 0 0 4px rgba(116,88,216,.22); outline: none; }
 html[lang] .cf-resp { color: #2f9f7c; font-weight: 800; }
 html[lang] .cf-resp .dot { background: var(--signal); border: 1.5px solid var(--ink); }
 html[lang] .to-top { background: var(--butter); border: 3px solid var(--ink); color: var(--on-pastel); box-shadow: 3px 3px 0 var(--shc); }
@@ -1480,13 +1413,13 @@ html[lang] .topbar { background: color-mix(in srgb, var(--bg) 88%, transparent);
 html[lang] .sidebar-nav .nav-item:hover, html[lang] .nav-item:hover { color: var(--text); }
 html[lang] .nav-item.active .nav-icon { background: #fff; }
 html[lang] .topbar-path { color: var(--text); }
-html[lang] .soc, html[lang] .btn, html[lang] .get-btn.soon, html[lang] .more-btn, html[lang] .mascot-choice-btn,
+html[lang] .soc, html[lang] .btn, html[lang] .get-btn.soon, html[lang] .more-btn,
 html[lang] .pf-btn, html[lang] .store-chip, html[lang] .plat-chip, html[lang] .p-link,
 html[lang] #section-github .repo-card .repo-links a { color: var(--text); }
 html[lang] .btn.primary, html[lang] .get-btn:not(.soon), html[lang] .p-links .p-link:first-child,
 html[lang] .pf-btn.active, html[lang] .store-chip.active, html[lang] .resume-btn { color: var(--on-pastel); }
 html[lang] .btn:hover, html[lang] .get-btn:hover, html[lang] .p-link:hover, html[lang] .more-btn:hover,
-html[lang] .mascot-choice-btn:hover, html[lang] .pf-btn:hover, html[lang] .store-chip:hover,
+html[lang] .pf-btn:hover, html[lang] .store-chip:hover,
 html[lang] a.plat-chip:hover, html[lang] #section-github .repo-card .repo-links a:hover,
 html[lang] .soc:hover { color: var(--on-pastel); }
 html[lang] .p-type-badge, html[lang] .ptl-chip, html[lang] .p-tag, html[lang] .edu-year,
@@ -1508,7 +1441,7 @@ html[lang] #section-github .gh-summary .gh-stat .gh-num, html[lang] #section-git
 html[lang] .console-bar { background: var(--s5); }
 html[lang] .cbar-title, html[lang] .cbar-live { color: var(--text); }
 html[lang] .store-hero .labs-eyebrow { color: var(--purple); }
-html[lang] .contact-form input, html[lang] .contact-form textarea, html[lang] .mascot-input-row input { color: var(--text); }
+html[lang] .contact-form input, html[lang] .contact-form textarea { color: var(--text); }
 html[lang] .store-search input { color: var(--text); }
 html[lang] .pl-mark { color: var(--text); }
 html[lang] .sec-title em { color: var(--text); background: linear-gradient(transparent 58%, color-mix(in srgb, var(--butter) var(--hl, 100%), transparent) 58%, color-mix(in srgb, var(--butter) var(--hl, 100%), transparent) 92%, transparent 92%); }
@@ -1641,8 +1574,7 @@ html[lang] .skill-block:hover .sk-icon svg.toon { animation: toonWiggle .6s ease
 html[lang] .contact-card:hover .cc-icon svg.toon { animation: toonWiggle .6s ease; }
 /* thin icons that remain get a chunkier, rounder stroke */
 html[lang] .btn svg, html[lang] .p-link svg, html[lang] .get-btn svg, html[lang] .resume-btn svg,
-html[lang] .to-top svg, html[lang] .s-location svg, html[lang] .exp-meta svg, html[lang] .store-search svg,
-html[lang] .mascot-input-row button svg { stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round; }
+html[lang] .to-top svg, html[lang] .s-location svg, html[lang] .exp-meta svg, html[lang] .store-search svg { stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round; }
 
 
 /* phones: keep sun/moon out of the mascot's way, bubble drops below */
@@ -1791,26 +1723,61 @@ html[lang] .mascot-input-row button svg { stroke-width: 2.6; stroke-linecap: rou
       </div>
 
       <div class="about-hero reveal">
-        <div class="console">
+        <!-- NOW CARD: edit the STATUS and ROLE text below; LAST PUSH + local time are filled by JS -->
+        <div class="console now-card">
           <div class="console-bar">
             <span class="cbar-dot cd-r"></span><span class="cbar-dot cd-y"></span><span class="cbar-dot cd-g"></span>
-            <span class="cbar-title">mascot://pixel-bot</span>
+            <span class="cbar-title">now://prahlad</span>
             <span class="cbar-live"><span class="dot"></span>LIVE</span>
           </div>
-          <div class="console-body mascot-body">
-            <div class="mascot-row">
-              <div class="mascot-avatar"><img src="/store/mascot-v2.png" alt="Pixel — portfolio mascot robot" title="Pixel"></div>
-              <div class="mascot-chat" id="mascot-chat"></div>
-            </div>
-            <div class="mascot-footer" id="mascot-footer"></div>
+          <div class="console-body now-body">
+            <div class="now-row"><span class="now-k">STATUS</span><span class="now-v"><span class="now-badge">Open to opportunities</span></span></div>
+            <div class="now-row"><span class="now-k">ROLE</span><span class="now-v">Backend → Full-Stack Developer · Lifelayer Health Solutions</span></div>
+            <div class="now-row"><span class="now-k">BASED IN</span><span class="now-v">Gurugram, India</span></div>
+            <div class="now-row"><span class="now-k">LAST PUSH</span><span class="now-v" id="now-push">checking GitHub…</span></div>
           </div>
-          <div class="console-status mascot-status">
+          <div class="console-status">
             <div class="stat-tile">
               <div class="lbl">Session Uptime</div>
               <div class="val" id="uptime">00:00:00</div>
             </div>
+            <div class="stat-tile">
+              <div class="lbl">My Time · IST</div>
+              <div class="val" id="now-clock">--:--</div>
+            </div>
           </div>
         </div>
+      </div>
+
+      <div class="spotlight reveal" id="spotlight">
+        <div class="spot-eyebrow">★ FEATURED PROJECT</div>
+        <div class="spot-main">
+          <div class="spot-icon"><img src="/store/gathalok-apk.webp" alt="GathaLok app icon" width="84" height="84" loading="lazy"></div>
+          <div>
+            <h3 class="spot-name">GathaLok</h3>
+            <div class="spot-tag">World Folklore &amp; Mythology Platform · MERN</div>
+            <p class="spot-desc">A community platform for discovering and contributing world folklore — ghost stories, mythological creatures, and regional legends from around the globe.</p>
+          </div>
+        </div>
+        <div class="spot-media" id="spot-media" role="button" tabindex="0" aria-label="GathaLok demo video — click to pause or play">
+          <video id="spot-video" muted loop playsinline preload="none" poster="/store/gathalok-demo-poster.webp" aria-label="Screen recording of the GathaLok web app: home, trending stories, story page, explore, world map and leaderboard">
+            <source src="/store/gathalok-demo.webm" type="video/webm">
+            <source src="/store/gathalok-demo.mp4" type="video/mp4">
+          </video>
+          <span class="spot-pp" aria-hidden="true">
+            <svg class="i-pause" viewBox="0 0 24 24"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg>
+            <svg class="i-play" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+          </span>
+        </div>
+        <div class="spot-stats">
+          <div><b>500+</b><span>stories</span></div>
+          <div><b>20+</b><span>countries</span></div>
+          <div><b>3</b><span>platforms</span></div>
+        </div>
+        <div class="chip-row">
+          <span class="chip">React 18</span><span class="chip">Redux Toolkit</span><span class="chip">Node.js</span><span class="chip">Express</span><span class="chip">MongoDB</span><span class="chip">Cloudinary</span><span class="chip">JWT</span>
+        </div>
+        <div class="hero-cta" id="spot-links"></div>
       </div>
 
       <div class="stats-row reveal">
@@ -2693,206 +2660,73 @@ window.addEventListener('resize', () => {
   if (window.innerWidth > 900) closeSidebar();
 });
 
-// ── MASCOT CHAT: PIXEL INTRODUCES HIMSELF, THEN OFFERS TOPIC BUTTONS ──
-// Instead of dumping every line at once, Pixel says a short intro and then
-// shows tappable topic buttons (About / Skills / Projects / Experience).
-// Picking one reveals just that topic's detail as a new bubble, then the
-// buttons reappear (with the picked one dimmed) so another topic can be
-// explored without re-reading everything from scratch.
-const AGENT_API_BASE = 'https://aiagent.prahladsingh.in/api';
-
-const MASCOT_INTRO = [
-  "Hey 👋 I'm Pixel — ask me anything about Prahlad, live.",
-  "Try a quick topic below, or just type your own question."
-];
-const QUICK_TOPICS = [
-  { label: 'About',      question: 'Tell me about yourself.' },
-  { label: 'Skills',     question: "What's your tech stack?" },
-  { label: 'Projects',   question: 'What have you built recently?' },
-  { label: 'Experience', question: "What's your current work experience?" }
-];
-
-const mascotChat = document.getElementById('mascot-chat');
-const mascotFooter = document.getElementById('mascot-footer');
-let agentConversationId = null;
-try { agentConversationId = sessionStorage.getItem('pixelConvoId') || null; } catch (e) {}
-
-function mascotScrollToBottom() {
-  mascotChat.scrollTop = mascotChat.scrollHeight;
-}
-
-function mascotAddBubble(html) {
-  const bubble = document.createElement('div');
-  bubble.className = 'chat-bubble';
-  bubble.innerHTML = html;
-  mascotChat.appendChild(bubble);
-  mascotScrollToBottom();
-  return bubble;
-}
-
-function mascotTyping() {
-  const typing = document.createElement('div');
-  typing.className = 'chat-typing';
-  typing.innerHTML = '<span></span><span></span><span></span>';
-  mascotChat.appendChild(typing);
-  mascotScrollToBottom();
-  return typing;
-}
-
-function mascotSources(sources) {
-  if (!sources || !sources.length) return;
-  const row = document.createElement('div');
-  row.className = 'chat-sources';
-  row.innerHTML = sources
-    .slice(0, 4)
-    .map(s => `<span class="chat-source-chip">${s.label || s.sourceType}</span>`)
-    .join('');
-  mascotChat.appendChild(row);
-  mascotScrollToBottom();
-}
-
-// Renders the model's Markdown (bold, lists, tables, code) into sanitized HTML.
-// Falls back to plain-text escaping if marked/DOMPurify failed to load (e.g. CDN blocked).
-function renderMarkdown(text) {
-  if (window.marked && window.DOMPurify) {
-    try {
-      return DOMPurify.sanitize(marked.parse(text));
-    } catch (e) { /* fall through to plain-text fallback below */ }
+// ── NOW CARD: local clock + latest GitHub push ──────────────────
+(function initNowCard() {
+  const clockEl = document.getElementById('now-clock');
+  if (clockEl) {
+    const fmt = new Intl.DateTimeFormat('en-IN', { hour: '2-digit', minute: '2-digit', hour12: true, timeZone: 'Asia/Kolkata' });
+    const tick = () => { clockEl.textContent = fmt.format(new Date()).toUpperCase(); };
+    tick();
+    setInterval(tick, 15000);
   }
-  return text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-}
 
-function setInputEnabled(enabled) {
-  const input = document.getElementById('pixel-input');
-  const btn = document.getElementById('pixel-send');
-  if (input) input.disabled = !enabled;
-  if (btn) btn.disabled = !enabled;
-}
-
-async function askPixel(question) {
-  const trimmed = (question || '').trim();
-  if (!trimmed) return;
-
-  mascotAddBubble(trimmed.replace(/</g, '&lt;'));
-  const input = document.getElementById('pixel-input');
-  if (input) input.value = '';
-  setInputEnabled(false);
-
-  const typing = mascotTyping();
-  let answerBubble = null;
-  let answerText = '';
-
-  try {
-    const res = await fetch(`${AGENT_API_BASE}/ai/chat`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ message: trimmed, conversationId: agentConversationId })
+  const pushEl = document.getElementById('now-push');
+  if (!pushEl) return;
+  const esc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  const ago = iso => {
+    const mins = Math.max(1, Math.floor((Date.now() - new Date(iso).getTime()) / 6e4));
+    if (mins < 60) return mins + 'm ago';
+    const hrs = Math.floor(mins / 60);
+    if (hrs < 24) return hrs + 'h ago';
+    const days = Math.floor(hrs / 24);
+    if (days < 30) return days + 'd ago';
+    const months = Math.floor(days / 30);
+    return months < 12 ? months + 'mo ago' : Math.floor(months / 12) + 'y ago';
+  };
+  ghJson('https://api.github.com/users/PrahladWebDev/repos?per_page=100&sort=updated')
+    .then(repos => {
+      const r = repos.filter(x => !x.fork && x.pushed_at)
+        .sort((a, b) => new Date(b.pushed_at) - new Date(a.pushed_at))[0];
+      if (!r) throw new Error('no repos');
+      pushEl.innerHTML = `<a href="${esc(r.html_url)}" target="_blank" rel="noopener">${esc(r.name)}</a> · ${ago(r.pushed_at)}`;
+    })
+    .catch(() => {
+      pushEl.innerHTML = '<a href="https://github.com/PrahladWebDev" target="_blank" rel="noopener">github.com/PrahladWebDev</a>';
     });
+})();
 
-    if (!res.ok || !res.body) throw new Error('Agent unavailable');
-
-    const reader = res.body.getReader();
-    const decoder = new TextDecoder();
-    let buffer = '';
-    let sources = [];
-
-    for (;;) {
-      const { done, value } = await reader.read();
-      if (done) break;
-      buffer += decoder.decode(value, { stream: true });
-
-      const events = buffer.split('\n\n');
-      buffer = events.pop() ?? '';
-
-      for (const raw of events) {
-        const lines = raw.split('\n');
-        const eventLine = lines.find(l => l.startsWith('event:'));
-        const dataLine = lines.find(l => l.startsWith('data:'));
-        if (!dataLine) continue;
-
-        const eventName = eventLine ? eventLine.replace('event:', '').trim() : 'message';
-        const data = JSON.parse(dataLine.replace('data:', '').trim());
-
-        if (eventName === 'token') {
-          if (!answerBubble) {
-            typing.remove();
-            answerBubble = mascotAddBubble('');
-          }
-          answerText += data;
-          answerBubble.innerHTML = renderMarkdown(answerText) + '<span class="chat-cursor"></span>';
-          mascotChat.scrollTop = mascotChat.scrollHeight;
-        } else if (eventName === 'sources') {
-          sources = data;
-        } else if (eventName === 'done') {
-          if (data && data.conversationId) {
-            agentConversationId = data.conversationId;
-            try { sessionStorage.setItem('pixelConvoId', agentConversationId); } catch (e) {}
-          }
-        }
-      }
-    }
-
-    if (answerBubble) answerBubble.innerHTML = renderMarkdown(answerText);
-    mascotSources(sources);
-  } catch (err) {
-    typing.remove();
-    if (!answerBubble) {
-      const errEl = document.createElement('div');
-      errEl.className = 'chat-error';
-      errEl.textContent = "Pixel can't reach the agent right now — try again in a moment.";
-      mascotChat.appendChild(errEl);
-    }
-  } finally {
-    setInputEnabled(true);
-    mascotChat.scrollTop = mascotChat.scrollHeight;
-    const input2 = document.getElementById('pixel-input');
-    if (input2) input2.focus();
+// ── FEATURED PROJECT: buttons are built from the GathaLok entry in PROJECTS ──
+(function initSpotlight() {
+  const box = document.getElementById('spot-links');
+  if (!box) return;
+  const p = PROJECTS.find(x => x.name === 'GathaLok');
+  const links = p ? p.links.filter(l => l.url && l.label !== 'GITHUB') : [];
+  const media = document.getElementById('spot-media');
+  const vid = document.getElementById('spot-video');
+  if (media && vid) {
+    const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let userPaused = reduce;
+    media.classList.toggle('paused', userPaused);
+    const toggle = () => {
+      if (vid.paused) { userPaused = false; vid.play().catch(() => {}); media.classList.remove('paused'); }
+      else { userPaused = true; vid.pause(); media.classList.add('paused'); }
+    };
+    media.addEventListener('click', toggle);
+    media.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(); } });
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(entries => {
+        entries.forEach(en => {
+          if (en.isIntersecting && !userPaused) vid.play().catch(() => {});
+          else if (!en.isIntersecting) vid.pause();
+        });
+      }, { threshold: 0.35 }).observe(media);
+    } else if (!userPaused) { vid.play().catch(() => {}); }
   }
-}
-
-function mascotShowTopics() {
-  const row = document.createElement('div');
-  row.className = 'mascot-choices';
-  QUICK_TOPICS.forEach((t, i) => {
-    const btn = document.createElement('button');
-    btn.type = 'button';
-    btn.className = 'mascot-choice-btn';
-    btn.textContent = t.label;
-    btn.style.animationDelay = (i * 0.06) + 's';
-    btn.addEventListener('click', () => askPixel(t.question));
-    row.appendChild(btn);
-  });
-  mascotFooter.appendChild(row);
-}
-
-function mascotShowInput() {
-  const row = document.createElement('div');
-  row.className = 'mascot-input-row';
-  row.innerHTML = `
-    <input id="pixel-input" type="text" placeholder="Ask Pixel something..." maxlength="500" autocomplete="off">
-    <button id="pixel-send" type="button" title="Send" aria-label="Send">
-      <svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
-    </button>
-  `;
-  mascotFooter.appendChild(row);
-  const input = row.querySelector('#pixel-input');
-  const btn = row.querySelector('#pixel-send');
-  const send = () => askPixel(input.value);
-  btn.addEventListener('click', send);
-  input.addEventListener('keydown', e => { if (e.key === 'Enter') send(); });
-}
-
-async function initMascot() {
-  for (const line of MASCOT_INTRO) {
-    const typing = mascotTyping();
-    await new Promise(r => setTimeout(r, 550));
-    typing.remove();
-    mascotAddBubble(line);
-  }
-  mascotShowTopics();
-  mascotShowInput();
-}
-setTimeout(initMascot, 650);
+  box.innerHTML = links.map((l, i) =>
+    `<a class="btn${i === 0 ? ' primary' : ''}" href="${l.url}" target="_blank" rel="noopener">${l.label}</a>`
+  ).join('') +
+  `<button class="btn" type="button" onclick="go('projects', document.getElementById('nav-projects'))">ALL PROJECTS →</button>`;
+})();
 
 // Live uptime counter — counts up from a fixed deploy timestamp, same for every visitor
 // Update SITE_LAUNCH whenever you redeploy, or leave it as your original go-live date.
