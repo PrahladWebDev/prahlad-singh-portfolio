@@ -529,6 +529,22 @@ overflow: hidden;
   transition: all 0.15s; background: var(--panel-2);
 }
 #section-github .repo-card .repo-links a:hover { background: var(--accent); color: #14100a; border-color: var(--accent); }
+/* Clickable tech tags, tech filter bar, copy-link button */
+button.p-tag { cursor: pointer; line-height: inherit; }
+.p-tag.on { background: var(--accent); color: #14100a; border-color: var(--accent); }
+.p-copy { cursor: pointer; }
+.p-copy.done { background: var(--signal); border-color: var(--signal); color: #06140f; }
+.proj-tech-bar { display: flex; align-items: center; flex-wrap: wrap; gap: 8px 12px; margin: -2px 0 18px; padding: 10px 14px; border: 1px dashed var(--line-strong); border-radius: var(--radius-sm); font-family: var(--mono); font-size: 11px; color: var(--muted); }
+.proj-tech-bar[hidden] { display: none; }
+.proj-tech-bar b { color: var(--text); }
+.proj-tech-bar .ptb-chip { padding: 3px 10px; border-radius: 999px; background: var(--accent); color: #14100a; font-weight: 800; }
+.proj-tech-bar button { margin-left: auto; font-family: var(--mono); font-size: 10px; font-weight: 700; padding: 5px 12px; border-radius: 999px; border: 1px solid var(--line-strong); background: var(--panel-2); color: var(--text); cursor: pointer; }
+.proj-tech-bar button:hover { border-color: var(--accent); color: var(--accent); }
+html[lang] .proj-tech-bar { border: 2.5px dashed var(--ink); background: var(--card); color: var(--text); }
+html[lang] .proj-tech-bar .ptb-chip { background: var(--butter); color: var(--on-pastel); border: 2px solid var(--ink); }
+html[lang] .proj-tech-bar button { border: 2.5px solid var(--ink); background: var(--card); color: var(--text); }
+html[lang] .p-tag.on { background: var(--butter); color: var(--on-pastel); border-color: var(--ink); }
+html[lang] .p-copy.done { background: var(--mint); color: var(--on-pastel); border-color: var(--ink); }
 /* Command palette (Ctrl/Cmd+K) */
 .cmdk-btn { display: inline-flex; align-items: center; gap: 8px; font-family: var(--mono); font-size: 10px; font-weight: 700; padding: 6px 10px; border: 1px solid var(--line-strong); border-radius: 8px; background: transparent; color: var(--muted); cursor: pointer; transition: border-color .2s, color .2s, transform .2s; }
 .cmdk-btn:hover { border-color: var(--accent); color: var(--text); transform: translateY(-1px); }
@@ -771,6 +787,7 @@ a:focus-visible,button:focus-visible,summary:focus-visible,input:focus-visible,t
 
 /* ── CONTACT ── */
 .contact-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 16px; }
+.contact-grid > .contact-card:last-child:nth-child(odd) { grid-column: 1 / -1; }
 .contact-card { border: 1px solid var(--line); border-radius: var(--radius); padding: 22px 26px; background: var(--panel); display: flex; align-items: center; gap: 16px; text-decoration: none; color: var(--text); transition: transform 0.25s, border-color 0.25s, background 0.2s; }
 .contact-card:hover { transform: translateY(-4px); border-color: var(--accent-dim); background: var(--panel-2); }
 .cc-icon { width: 42px; height: 42px; background: var(--panel-2); border: 1px solid var(--line-strong); border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: all 0.2s; }
@@ -2006,6 +2023,7 @@ html[lang] .to-top svg, html[lang] .s-location svg, html[lang] .exp-meta svg, ht
       <div class="proj-type-legend reveal" id="proj-type-legend"></div>
 
       <div class="proj-filters reveal" id="proj-filters" role="group" aria-label="Filter projects"></div>
+      <div class="proj-tech-bar" id="proj-tech-bar" hidden></div>
       <div class="proj-grid" id="proj-grid"></div>
     </section>
 
@@ -2122,6 +2140,10 @@ html[lang] .to-top svg, html[lang] .s-location svg, html[lang] .exp-meta svg, ht
         <a class="contact-card reveal" href="https://prahladsingh.in/" target="_blank" title="Prahlad Singh Portfolio Website" rel="me noopener">
           <div class="cc-icon"><svg class="toon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9.5" style="fill:var(--sky)" stroke="#2f2850" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/><path d="M2.5 12h19M12 2.5c3.6 3.9 3.6 15.1 0 19M12 2.5c-3.6 3.9-3.6 15.1 0 19" fill="none" stroke="#2f2850" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/></svg></div>
           <div><div class="cc-lbl">PORTFOLIO</div><div class="cc-val">prahladsingh.in</div></div>
+        </a>
+        <a class="contact-card reveal" href="#" id="save-contact" role="button" onclick="saveContact(this); return false;" title="Download Prahlad Singh's contact card (vCard)">
+          <div class="cc-icon"><svg class="toon" viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="4.5" width="19" height="15" rx="3.2" style="fill:var(--lilac)" stroke="#2f2850" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/><circle cx="9" cy="10.5" r="2.1" style="fill:var(--butter)" stroke="#2f2850" stroke-width="1.8"/><path d="M5.8 16c.5-1.9 1.8-2.7 3.2-2.7s2.7.8 3.2 2.7M14.5 9.5h4M14.5 12.5h4" fill="none" stroke="#2f2850" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div><div class="cc-lbl">SAVE CONTACT</div><div class="cc-val">Add to your phone (vCard)</div></div>
         </a>
         <a class="contact-card reveal" href="/prahlad_resume.pdf" download title="Download Prahlad Singh's Resume PDF">
           <div class="cc-icon"><svg class="toon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 15.5h16v3a2.5 2.5 0 0 1-2.5 2.5h-11A2.5 2.5 0 0 1 4 18.5z" style="fill:var(--butter)" stroke="#2f2850" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/><path d="M12 3.5v10M7.5 9.5l4.5 4.5 4.5-4.5" fill="none" stroke="#2f2850" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/></svg></div>
@@ -2476,6 +2498,8 @@ const STACK_ICO = {
   'CLI':'cli','Ink':'cli','npm Package':'npm','Multi-Tenant':'tenant'
 };
 let projFilter = 'all';
+let techFilter = '';   // normalised tech key, '' = no tech filter
+let techLabel = '';
 function projMatches(p, f) {
   if (f === 'all') return true;
   if (f === 'live') return !!(p.deployed && p.deployed.status);
@@ -2492,21 +2516,83 @@ function renderProjectFilters() {
     .filter(([k, , n]) => n > 0 || k === 'all')
     .map(([k, label, n]) => `<button type="button" class="pf-btn${projFilter === k ? ' active' : ''}" aria-pressed="${projFilter === k}" onclick="setProjFilter('${k}')">${label}<b>${n}</b></button>`).join('');
 }
-function setProjFilter(k) { projFilter = k; renderProjectFilters(); renderProjects(); }
+function setProjFilter(k) { projFilter = k; techFilter = ''; techLabel = ''; renderProjectFilters(); renderProjects(); }
+
+// "React 18", "React.js" and "React" all count as the same technology
+function techKey(t) {
+  return String(t).toLowerCase().replace(/\.js\b/g, '').replace(/\s+v?\d+(\.\d+)*$/, '').replace(/\s+sdk$/, '').replace(/\s+/g, ' ').trim();
+}
+function setTechFilter(key, label) {
+  if (techFilter === key) { clearTechFilter(); return; }
+  techFilter = key; techLabel = label; projFilter = 'all';
+  renderProjectFilters(); renderProjects();
+  const bar = document.getElementById('proj-tech-bar');
+  if (bar) bar.scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+function clearTechFilter() { techFilter = ''; techLabel = ''; renderProjectFilters(); renderProjects(); }
+function renderTechBar(count) {
+  const bar = document.getElementById('proj-tech-bar');
+  if (!bar) return;
+  if (!techFilter) { bar.hidden = true; bar.innerHTML = ''; return; }
+  const esc = x => String(x).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  bar.hidden = false;
+  bar.innerHTML = `<span>Built with</span><span class="ptb-chip">${esc(techLabel)}</span><span><b>${count}</b> project${count === 1 ? '' : 's'}</span><button type="button" onclick="clearTechFilter()">✕ CLEAR</button>`;
+}
+
+// ── project deep links: /projects#gathalok ──────────────────────────
+function projSlug(name) {
+  return String(name).replace(/&amp;|&/g, 'and').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+}
+function copyToClipboard(text) {
+  if (navigator.clipboard && window.isSecureContext) return navigator.clipboard.writeText(text);
+  return new Promise((resolve, reject) => {
+    try {
+      const t = document.createElement('textarea');
+      t.value = text; t.setAttribute('readonly', ''); t.style.cssText = 'position:fixed;top:-1000px;opacity:0';
+      document.body.appendChild(t); t.select();
+      const ok = document.execCommand('copy'); t.remove();
+      ok ? resolve() : reject(new Error('copy failed'));
+    } catch (e) { reject(e); }
+  });
+}
+function copyProjectLink(btn, slug) {
+  const url = SITE + '/projects#' + slug;
+  const label = btn.querySelector('.pc-lbl');
+  const flash = txt => { btn.classList.add('done'); if (label) label.textContent = txt; setTimeout(() => { btn.classList.remove('done'); if (label) label.textContent = 'COPY LINK'; }, 1800); };
+  copyToClipboard(url).then(() => flash('COPIED ✓')).catch(() => { window.prompt('Copy this link:', url); });
+}
+function focusProjectBySlug(slug) {
+  if (!PROJECTS.some(p => projSlug(p.name) === slug)) return false;
+  if (projFilter !== 'all' || techFilter) { projFilter = 'all'; techFilter = ''; techLabel = ''; renderProjectFilters(); renderProjects(); }
+  let tries = 0;
+  const t = setInterval(() => {
+    const sec = document.getElementById('section-projects');
+    const card = document.querySelector('#proj-grid .proj-card[data-slug="' + slug + '"]');
+    if (card && sec && sec.classList.contains('active')) {
+      clearInterval(t);
+      card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      card.classList.add('cmdk-flash');
+      setTimeout(() => card.classList.remove('cmdk-flash'), 1800);
+    } else if (++tries > 40) clearInterval(t);
+  }, 80);
+  return true;
+}
 function stackTag(t) {
   const id = STACK_ICO[t];
-  return `<span class="p-tag">${id ? `<svg aria-hidden="true"><use href="#sk-${id}"/></svg>` : ''}${t}</span>`;
+  const key = techKey(t);
+  return `<button type="button" class="p-tag${techFilter === key ? ' on' : ''}" data-tech="${key}" onclick="setTechFilter(this.dataset.tech, this.textContent.trim())" title="Show every project built with ${t}" aria-pressed="${techFilter === key}">${id ? `<svg aria-hidden="true"><use href="#sk-${id}"/></svg>` : ''}${t}</button>`;
 }
 function renderProjects() {
   const grid = document.getElementById('proj-grid');
-  const list = sortedProjects().filter(p => projMatches(p, projFilter));
+  const list = sortedProjects().filter(p => projMatches(p, projFilter) && (!techFilter || p.stack.some(t => techKey(t) === techFilter)));
+  renderTechBar(list.length);
   if (!list.length) { grid.innerHTML = '<div class="proj-empty">No projects in this category yet.</div>'; return; }
   grid.innerHTML = list.map(p => {
     const typeColor = (PROJECT_TYPES[p.type] || {}).color || '#8891ab';
     const isDeployed = p.deployed && p.deployed.status;
     const first = p.features.slice(0, 3), rest = p.features.slice(3);
     return `
-    <div class="proj-card fade-in">
+    <div class="proj-card fade-in" data-slug="${projSlug(p.name)}">
       <div class="p-head">
         <div class="p-name">${p.name}</div>
         <div class="p-badges">
@@ -2525,6 +2611,7 @@ function renderProjects() {
           ? `<a class="p-link" href="#" onclick="${l.onclick || "go('store', document.getElementById('nav-store'))"};return false;" title="${p.name} — ${l.label.toLowerCase()}">${ICO[l.icon]}${l.label}</a>`
           : `<a class="p-link" href="${l.url}" target="_blank" rel="noopener" title="${p.name} — ${l.label.toLowerCase()}">${ICO[l.icon]}${l.label}</a>`
         ).join('')}
+        <button type="button" class="p-link p-copy" onclick="copyProjectLink(this, '${projSlug(p.name)}')" title="Copy a link that opens straight to ${p.name}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.07 0l2.83-2.83a5 5 0 0 0-7.07-7.07L11.5 4.43"/><path d="M14 11a5 5 0 0 0-7.07 0L4.1 13.83a5 5 0 0 0 7.07 7.07l1.33-1.33"/></svg><span class="pc-lbl">COPY LINK</span></button>
       </div>
     </div>
   `;
@@ -2817,6 +2904,44 @@ window.addEventListener('resize', () => {
   `<button class="btn" type="button" onclick="go('projects', document.getElementById('nav-projects'))">ALL PROJECTS →</button>`;
 })();
 
+// ── SAVE CONTACT: builds a .vcf in the browser and downloads it ─────
+async function saveContact(trigger) {
+  const val = trigger && trigger.querySelector ? trigger.querySelector('.cc-val') : null;
+  const orig = val ? val.textContent : '';
+  if (val) val.textContent = 'Preparing…';
+  const esc = x => String(x).replace(/\\/g, '\\\\').replace(/;/g, '\\;').replace(/,/g, '\\,').replace(/\n/g, '\\n');
+  const fold = l => { let out = l.slice(0, 75), rest = l.slice(75); while (rest.length) { out += '\r\n ' + rest.slice(0, 74); rest = rest.slice(74); } return out; };
+  let photo = '';
+  try {
+    const r = await fetch('/Prahlad.jpg');
+    if (r.ok) {
+      const blob = await r.blob();
+      photo = await new Promise((res, rej) => { const fr = new FileReader(); fr.onload = () => res(String(fr.result).split(',')[1] || ''); fr.onerror = rej; fr.readAsDataURL(blob); });
+    }
+  } catch (e) { /* the card still works without a photo */ }
+  const lines = [
+    'BEGIN:VCARD', 'VERSION:3.0',
+    'N:Singh;Prahlad;;;', 'FN:Prahlad Singh',
+    'TITLE:Full-Stack Developer',
+    'TEL;TYPE=CELL:+919149062842',
+    'EMAIL;TYPE=INTERNET:prahlad.singh.dev@gmail.com',
+    'URL:https://prahladsingh.in/',
+    'URL:https://github.com/PrahladWebDev',
+    'URL:https://www.linkedin.com/in/prahlad-singh-52162b232',
+    'ADR:;;;Gurugram;Haryana;;India',
+    'NOTE:' + esc('Full-Stack MERN/MEVN developer. Real-time systems that stay up.'),
+    photo ? 'PHOTO;ENCODING=b;TYPE=JPEG:' + photo : '',
+    'END:VCARD'
+  ].filter(Boolean).map(fold);
+  const blob = new Blob([lines.join('\r\n') + '\r\n'], { type: 'text/vcard;charset=utf-8' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = 'Prahlad-Singh.vcf';
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 4000);
+  if (val) { val.textContent = 'Saved ✓ — open the file to add'; setTimeout(() => { val.textContent = orig; }, 2600); }
+}
+
 // ── COMMAND PALETTE (Ctrl/Cmd+K, or "/") ─────────────────────────
 (function initCommandPalette() {
   const root = document.getElementById('cmdk');
@@ -2875,6 +3000,8 @@ window.addEventListener('resize', () => {
     link('LinkedIn', 'Prahlad Singh', 'https://www.linkedin.com/in/prahlad-singh-52162b232', 'social profile');
     link('GitHub profile', 'github.com/PrahladWebDev', 'https://github.com/PrahladWebDev', 'code repos social');
     link('WhatsApp', 'Message me', 'https://wa.me/919149062842', 'chat contact phone');
+    items.push({ g: 'Links', label: 'Save contact', hint: 'Download my vCard', kw: 'vcard vcf phone address book add',
+      run: () => saveContact(document.getElementById('save-contact')) });
     document.querySelectorAll('.theme-swatch').forEach(b => items.push({
       g: 'Themes', label: 'Theme: ' + (b.getAttribute('title') || b.dataset.theme).replace(/\s*\(.*\)/, ''), hint: 'Switch colour theme', kw: 'theme colour color dark light mode',
       run: () => b.click()
@@ -3510,14 +3637,24 @@ fetchFullGitHub();
 // ══════════════════════════════════════════════════════════════
 (function initRoute() {
   const id = sectionFromLocation();
+  const rawHash = location.hash.replace('#', '').toLowerCase();
+  const legacyHash = SECTIONS.includes(rawHash);   // old /#skills links
   const onRoot = location.pathname === '/' || location.pathname === '/index.html';
   // legacy /#skills -> /skills ; /skills/ -> /skills ; keep plain "/" as is
   if (!(onRoot && id === 'about' && !location.hash)) {
     const url = sectionUrl(id);
-    try { if (location.pathname !== url || location.hash) history.replaceState({ section: id }, '', url); } catch (e) { /* file:// preview */ }
+    try { if (location.pathname !== url || legacyHash) history.replaceState({ section: id }, '', url + (legacyHash ? '' : location.hash)); } catch (e) { /* file:// preview */ }
   }
   if (id !== 'about') showSection(id);
+  if (id === 'projects' && rawHash && !legacyHash) focusProjectBySlug(rawHash);   // /projects#gathalok
 })();
+
+// typing a #project-name into the address bar while already on Projects
+window.addEventListener('hashchange', () => {
+  const h = location.hash.replace('#', '').toLowerCase();
+  const cur = document.querySelector('.section.active');
+  if (h && !SECTIONS.includes(h) && cur && cur.id === 'section-projects') focusProjectBySlug(h);
+});
 </script>
 </body>
 </html>
