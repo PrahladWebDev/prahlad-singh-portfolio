@@ -528,6 +528,36 @@ overflow: hidden;
   transition: all 0.15s; background: var(--panel-2);
 }
 #section-github .repo-card .repo-links a:hover { background: var(--accent); color: #14100a; border-color: var(--accent); }
+/* GitHub contribution heatmap */
+.gh-heat { --h1:#0e4429; --h2:#006d32; --h3:#26a641; --h4:#39d353; border: 1px solid var(--line); border-radius: var(--radius); background: var(--panel); padding: 18px 20px 14px; margin: 4px 0 22px; min-width: 0; max-width: 100%; box-sizing: border-box; }
+@supports (color: color-mix(in srgb, red, blue)) {
+  .gh-heat { --h1: color-mix(in srgb, var(--signal) 28%, var(--panel-2)); --h2: color-mix(in srgb, var(--signal) 52%, var(--panel-2)); --h3: color-mix(in srgb, var(--signal) 78%, var(--panel-2)); --h4: var(--signal); }
+}
+.gh-heat-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 6px 16px; margin-bottom: 14px; }
+.gh-heat-title { font-family: var(--mono); font-size: 10px; letter-spacing: 1px; color: var(--muted); text-transform: uppercase; }
+.gh-heat-total { font-family: var(--mono); font-size: 11px; color: var(--muted); }
+.gh-heat-total b { font-family: var(--display); font-size: 18px; color: var(--text); margin-right: 4px; }
+.gh-heat-body { display: flex; gap: 8px; min-width: 0; }
+.gh-days { display: grid; grid-template-rows: repeat(7, 11px); gap: 3px; margin-top: 20px; font-family: var(--mono); font-size: 9px; color: var(--faint); line-height: 11px; flex-shrink: 0; }
+.gh-scroll { overflow-x: auto; padding-bottom: 6px; flex: 1 1 0; width: 0; min-width: 0; }
+.gh-months { display: grid; gap: 3px; height: 14px; margin-bottom: 6px; font-family: var(--mono); font-size: 9px; color: var(--faint); line-height: 14px; }
+.gh-months span { white-space: nowrap; }
+.gh-grid { display: grid; grid-template-rows: repeat(7, 11px); grid-auto-flow: column; grid-auto-columns: 11px; gap: 3px; width: max-content; }
+.gh-grid i, .gh-legend i { display: block; width: 11px; height: 11px; border-radius: 3px; background: var(--panel-2); box-shadow: inset 0 0 0 1px var(--line); }
+.gh-grid i.pad { background: none; box-shadow: none; }
+.gh-grid i.l1, .gh-legend i.l1 { background: var(--h1); box-shadow: none; }
+.gh-grid i.l2, .gh-legend i.l2 { background: var(--h2); box-shadow: none; }
+.gh-grid i.l3, .gh-legend i.l3 { background: var(--h3); box-shadow: none; }
+.gh-grid i.l4, .gh-legend i.l4 { background: var(--h4); box-shadow: none; }
+.gh-grid i:not(.pad):hover { outline: 1.5px solid var(--text); outline-offset: 1px; }
+.gh-heat-foot { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 16px; margin-top: 8px; font-family: var(--mono); font-size: 9.5px; color: var(--faint); }
+.gh-heat-foot a { color: var(--accent); text-decoration: none; font-weight: 700; }
+.gh-heat-foot a:hover { text-decoration: underline; text-underline-offset: 2px; }
+.gh-legend { display: flex; align-items: center; gap: 4px; }
+.gh-legend span { margin: 0 3px; }
+.gh-heat-note { font-family: var(--mono); font-size: 11px; color: var(--muted); padding: 6px 0; }
+.gh-heat-note a { color: var(--accent); }
+@media (max-width: 560px) { .gh-heat { padding: 14px 14px 12px; } }
 #section-github .gh-summary { display: grid; grid-template-columns: repeat(5,1fr); gap: 12px; margin: 24px 0 12px; }
 #section-github .gh-summary .gh-stat { border: 1px solid var(--line); border-radius: var(--radius-sm); padding: 14px 10px; text-align: center; background: var(--panel); }
 #section-github .gh-summary .gh-stat .gh-num { font-family: var(--display); font-size: 24px; font-weight: 800; color: var(--text); }
@@ -1359,6 +1389,8 @@ html[lang] #section-github .gh-summary .gh-stat:nth-child(5n+3) { background: va
 html[lang] #section-github .gh-summary .gh-stat:nth-child(5n+4) { background: var(--butter); }
 html[lang] #section-github .gh-summary .gh-stat:nth-child(5n)   { background: var(--lilac); }
 html[lang] #section-github .gh-summary .gh-stat .gh-label { color: var(--on-pastel); font-weight: 800; font-size: 9.5px; }
+html[lang] .gh-heat { border: 3px solid var(--ink); border-radius: var(--radius); background: var(--card); box-shadow: var(--shadow); }
+html[lang] .gh-grid i, html[lang] .gh-legend i { border-radius: 4px; }
 html[lang] .gh-skel i { background: linear-gradient(90deg,var(--card) 25%,var(--panel-2) 50%,var(--card) 75%); background-size: 200% 100%; border: 2.5px solid var(--line-strong); border-radius: 18px; }
 
 /* ── forms ── */
@@ -2871,6 +2903,74 @@ function retryGitHub() {
   document.getElementById('github-full-content').innerHTML = GH_SKEL;
   fetchFullGitHub();
 }
+// ── GITHUB CONTRIBUTION HEATMAP ──────────────────────────────────
+// GitHub's REST API has no contribution calendar, so this reads it from the public
+// proxy github-contributions-api.jogruber.de (no token, cached ~1h). If that service
+// is down, the card just shows a link to your profile instead of breaking the tab.
+async function renderGhHeatmap() {
+  const box = document.getElementById('gh-heat');
+  if (!box) return;
+  const USER = 'PrahladWebDev';
+  const profile = 'https://github.com/' + USER;
+  try {
+    const data = await ghJson('https://github-contributions-api.jogruber.de/v4/' + USER + '?y=last');
+    const days = (data && data.contributions) || [];
+    if (!days.length) throw new Error('empty');
+    const total = days.reduce((a, d) => a + (d.count || 0), 0);
+
+    const utc = iso => new Date(iso + 'T00:00:00Z');
+    const lead = utc(days[0].date).getUTCDay();            // pad so rows are Sun..Sat
+    const cells = Array(lead).fill(null).concat(days);
+    const weeks = Math.ceil(cells.length / 7);
+
+    // month labels: one per month change, skipping a first label that would be crowded
+    const MON = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    const marks = [];
+    let prev = -1;
+    for (let w = 0; w < weeks; w++) {
+      const d = cells.slice(w * 7, w * 7 + 7).find(Boolean);
+      if (!d) continue;
+      const m = utc(d.date).getUTCMonth();
+      if (m !== prev) { marks.push({ w, m }); prev = m; }
+    }
+    if (marks.length > 1 && marks[1].w - marks[0].w < 3) marks.shift();
+    const monthHtml = marks.map(k => `<span style="grid-column:${k.w + 1}">${MON[k.m]}</span>`).join('');
+
+    const fmt = iso => utc(iso).toLocaleDateString('en-IN', { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric', timeZone: 'UTC' });
+    const gridHtml = cells.map(d => d
+      ? `<i class="l${Math.min(4, Math.max(0, d.level | 0))}" title="${d.count} contribution${d.count === 1 ? '' : 's'} · ${fmt(d.date)}"></i>`
+      : '<i class="pad"></i>').join('');
+
+    box.innerHTML = `
+      <div class="gh-heat-head">
+        <span class="gh-heat-title">Contribution Activity</span>
+        <span class="gh-heat-total"><b>${total.toLocaleString('en-IN')}</b>contributions in the last year</span>
+      </div>
+      <div class="gh-heat-body">
+        <div class="gh-days" aria-hidden="true"><span></span><span>Mon</span><span></span><span>Wed</span><span></span><span>Fri</span><span></span></div>
+        <div class="gh-scroll" id="gh-scroll">
+          <div class="gh-months" style="grid-template-columns:repeat(${weeks},11px)" aria-hidden="true">${monthHtml}</div>
+          <div class="gh-grid" role="img" aria-label="${total} GitHub contributions in the last year">${gridHtml}</div>
+        </div>
+      </div>
+      <div class="gh-heat-foot">
+        <a href="${profile}" target="_blank" rel="noopener">View on GitHub ↗</a>
+        <span class="gh-legend">Less<span></span><i></i><i class="l1"></i><i class="l2"></i><i class="l3"></i><i class="l4"></i><span></span>More</span>
+      </div>`;
+    // the GitHub tab is hidden when this renders, so wait until it is actually visible,
+    // then jump to the most recent weeks (matters on small screens where the graph scrolls)
+    const sc = document.getElementById('gh-scroll');
+    if (sc && 'IntersectionObserver' in window) {
+      const io = new IntersectionObserver(es => {
+        if (es.some(e => e.isIntersecting)) { sc.scrollLeft = sc.scrollWidth; io.disconnect(); }
+      });
+      io.observe(sc);
+    } else if (sc) { sc.scrollLeft = sc.scrollWidth; }
+  } catch (e) {
+    box.innerHTML = `<div class="gh-heat-note">Contribution graph is unavailable right now — <a href="${profile}" target="_blank" rel="noopener">see it on GitHub ↗</a></div>`;
+  }
+}
+
 async function fetchFullGitHub() {
   const container = document.getElementById('github-full-content');
   try {
@@ -2920,6 +3020,8 @@ async function fetchFullGitHub() {
       </div>
       <div class="gh-line">▸ ${recentRepos} repo${recentRepos === 1 ? '' : 's'} updated in the last 90 days · last push ${lastPushTxt}</div>
 
+      <div class="gh-heat" id="gh-heat"><div class="gh-heat-note">Loading contribution graph…</div></div>
+
       <div style="display:flex;flex-wrap:wrap;align-items:center;gap:18px;margin:8px 0 20px;">
         <div style="font-family:var(--mono);font-size:9px;letter-spacing:1px;color:var(--muted);text-transform:uppercase;">Top Languages</div>
         <div class="top-langs">
@@ -2950,6 +3052,7 @@ async function fetchFullGitHub() {
         `).join('')}
       </div>
     `;
+    renderGhHeatmap();
   } catch (err) {
     container.innerHTML = `<div class="gh-fail"><div>⚡ GitHub is taking a break (rate limit or network).</div><div class="gh-fail-actions"><button class="btn" type="button" onclick="retryGitHub()">Retry</button><a class="btn primary" href="https://github.com/PrahladWebDev" target="_blank" rel="noopener">Open GitHub profile</a></div></div>`;
   }
