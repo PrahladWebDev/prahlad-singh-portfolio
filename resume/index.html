@@ -4,10 +4,13 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Resume | Prahlad Singh — Full-Stack MERN/MEVN Developer</title>
-<meta name="description" content="Resume of Prahlad Singh, full-stack MERN/MEVN developer based in Gurgaon, India. View online or download the PDF.">
+<meta name="description" content="Resume of Prahlad Singh, full-stack MERN/MEVN developer in Gurgaon, India: multi-tenant SaaS, real-time systems, React Native. Read online or download the PDF.">
 <link rel="canonical" href="https://prahladsingh.in/resume">
 <meta name="robots" content="index, follow">
 <meta name="theme-color" content="#fff7ec">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"ProfilePage","mainEntity":{"@type":"Person","name":"Prahlad Singh","jobTitle":"Full-Stack Developer","url":"https://prahladsingh.in/","sameAs":["https://www.linkedin.com/in/prahlad-singh-52162b232","https://github.com/PrahladWebDev"],"worksFor":{"@type":"Organization","name":"Lifelayer Health Solutions Pvt. Ltd."},"alumniOf":[{"@type":"CollegeOrUniversity","name":"Dr. A.P.J. Abdul Kalam Technical University"},{"@type":"CollegeOrUniversity","name":"Mahatma Jyotiba Phule Rohilkhand University"}],"address":{"@type":"PostalAddress","addressLocality":"Gurgaon","addressRegion":"Haryana","addressCountry":"IN"},"knowsAbout":["MERN stack","MEVN stack","React Native","Node.js","Vue.js","Spring Boot","MongoDB","Multi-tenant architecture","Real-time systems"]}}
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@600;700;800&display=swap">
 <script>
@@ -20,12 +23,12 @@ var m=document.querySelector('meta[name="theme-color"]');if(m&&night)m.setAttrib
 :root{--bg:#fff7ec;--card:#fff;--text:#3d3560;--muted:#6a6288;--ink:#3d3560;--shc:#3d3560;--accent:#ff8f7a;--butter:#ffe9a6;--pink:#ffc2d4;--mint:#bfeedd;--sky:#bfe3ff;--lilac:#dccfff;--glow:.4;--dot:rgba(61,53,96,.10)}
 html[data-mode="night"]{--bg:#0b1020;--card:#141b33;--text:#ece9ff;--muted:#a7a3c9;--ink:#8f89d4;--shc:rgba(0,0,0,.55);--accent:#f2a93b;--glow:.12;--dot:rgba(255,255,255,.05)}
 *{box-sizing:border-box;margin:0;padding:0}
-html,body{height:100%}
+html,body{min-height:100%}
 body{font-family:'Nunito',system-ui,sans-serif;color:var(--text);background:
  radial-gradient(circle at 12% 10%,color-mix(in srgb,var(--pink) calc(var(--glow)*100%),transparent) 0,transparent 38%),
  radial-gradient(circle at 90% 20%,color-mix(in srgb,var(--sky) calc(var(--glow)*100%),transparent) 0,transparent 34%),
  radial-gradient(circle at 70% 95%,color-mix(in srgb,var(--mint) calc(var(--glow)*100%),transparent) 0,transparent 36%),var(--bg);
- display:flex;flex-direction:column;position:relative;overflow:hidden}
+ display:flex;flex-direction:column;position:relative;overflow-x:hidden}
 body::before{content:'';position:fixed;inset:0;background-image:radial-gradient(var(--dot) 1.6px,transparent 1.7px);background-size:26px 26px;pointer-events:none}
 header{position:relative;z-index:2;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;padding:14px 22px}
 .title{font-family:'Fredoka',sans-serif;font-weight:700;font-size:clamp(18px,3vw,24px)}
@@ -35,19 +38,43 @@ header{position:relative;z-index:2;display:flex;align-items:center;justify-conte
 .btn:hover{transform:translate(-2px,-4px) rotate(-1.5deg);box-shadow:6px 8px 0 var(--shc);background:var(--butter);color:#3a3260}
 .btn:active{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--shc)}
 .btn:focus-visible{outline:3px solid #7458d8;outline-offset:3px}
-main{position:relative;z-index:2;flex:1;min-height:0;padding:6px 22px 24px}
-.sheet{height:100%;border:3px solid var(--ink);border-radius:22px;background:var(--card);box-shadow:6px 6px 0 var(--shc);overflow:hidden}
+main{position:relative;z-index:2;padding:6px 22px 24px}
+.sheet{height:calc(100vh - 92px);min-height:520px;border:3px solid var(--ink);border-radius:22px;background:var(--card);box-shadow:6px 6px 0 var(--shc);overflow:hidden}
 object{width:100%;height:100%;border:0;display:block}
 .fallback{padding:48px 20px;text-align:center;color:var(--muted);font-weight:700;line-height:1.8}
 .fallback .btn{margin-top:14px}
-@media (max-width:640px){header{padding:12px 14px;justify-content:center}main{padding:4px 12px 16px}.title{order:-1;width:100%;text-align:center}}
+.rtext{position:relative;z-index:2;max-width:920px;margin:0 auto;padding:10px 22px 64px;scroll-margin-top:12px}
+.rcard{border:3px solid var(--ink);border-radius:22px;background:var(--card);box-shadow:6px 6px 0 var(--shc);padding:26px 28px;margin-bottom:22px}
+.rtext h2{font-family:'Fredoka',sans-serif;font-weight:700;font-size:clamp(20px,3vw,26px);margin-bottom:14px}
+.rtext h2 em{font-style:normal;background:linear-gradient(transparent 58%,color-mix(in srgb,var(--butter) 80%,transparent) 58%,color-mix(in srgb,var(--butter) 80%,transparent) 92%,transparent 92%);padding:0 .12em}
+.rtext h3{font-family:'Fredoka',sans-serif;font-weight:600;font-size:18px;margin-bottom:2px}
+.rtext p,.rtext li{font-weight:600;line-height:1.75;color:var(--muted)}
+.rtext p{margin-bottom:6px}
+.rtext ul{margin:8px 0 0 20px}
+.rtext li{margin-bottom:6px}
+.rtext a{color:var(--text);font-weight:800;text-decoration-thickness:2px;text-underline-offset:3px}
+.rtext a:hover{color:var(--accent)}
+.rtext a:focus-visible{outline:3px solid #7458d8;outline-offset:3px;border-radius:4px}
+.r-role{font-weight:800;color:var(--text)}
+.r-meta{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:13px;font-weight:700;color:var(--muted);margin:2px 0 8px}
+.r-contact{display:flex;flex-wrap:wrap;gap:8px 12px;margin-top:12px}
+.r-contact a{border:2.5px solid var(--ink);border-radius:999px;padding:5px 14px;font-size:13px;text-decoration:none;background:var(--bg)}
+.r-skills{display:grid;grid-template-columns:150px 1fr;gap:10px 18px}
+.r-skills dt{font-weight:800;color:var(--text)}
+.r-skills dd{font-weight:600;color:var(--muted);line-height:1.7}
+.r-proj{padding:14px 0;border-top:2px dashed color-mix(in srgb,var(--ink) 35%,transparent)}
+.r-proj:first-of-type{border-top:0;padding-top:0}
+.r-links{font-size:13px;margin-top:2px}
+.r-links a{margin-right:12px}
+@media (max-width:640px){header{padding:12px 14px;justify-content:center}main{padding:4px 12px 16px}.title{order:-1;width:100%;text-align:center}.sheet{height:calc(100vh - 150px)}.rtext{padding:6px 12px 48px}.rcard{padding:20px 18px}.r-skills{grid-template-columns:1fr;gap:2px}.r-skills dd{margin-bottom:10px}}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
 </head>
 <body>
   <header>
     <a class="btn" href="/">← prahladsingh.in</a>
-    <div class="title">Prahlad Singh — <em>Resume</em></div>
+    <h1 class="title">Prahlad Singh — <em>Resume</em></h1>
+    <a class="btn" href="#text">↓ Text version</a>
     <a class="btn p" href="/prahlad_resume.pdf" download="Prahlad_Singh_Resume.pdf">⬇ Download PDF</a>
   </header>
   <main>
@@ -60,6 +87,105 @@ object{width:100%;height:100%;border:0;display:block}
       </object>
     </div>
   </main>
+
+  <div class="rtext" id="text">
+    <section class="rcard" aria-labelledby="r-about">
+      <h2 id="r-about">Prahlad Singh — <em>Full-Stack Developer</em></h2>
+      <div class="r-meta"><span>MERN / MEVN</span><span>React Native</span><span>Real-Time &amp; Multi-Tenant Systems</span><span>Gurgaon, Haryana, India</span></div>
+      <p>Full-stack developer specializing in MERN/MEVN with production experience in multi-tenant SaaS, JWT/RBAC security, and real-time systems (Socket.io, PeerJS, Redis), plus Java/Spring Boot. Comfortable end-to-end: MongoDB/MySQL schema design, REST APIs, React/Vue/React Native frontends, and Linux DevOps (Nginx, PM2, GitHub Actions). Currently building a healthcare platform with DICOM imaging, telemedicine, and Razorpay payments. Shipped 14 projects, including a Microsoft Store app and an npm CLI.</p>
+      <div class="r-contact">
+        <a href="mailto:prahlad.singh.dev@gmail.com">Email</a>
+        <a href="https://www.linkedin.com/in/prahlad-singh-52162b232" rel="me noopener" target="_blank">LinkedIn</a>
+        <a href="https://github.com/PrahladWebDev" rel="me noopener" target="_blank">GitHub</a>
+        <a href="/">Portfolio</a>
+      </div>
+    </section>
+
+    <section class="rcard" aria-labelledby="r-skills">
+      <h2 id="r-skills">Technical <em>Skills</em></h2>
+      <dl class="r-skills">
+        <dt>Frontend</dt><dd>React.js, Vue.js, Vuetify, React Native (Expo), Next.js, Redux Toolkit, Vuex, TanStack Query, JavaScript (ES6+)/TypeScript, Tailwind CSS, HTML5/CSS3, Vite, Monaco Editor</dd>
+        <dt>Backend</dt><dd>Node.js, Express.js, NestJS, Java, Spring Boot, Spring Security, Spring Data JPA, RESTful APIs, Socket.io, PeerJS (WebRTC), Redis, JWT, RBAC, PHP</dd>
+        <dt>Database</dt><dd>MongoDB, Mongoose, Aggregation Pipelines, Multi-Tenant Architecture, MySQL, Schema Design &amp; Indexing</dd>
+        <dt>DevOps &amp; Tools</dt><dd>Linux, Nginx, PM2, Docker, GitHub Actions (CI/CD), Git, SSH/SCP, SSL, Postman, Puppeteer, Cloudinary, Vitest, Electron</dd>
+        <dt>Publishing</dt><dd>Microsoft Store, Play Store, Android APK Distribution, npm Publishing, CLI Development (Ink)</dd>
+        <dt>Data Viz, AI &amp; APIs</dt><dd>Chart.js, Three.js, D3.js, Gemini API, GitHub API, Razorpay, DICOM Imaging (DWV), OpenWeatherMap API, remove.bg, Cron Automation</dd>
+      </dl>
+    </section>
+
+    <section class="rcard" aria-labelledby="r-exp">
+      <h2 id="r-exp"><em>Experience</em></h2>
+      <article>
+        <h3>Lifelayer Health Solutions Pvt. Ltd.</h3>
+        <div class="r-meta"><span class="r-role">Backend Developer → Full-Stack Developer</span><span>Mar 2025 – Present</span><span>Gurugram, India</span></div>
+        <ul>
+          <li>Built a large-scale multi-tenant healthcare platform (MEVN) with per-company MongoDB isolation, a connection manager, and a model factory pattern.</li>
+          <li>Developed a DICOM medical imaging viewer in Vue.js with multi-panel grids (1×1 to 2×4), per-panel DWV instances, and drag-and-drop series loading.</li>
+          <li>Built a production-grade telemedicine system using PeerJS, Socket.io, and Redis session persistence, plus real-time ambulance booking with live GPS tracking via Google Maps.</li>
+          <li>Integrated Razorpay payments (Transaction schema, webhooks) with Puppeteer PDF invoicing; designed JWT/RBAC auth across 5+ roles on indexed, HIPAA-aligned MongoDB schemas; managed VPS deployments (Nginx, PM2, GitHub Actions CI/CD).</li>
+        </ul>
+      </article>
+    </section>
+
+    <section class="rcard" aria-labelledby="r-proj">
+      <h2 id="r-proj">Selected <em>Projects</em></h2>
+      <article class="r-proj">
+        <h3>GathaLok — World Folklore Platform</h3>
+        <div class="r-meta"><span>Web, Android &amp; Windows</span></div>
+        <ul>
+          <li>Built a storytelling platform with 500+ stories across 20+ countries, a contributor workflow (drafts, admin review), an admin CMS, and JWT auth with 4 roles; published the desktop edition on the Microsoft Store.</li>
+          <li>Led a large-scale architecture migration from a state-wise to a country-wise data model across the entire application.</li>
+        </ul>
+        <div class="r-links"><a href="https://gathalok.prahladsingh.in/" target="_blank" rel="noopener">Live</a><a href="https://apps.microsoft.com/detail/9PP0R2RCS99W" target="_blank" rel="noopener">Microsoft Store</a><a href="https://github.com/PrahladWebDev/gathalok.git" target="_blank" rel="noopener">GitHub</a></div>
+      </article>
+      <article class="r-proj">
+        <h3>Foldd — Wardrobe &amp; Outfit Planning App</h3>
+        <div class="r-meta"><span>React Native</span></div>
+        <ul>
+          <li>Built a full-stack Expo app with a Node/Express/MongoDB backend: outfit builder, laundry tracker, weather-aware suggestions (OpenWeatherMap), and a trip packing-list generator.</li>
+          <li>Built a Stats tab on MongoDB aggregation pipelines (wear timelines, cost-per-wear) with react-native-svg charts, plus remove.bg photo cleanup.</li>
+        </ul>
+        <div class="r-links"><a href="https://github.com/PrahladWebDev/wardrobe-manager-react-native" target="_blank" rel="noopener">GitHub</a></div>
+      </article>
+      <article class="r-proj">
+        <h3>Assessment Platform — Proctored Online Exams</h3>
+        <ul>
+          <li>Built three coordinated apps (Vue 3 + Vuetify admin, proctored candidate app with Monaco editor, Node/Express/MongoDB backend) with autosave, auto-submit timers, and webcam/screen recording.</li>
+          <li>Added copy-paste/devtools violation detection, bulk CSV/XLSX import, and a live progress dashboard over Socket.IO with optional Redis cache.</li>
+        </ul>
+        <div class="r-links"><a href="https://admin.assessment.prahladsingh.in/" target="_blank" rel="noopener">Live</a><a href="https://github.com/PrahladWebDev/assessment-platform" target="_blank" rel="noopener">GitHub</a></div>
+      </article>
+      <article class="r-proj">
+        <h3>Expense Tracker — Spring Boot &amp; React (TypeScript)</h3>
+        <ul>
+          <li>Built a Java 21 / Spring Boot 3 / MySQL backend with JWT refresh-token rotation, RBAC, and a Splitwise-style group system with a debt-simplification engine; added receipt OCR and PDF/CSV reports.</li>
+          <li>Wrote Mockito and Vitest unit tests; fully Dockerized with docker-compose for one-command startup.</li>
+        </ul>
+        <div class="r-links"><a href="https://expensetracker.prahladsingh.in/" target="_blank" rel="noopener">Live</a><a href="https://github.com/PrahladWebDev/expense-tracker-java" target="_blank" rel="noopener">GitHub</a></div>
+      </article>
+      <article class="r-proj">
+        <h3>Codebase Detective — Deterministic Codebase Analysis</h3>
+        <ul>
+          <li>Built a tool (ZIP or GitHub URL) producing architecture reports via Babel AST import resolution, a React Flow dependency graph, DFS circular-dependency detection, and git churn analysis; hardened against zip-slip/path traversal.</li>
+        </ul>
+        <div class="r-links"><a href="https://detective.prahladsingh.in/analyze" target="_blank" rel="noopener">Live</a><a href="https://github.com/PrahladWebDev/codebase-detective.git" target="_blank" rel="noopener">GitHub</a></div>
+      </article>
+      <p><a href="/projects">See all 14 projects →</a></p>
+    </section>
+
+    <section class="rcard" aria-labelledby="r-edu">
+      <h2 id="r-edu"><em>Education</em></h2>
+      <article class="r-proj">
+        <h3>Master of Computer Applications (MCA)</h3>
+        <div class="r-meta"><span>Dr. A.P.J. Abdul Kalam Technical University</span><span>2022 – 2024</span></div>
+      </article>
+      <article class="r-proj">
+        <h3>Bachelor of Computer Applications (BCA)</h3>
+        <div class="r-meta"><span>Mahatma Jyotiba Phule Rohilkhand University</span><span>2019 – 2022</span></div>
+      </article>
+      <p><span class="r-role">Languages:</span> English, Hindi &nbsp;·&nbsp; <span class="r-role">Availability:</span> Open to full-time opportunities</p>
+    </section>
+  </div>
   <script>
     // If the browser can't preview PDFs inline, download automatically
     (function () {
