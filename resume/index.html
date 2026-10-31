@@ -43,8 +43,14 @@ main{position:relative;z-index:2;padding:6px 22px 24px}
 object{width:100%;height:100%;border:0;display:block}
 .fallback{padding:48px 20px;text-align:center;color:var(--muted);font-weight:700;line-height:1.8}
 .fallback .btn{margin-top:14px}
-.rtext{position:relative;z-index:2;max-width:920px;margin:0 auto;padding:10px 22px 64px;scroll-margin-top:12px}
-.rcard{border:3px solid var(--ink);border-radius:22px;background:var(--card);box-shadow:6px 6px 0 var(--shc);padding:26px 28px;margin-bottom:22px}
+.rtext{position:relative;z-index:2;width:100%;max-width:none;margin:0;padding:10px 22px 64px;scroll-margin-top:12px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,2fr);gap:22px;align-items:start}
+.rcol{display:flex;flex-direction:column;gap:22px;min-width:0}
+.rcard{border:3px solid var(--ink);border-radius:22px;background:var(--card);box-shadow:6px 6px 0 var(--shc);padding:26px 28px;margin:0}
+.r-projgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:18px;align-items:stretch}
+.r-projgrid .r-proj{display:flex;flex-direction:column;border:2.5px solid color-mix(in srgb,var(--ink) 45%,transparent);border-radius:16px;padding:16px 18px!important;background:var(--bg)}
+.r-projgrid .r-proj:first-of-type{border-top:2.5px solid color-mix(in srgb,var(--ink) 45%,transparent)}
+.r-projgrid .r-links{margin-top:auto;padding-top:8px}
+.r-projmore{margin-top:16px}
 .rtext h2{font-family:'Fredoka',sans-serif;font-weight:700;font-size:clamp(20px,3vw,26px);margin-bottom:14px}
 .rtext h2 em{font-style:normal;background:linear-gradient(transparent 58%,color-mix(in srgb,var(--butter) 80%,transparent) 58%,color-mix(in srgb,var(--butter) 80%,transparent) 92%,transparent 92%);padding:0 .12em}
 .rtext h3{font-family:'Fredoka',sans-serif;font-weight:600;font-size:18px;margin-bottom:2px}
@@ -59,14 +65,15 @@ object{width:100%;height:100%;border:0;display:block}
 .r-meta{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:13px;font-weight:700;color:var(--muted);margin:2px 0 8px}
 .r-contact{display:flex;flex-wrap:wrap;gap:8px 12px;margin-top:12px}
 .r-contact a{border:2.5px solid var(--ink);border-radius:999px;padding:5px 14px;font-size:13px;text-decoration:none;background:var(--bg)}
-.r-skills{display:grid;grid-template-columns:150px 1fr;gap:10px 18px}
+.r-skills{display:grid;grid-template-columns:1fr;gap:2px}
 .r-skills dt{font-weight:800;color:var(--text)}
-.r-skills dd{font-weight:600;color:var(--muted);line-height:1.7}
+.r-skills dd{font-weight:600;color:var(--muted);line-height:1.7;margin-bottom:12px}
 .r-proj{padding:14px 0;border-top:2px dashed color-mix(in srgb,var(--ink) 35%,transparent)}
 .r-proj:first-of-type{border-top:0;padding-top:0}
 .r-links{font-size:13px;margin-top:2px}
 .r-links a{margin-right:12px}
-@media (max-width:640px){header{padding:12px 14px;justify-content:center}main{padding:4px 12px 16px}.title{order:-1;width:100%;text-align:center}.sheet{height:calc(100vh - 150px)}.rtext{padding:6px 12px 48px}.rcard{padding:20px 18px}.r-skills{grid-template-columns:1fr;gap:2px}.r-skills dd{margin-bottom:10px}}
+@media (max-width:900px){.rtext{grid-template-columns:1fr}}
+@media (max-width:640px){header{padding:12px 14px;justify-content:center}main{padding:4px 12px 16px}.title{order:-1;width:100%;text-align:center}.sheet{height:calc(100vh - 150px)}.rtext{padding:6px 12px 48px;gap:16px}.rcol{gap:16px}.rcard{padding:20px 18px}}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
 </head>
@@ -89,7 +96,8 @@ object{width:100%;height:100%;border:0;display:block}
   </main>
 
   <div class="rtext" id="text">
-    <section class="rcard" aria-labelledby="r-about">
+    <div class="rcol">
+    <section class="rcard" id="r-about-card" aria-labelledby="r-about">
       <h2 id="r-about">Prahlad Singh — <em>Full-Stack Developer</em></h2>
       <div class="r-meta"><span>MERN / MEVN</span><span>React Native</span><span>Real-Time &amp; Multi-Tenant Systems</span><span>Gurgaon, Haryana, India</span></div>
       <p>Full-stack developer specializing in MERN/MEVN with production experience in multi-tenant SaaS, JWT/RBAC security, and real-time systems (Socket.io, PeerJS, Redis), plus Java/Spring Boot. Comfortable end-to-end: MongoDB/MySQL schema design, REST APIs, React/Vue/React Native frontends, and Linux DevOps (Nginx, PM2, GitHub Actions). Currently building a healthcare platform with DICOM imaging, telemedicine, and Razorpay payments. Shipped 14 projects, including a Microsoft Store app and an npm CLI.</p>
@@ -100,8 +108,7 @@ object{width:100%;height:100%;border:0;display:block}
         <a href="/">Portfolio</a>
       </div>
     </section>
-
-    <section class="rcard" aria-labelledby="r-skills">
+    <section class="rcard" id="r-skills-card" aria-labelledby="r-skills">
       <h2 id="r-skills">Technical <em>Skills</em></h2>
       <dl class="r-skills">
         <dt>Frontend</dt><dd>React.js, Vue.js, Vuetify, React Native (Expo), Next.js, Redux Toolkit, Vuex, TanStack Query, JavaScript (ES6+)/TypeScript, Tailwind CSS, HTML5/CSS3, Vite, Monaco Editor</dd>
@@ -112,8 +119,21 @@ object{width:100%;height:100%;border:0;display:block}
         <dt>Data Viz, AI &amp; APIs</dt><dd>Chart.js, Three.js, D3.js, Gemini API, GitHub API, Razorpay, DICOM Imaging (DWV), OpenWeatherMap API, remove.bg, Cron Automation</dd>
       </dl>
     </section>
-
-    <section class="rcard" aria-labelledby="r-exp">
+    <section class="rcard" id="r-edu-card" aria-labelledby="r-edu">
+      <h2 id="r-edu"><em>Education</em></h2>
+      <article class="r-proj">
+        <h3>Master of Computer Applications (MCA)</h3>
+        <div class="r-meta"><span>Dr. A.P.J. Abdul Kalam Technical University</span><span>2022 – 2024</span></div>
+      </article>
+      <article class="r-proj">
+        <h3>Bachelor of Computer Applications (BCA)</h3>
+        <div class="r-meta"><span>Mahatma Jyotiba Phule Rohilkhand University</span><span>2019 – 2022</span></div>
+      </article>
+      <p><span class="r-role">Languages:</span> English, Hindi &nbsp;·&nbsp; <span class="r-role">Availability:</span> Open to full-time opportunities</p>
+    </section>
+    </div>
+    <div class="rcol">
+    <section class="rcard" id="r-exp-card" aria-labelledby="r-exp">
       <h2 id="r-exp"><em>Experience</em></h2>
       <article>
         <h3>Lifelayer Health Solutions Pvt. Ltd.</h3>
@@ -126,9 +146,9 @@ object{width:100%;height:100%;border:0;display:block}
         </ul>
       </article>
     </section>
-
-    <section class="rcard" aria-labelledby="r-proj">
+    <section class="rcard" id="r-proj-card" aria-labelledby="r-proj">
       <h2 id="r-proj">Selected <em>Projects</em></h2>
+      <div class="r-projgrid">
       <article class="r-proj">
         <h3>GathaLok — World Folklore Platform</h3>
         <div class="r-meta"><span>Web, Android &amp; Windows</span></div>
@@ -170,21 +190,14 @@ object{width:100%;height:100%;border:0;display:block}
         </ul>
         <div class="r-links"><a href="https://detective.prahladsingh.in/analyze" target="_blank" rel="noopener">Live</a><a href="https://github.com/PrahladWebDev/codebase-detective.git" target="_blank" rel="noopener">GitHub</a></div>
       </article>
-      <p><a href="/projects">See all 14 projects →</a></p>
+      </div>
+      <p class="r-projmore"><a href="/projects">See all 14 projects →</a></p>
     </section>
+    </div>
 
-    <section class="rcard" aria-labelledby="r-edu">
-      <h2 id="r-edu"><em>Education</em></h2>
-      <article class="r-proj">
-        <h3>Master of Computer Applications (MCA)</h3>
-        <div class="r-meta"><span>Dr. A.P.J. Abdul Kalam Technical University</span><span>2022 – 2024</span></div>
-      </article>
-      <article class="r-proj">
-        <h3>Bachelor of Computer Applications (BCA)</h3>
-        <div class="r-meta"><span>Mahatma Jyotiba Phule Rohilkhand University</span><span>2019 – 2022</span></div>
-      </article>
-      <p><span class="r-role">Languages:</span> English, Hindi &nbsp;·&nbsp; <span class="r-role">Availability:</span> Open to full-time opportunities</p>
-    </section>
+
+
+
   </div>
   <script>
     // If the browser can't preview PDFs inline, download automatically
