@@ -671,6 +671,16 @@ html[lang] .cmdk-item mark { color: var(--purple); }
 .pf-btn b{opacity:.65;font-weight:700;margin-left:4px}
 .proj-card.fade-in{animation:cardIn .45s ease both}
 @keyframes cardIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+/* deep-link landing: card drops in from above and settles in its place */
+.proj-card.proj-pre{opacity:0!important;transform:translateY(-110px) scale(.96)!important;animation:none!important}
+.proj-card.proj-land{animation:projLand .95s cubic-bezier(.2,.9,.3,1) both!important}
+@keyframes projLand{
+  0%{opacity:0;transform:translateY(-110px) scale(.96)}
+  55%{opacity:1;transform:translateY(12px) scale(1.01)}
+  75%{transform:translateY(-5px) scale(1)}
+  100%{opacity:1;transform:none}
+}
+@media (prefers-reduced-motion:reduce){.proj-card.proj-pre{transform:none!important}.proj-card.proj-land{animation:none!important}}
 .p-featured{font-family:var(--mono);font-size:9px;font-weight:700;letter-spacing:.4px;color:var(--accent);padding:5px 10px;border-radius:20px;border:1px solid var(--accent-dim);background:rgba(242,169,59,.08)}
 .p-more{margin:0}
 .p-more summary{cursor:pointer;font-family:var(--mono);font-size:10px;font-weight:700;color:var(--accent);list-style:none;padding:2px 0}
@@ -2571,9 +2581,13 @@ function focusProjectBySlug(slug) {
     const card = document.querySelector('#proj-grid .proj-card[data-slug="' + slug + '"]');
     if (card && sec && sec.classList.contains('active')) {
       clearInterval(t);
+      card.classList.remove('proj-land'); card.classList.add('proj-pre');   // hide above its spot
       card.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      card.classList.add('cmdk-flash');
-      setTimeout(() => card.classList.remove('cmdk-flash'), 1800);
+      setTimeout(() => {                                                    // scroll is mostly done: drop in and settle
+        card.classList.remove('proj-pre'); card.classList.add('proj-land');
+        card.classList.add('cmdk-flash');
+        setTimeout(() => { card.classList.remove('proj-land'); card.classList.remove('cmdk-flash'); }, 2000);
+      }, 450);
     } else if (++tries > 40) clearInterval(t);
   }, 80);
   return true;
