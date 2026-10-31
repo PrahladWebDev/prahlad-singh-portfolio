@@ -1630,7 +1630,7 @@ html[lang] .hero-mascot:focus-visible { outline: 3px solid var(--purple); outlin
 /* ── comic-panel page wipe ── */
 #panel-wipe { position: fixed; inset: 0; z-index: 99990; display: flex; pointer-events: none; visibility: hidden; }
 #panel-wipe.in, #panel-wipe.out { visibility: visible; }
-#panel-wipe i { flex: 1; transform: scaleY(0); transform-origin: top; border-right: 3px solid var(--ink); }
+#panel-wipe i { flex: 1; transform: scaleY(0); transform-origin: top; border-right: 3px solid var(--ink); will-change: transform; backface-visibility: hidden; }
 #panel-wipe i:nth-child(1) { background: var(--s1); } #panel-wipe i:nth-child(2) { background: var(--s4); }
 #panel-wipe i:nth-child(3) { background: var(--s2); } #panel-wipe i:nth-child(4) { background: var(--s3); }
 #panel-wipe i:nth-child(5) { background: var(--s5); border-right: 0; }
@@ -2791,19 +2791,25 @@ function showSection(id, el) {
 }
 
 // Comic-panel wipe between sections (skipped for reduced-motion)
-let _wiping = false;
+let _wiping = false, _wipeTimers = [], _wipeSwap = null;
 function panelWipe(swap) {
   const w = document.getElementById('panel-wipe');
-  if (!w || _wiping || matchMedia('(prefers-reduced-motion: reduce)').matches) { swap(); return; }
+  if (!w || matchMedia('(prefers-reduced-motion: reduce)').matches) { swap(); return; }
+  _wipeSwap = swap;                                    // latest click wins (no stale section swap)
+  if (_wiping) return;                                 // wipe already running: it will run the latest swap
   _wiping = true;
+  const later = (fn, ms) => _wipeTimers.push(setTimeout(fn, ms));
+  const finish = () => { _wipeTimers.forEach(clearTimeout); _wipeTimers = []; w.className = ''; _wiping = false; };
+  w.className = ''; void w.offsetWidth;                // reset so the 'in' animation always starts clean
   w.className = 'in';
-  const finish = () => { w.className = ''; _wiping = false; };
-  setTimeout(() => {
-    try { swap(); } catch (e) { console.error(e); }   // never let an error leave the overlay stuck
-    w.className = 'out';
-    setTimeout(finish, 420);
+  later(() => {
+    try { const fn = _wipeSwap; _wipeSwap = null; if (fn) fn(); } catch (e) { console.error(e); }
+    requestAnimationFrame(() => {                      // let heavy swap work paint first, then reveal
+      w.className = 'out';
+      later(finish, 500);
+    });
   }, 700);
-  setTimeout(finish, 2000);                            // failsafe
+  later(finish, 2500);                                 // failsafe (cleared by finish, so it can never hit a later wipe)
 }
 
 // go() = user clicked a nav item -> change section AND update the URL
