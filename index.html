@@ -1630,14 +1630,29 @@ html[lang] .hero-mascot:focus-visible { outline: 3px solid var(--purple); outlin
 /* ── comic-panel page wipe ── */
 #panel-wipe { position: fixed; inset: 0; z-index: 99990; display: flex; pointer-events: none; visibility: hidden; }
 #panel-wipe.in, #panel-wipe.out { visibility: visible; }
-#panel-wipe i { flex: 1; transform: scaleY(0); transform-origin: top; border-right: 3px solid var(--ink); will-change: transform; backface-visibility: hidden; }
+#panel-wipe { --t0: scaleY(0); --t1: scaleY(1); --t2: scaleY(0); --o: top; --oo: bottom; --dur: .26s; --step: 30ms; }
+#panel-wipe i { --dl: calc(var(--n) * var(--step)); flex: 1; transform: var(--t0); transform-origin: var(--o); border-right: 3px solid var(--ink); will-change: transform; backface-visibility: hidden; }
 #panel-wipe i:nth-child(1) { background: var(--s1); } #panel-wipe i:nth-child(2) { background: var(--s4); }
 #panel-wipe i:nth-child(3) { background: var(--s2); } #panel-wipe i:nth-child(4) { background: var(--s3); }
 #panel-wipe i:nth-child(5) { background: var(--s5); border-right: 0; }
-#panel-wipe.in i  { animation: wipeIn .26s cubic-bezier(.65,0,.35,1) forwards; animation-delay: calc(var(--n) * 30ms); }
-#panel-wipe.out i { transform: scaleY(1); transform-origin: bottom; animation: wipeOut .3s cubic-bezier(.65,0,.35,1) forwards; animation-delay: calc(var(--n) * 30ms); }
-@keyframes wipeIn  { to { transform: scaleY(1); } }
-@keyframes wipeOut { to { transform: scaleY(0); } }
+#panel-wipe.in i  { animation: wipeIn var(--dur) cubic-bezier(.65,0,.35,1) forwards; animation-delay: var(--dl); }
+#panel-wipe.out i { transform: var(--t1); transform-origin: var(--oo); animation: wipeOut .3s cubic-bezier(.65,0,.35,1) forwards; animation-delay: var(--dl); }
+@keyframes wipeIn  { to { transform: var(--t1); } }
+@keyframes wipeOut { to { transform: var(--t2); } }
+/* one comic-panel style per section (set via data-style on #panel-wipe) */
+#panel-wipe[data-style="drop"]    { }                                                                      /* About: stripes drop from the top */
+#panel-wipe[data-style="rise"]    { --o: bottom; --oo: top; }                                              /* Skills: stripes rise from the bottom */
+#panel-wipe[data-style="zipper"] i:nth-child(even) { transform-origin: bottom; }                           /* Experience: zip - alternate stripes from top / bottom */
+#panel-wipe[data-style="zipper"].out i:nth-child(odd)  { transform-origin: top; }
+#panel-wipe[data-style="zipper"].out i:nth-child(even) { transform-origin: bottom; }
+#panel-wipe[data-style="slide"]   { --t0: translateX(-101%); --t1: translateX(0); --t2: translateX(101%); --step: 45ms; --dur: .3s; }   /* Projects: panels slide in from the left */
+#panel-wipe[data-style="pop"]     { --t0: scale(0) rotate(-14deg); --t1: scale(1.02) rotate(0); --t2: scale(0) rotate(14deg); --o: center; --oo: center; --step: 55ms; --dur: .3s; }   /* Store: panels pop open */
+#panel-wipe[data-style="blinds"]  { perspective: 900px; --t0: rotateY(90deg); --t1: rotateY(0); --t2: rotateY(-90deg); --o: center; --oo: center; --step: 40ms; --dur: .3s; }   /* GitHub: venetian blinds flip */
+#panel-wipe[data-style="burst"]   { --o: center; --oo: center; }                                           /* Education: opens from the centre outwards */
+#panel-wipe[data-style="burst"] i:nth-child(3) { --dl: 0ms; }
+#panel-wipe[data-style="burst"] i:nth-child(2), #panel-wipe[data-style="burst"] i:nth-child(4) { --dl: 70ms; }
+#panel-wipe[data-style="burst"] i:nth-child(1), #panel-wipe[data-style="burst"] i:nth-child(5) { --dl: 140ms; }
+#panel-wipe[data-style="swing"]   { --t0: translateY(-101%) skewX(-12deg); --t1: translateY(0) skewX(0); --t2: translateY(101%) skewX(12deg); --step: 50ms; --dur: .32s; }   /* Contact: slanted panels swing down */
 /* PRAHLAD spelled across the 5 stripes: PR | A | H | L | AD */
 #panel-wipe i { display: flex; align-items: center; justify-content: center; }
 #panel-wipe i span {
@@ -2877,12 +2892,25 @@ function showSection(id, el) {
 
 // Comic-panel wipe between sections (skipped for reduced-motion)
 let _wiping = false, _wipeTimers = [], _wipeSwap = null;
-function panelWipe(swap) {
+const WIPE_STYLES = {
+  about:      { style: 'drop',   words: ['PR', 'A', 'H', 'L', 'AD'] },
+  skills:     { style: 'rise',   words: ['SK', 'I', 'L', 'L', 'S'] },
+  experience: { style: 'zipper', words: ['EX', 'PE', 'RI', 'EN', 'CE'] },
+  projects:   { style: 'slide',  words: ['PR', 'OJ', 'EC', 'T', 'S'] },
+  store:      { style: 'pop',    words: ['S', 'T', 'O', 'R', 'E'] },
+  github:     { style: 'blinds', words: ['GI', 'T', 'HU', 'B', '!'] },
+  education:  { style: 'burst',  words: ['ED', 'U', 'CA', 'TI', 'ON'] },
+  contact:    { style: 'swing',  words: ['CO', 'N', 'TA', 'C', 'T'] }
+};
+function panelWipe(swap, target) {
   const w = document.getElementById('panel-wipe');
   if (!w || matchMedia('(prefers-reduced-motion: reduce)').matches) { swap(); return; }
   _wipeSwap = swap;                                    // latest click wins (no stale section swap)
   if (_wiping) return;                                 // wipe already running: it will run the latest swap
   _wiping = true;
+  const ws = WIPE_STYLES[target] || WIPE_STYLES.about;  // each section has its own comic-panel style + word
+  w.dataset.style = ws.style;
+  w.querySelectorAll('i span').forEach((sp, k) => { sp.textContent = ws.words[k] || ''; });
   const later = (fn, ms) => _wipeTimers.push(setTimeout(fn, ms));
   const finish = () => { _wipeTimers.forEach(clearTimeout); _wipeTimers = []; w.className = ''; _wiping = false; };
   w.className = ''; void w.offsetWidth;                // reset so the 'in' animation always starts clean
@@ -2908,7 +2936,7 @@ function go(id, el) {
   };
   const cur = document.querySelector('.section.active');
   if (cur && cur.id === 'section-' + id) { apply(); return; }
-  panelWipe(apply);
+  panelWipe(apply, id);
 }
 
 // Which section does the current URL point to?
@@ -2922,7 +2950,7 @@ function sectionFromLocation() {
 }
 
 // Browser back/forward
-window.addEventListener('popstate', () => panelWipe(() => showSection(sectionFromLocation())));
+window.addEventListener('popstate', () => { const id = sectionFromLocation(); panelWipe(() => showSection(id), id); });
 
 // ── MOBILE SIDEBAR DRAWER ─────────────────────────────────────────
 const sidebarEl = document.getElementById('sidebar');
