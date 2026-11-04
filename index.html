@@ -3838,7 +3838,7 @@ fetchFullGitHub();
       body: JSON.stringify({ name: name, message: message, website: $('gb-hp').value })
     }).then((r) => r.json().then((j) => ({ r, j }))).then((x) => {
       if (x.r.ok && x.j.ok) {
-        say('Thanks for signing! ✓', 'ok'); msgEl.value = ''; chars.textContent = '0 / 280';
+        say(x.j.message || 'Thanks for signing! ✓', 'ok'); msgEl.value = ''; chars.textContent = '0 / 280';
         try { localStorage.setItem('ps-gb-name', name); } catch (e) {}
         load();
       } else say(x.j.error || 'Could not sign right now.', 'err');
