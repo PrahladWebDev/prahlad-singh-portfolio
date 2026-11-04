@@ -1717,6 +1717,22 @@ html[lang] .live-pill{border:2px solid var(--ink);background:var(--card);color:#
 .topbar .live-pill{white-space:nowrap;flex-shrink:0;padding:4px 10px}
 .topbar .live-pill b{font-weight:700}
 @media (max-width:640px){.topbar .live-pill{padding:4px 8px;gap:5px;font-size:11px}.topbar .live-pill .live-t{display:none}}
+.vmap{margin-top:22px;border:1px solid var(--line);border-radius:var(--radius);background:var(--panel);padding:22px 24px}
+.vmap-head{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:8px;margin-bottom:12px}
+.vmap-title{font-family:var(--display);font-size:18px;font-weight:800;letter-spacing:-.3px}
+.vmap-sub{font-family:var(--mono);font-size:11px;color:var(--muted)}
+.vmap-wrap{position:relative;width:100%}
+.vmap-wrap canvas{display:block;width:100%;height:auto;touch-action:manipulation}
+.vmap-tip{position:absolute;z-index:3;pointer-events:none;transform:translate(-50%,-120%);white-space:nowrap;padding:6px 10px;border-radius:8px;border:1px solid var(--line-strong);background:var(--panel-2);color:var(--text);font-family:var(--mono);font-size:11px;box-shadow:0 6px 18px rgba(0,0,0,.25)}
+.vmap-list{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.vchip{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:999px;border:1px solid var(--line-strong);background:var(--panel-2);font-family:var(--mono);font-size:11px;color:var(--text)}
+.vchip b{color:var(--accent);font-weight:700}
+.vchip.on{border-color:rgba(62,230,168,.55)}
+.vchip.on::after{content:'';width:6px;height:6px;border-radius:50%;background:var(--signal)}
+@media (max-width:640px){.vmap{padding:16px 14px}.vmap-title{font-size:16px}}
+html[lang] .vmap{border:3px solid var(--ink);border-radius:var(--radius);background:var(--t3,var(--panel))}
+html[lang] .vchip{border:2px solid var(--ink);background:var(--card);color:var(--on-pastel);font-weight:800}
+html[lang] .vmap-tip{border:2px solid var(--ink);background:var(--card);color:var(--on-pastel)}
 @media (prefers-reduced-motion:reduce){.wave-btn:hover .wave-hand,.wave-btn.waving .wave-hand,.live-pill .dot{animation:none}.wave-float{animation-duration:.01s}}
 </style>
 </head>
@@ -1925,6 +1941,18 @@ html[lang] .live-pill{border:2px solid var(--ink);background:var(--card);color:#
         <div class="stat-box"><svg class="toon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="8" height="8" rx="2.3" style="fill:var(--pink)" stroke="#2f2850" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/><rect x="13" y="3" width="8" height="8" rx="2.3" style="fill:var(--mint)" stroke="#2f2850" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/><rect x="3" y="13" width="8" height="8" rx="2.3" style="fill:var(--sky)" stroke="#2f2850" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/><rect x="13" y="13" width="8" height="8" rx="2.3" style="fill:var(--butter)" stroke="#2f2850" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/></svg><div class="stat-n" id="cnt-proj">0+</div><div class="stat-l">Projects Shipped</div></div>
         <div class="stat-box"><svg class="toon" viewBox="0 0 24 24" aria-hidden="true"><path d="M2.5 15.5L12 20l9.5-4.5L12 11z" style="fill:var(--sky)" stroke="#2f2850" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/><path d="M2.5 11.5L12 16l9.5-4.5L12 7z" style="fill:var(--mint)" stroke="#2f2850" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/><path d="M2.5 7.5L12 12l9.5-4.5L12 3z" style="fill:var(--pink)" stroke="#2f2850" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/></svg><div class="stat-n" id="cnt-stack">0+</div><div class="stat-l">Technologies</div></div>
         <div class="stat-box"><svg class="toon" viewBox="0 0 24 24" aria-hidden="true"><path d="M10 15v3.4c0 1 .8 2.4 2 3.4 1.2-1 2-2.4 2-3.4V15" style="fill:var(--peach)" stroke="#2f2850" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/><path d="M8 11.5L4.6 15l3.4.7M16 11.5l3.4 3.5-3.4.7" style="fill:var(--pink)" stroke="#2f2850" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/><path d="M12 2.5c3.7 2.7 5.1 6.4 4.4 11H7.6C6.9 8.9 8.3 5.2 12 2.5z" style="fill:var(--sky)" stroke="#2f2850" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/><circle cx="12" cy="9" r="1.9" style="fill:var(--butter)" stroke="#2f2850" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/></svg><div class="stat-n" id="cnt-live">0+</div><div class="stat-l">Live Apps</div></div>
+      </div>
+
+      <div class="vmap reveal" id="vmap" hidden>
+        <div class="vmap-head">
+          <div class="vmap-title">Visitors around the world</div>
+          <div class="vmap-sub" id="vmap-sub">loading…</div>
+        </div>
+        <div class="vmap-wrap" id="vmap-wrap">
+          <canvas id="vmap-canvas" role="img" aria-label="World map showing which countries visitors come from"></canvas>
+          <div class="vmap-tip" id="vmap-tip" hidden></div>
+        </div>
+        <div class="vmap-list" id="vmap-list"></div>
       </div>
     </section>
 
@@ -3770,7 +3798,7 @@ fetchFullGitHub();
   if (pill && 'EventSource' in window) {
     const es = new EventSource(API + '/presence?id=' + encodeURIComponent(vid));
     es.addEventListener('hello', (e) => { const d = JSON.parse(e.data); setOnline(d.online); setWaves(d.waves); });
-    es.addEventListener('presence', (e) => setOnline(JSON.parse(e.data).online));
+    es.addEventListener('presence', (e) => { setOnline(JSON.parse(e.data).online); window.dispatchEvent(new Event('ps-presence')); });
     es.addEventListener('wave', (e) => {
       const d = JSON.parse(e.data); setWaves(d.waves);
       if (!mine) floatHand(window.innerWidth * (0.15 + Math.random() * 0.7), window.innerHeight * 0.78);
@@ -3849,6 +3877,137 @@ fetchFullGitHub();
       } else say(x.j.error || 'Could not sign right now.', 'err');
     }).catch(() => say('Guestbook is offline right now.', 'err')).then(() => { btn.disabled = false; });
   });
+})();
+// ══════════════════════════════════════════════════════════════
+// VISITOR WORLD MAP  (dot-matrix map, data from /api/countries)
+// ══════════════════════════════════════════════════════════════
+(function initVisitorMap() {
+  const API = window.PORTFOLIO_API || '/api';
+  const card = document.getElementById('vmap');
+  const cv = document.getElementById('vmap-canvas');
+  if (!card || !cv) return;
+  const wrap = document.getElementById('vmap-wrap'), tip = document.getElementById('vmap-tip');
+  const sub = document.getElementById('vmap-sub'), listEl = document.getElementById('vmap-list');
+  const ctx = cv.getContext('2d');
+  const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  const STEP = 3.0, TOP = 84.0, BOT = -60.0;
+  const LAND = ["000000000000000000000000000000000000000000111111100000000000000000000000000000000000000000000000000000000000000000000000","000000000000000000000000000001111111111111111111111110000000000000111000000000000000000000000000000000000000000000000000","000000000000000000000000000000100000001111111111111111000000000000000000000000000000000000011111000000000000000000000000","000000000000000000000000000000000000000001111111111110000000000000000000000000110000000111111111111100000000000000000000","000000011100000000011111110000000111100000111111111110000000000000011000000000000001111111111111111111111111111100000000","110001111111111111111111111111110011111000111111111000000000000001111111101111111111111111111111111111111111111111111111","000000111111111111111111111111100001111000111111100011100000000011101111111111111111111111111111111111111111111111111110","000001111111111111111111111110000010000000011110000000000000001111011111111111111111111111111111111111111111111111111100","000000011000000111111111111110000011111000000000000000000010001011001111111111111111111111111111111111111110000001000000","000000000000000011111111111111110011111100000000000000000010000000011111111111111111111111111111111111111100000011000000","000000000000000001111111111111111111111110000000000000000101111111111111111111111111111111111111111111111111000010000000","000000000000000000111111111111111111111111000000000000000001111111111111111111111111111111111111111111111111000000000000","000000000000000000011111111111111111111000000000000000000001111111111111111101111111111111111111111111111100000000000000","000000000000000000011111111111111111100000000000000000000001110101111000011101111111111111111111111111111001000000000000","000000000000000000011111111111111110000000000000000000000111000001010111111110111111111111111111111111100000000000000000","000000000000000000011111111111111110000000000000000000000111000010010111111100111111111111111111111100100010000000000000","000000000000000000001111111111111100000000000000000000000011111100000000111111111111111111111111111100001100000000000000","000000000000000000000111111111111000000000000000000000000111111111101001111111111111111111111111111110010000000000000000","000000000000000000000101111100001000000000000000000000001111111111111110111101111111111111111111111100000000000000000000","000000000000000000000010111100000000000000000000000000011111111111111111111110101111111111111111111100000000000000000000","000000000000000000000000011000001100000000000000000000011111111111111111011111110001111111111111110000000000000000000000","000000000000000000000000011100100000100000000000000000011111111111111111011111100000111110011110000000000000000000000000","000000000000000000000000000111100000000000000000000000111111111111111111101111000000111000011111000010000000000000000000","000000000000000000000000000000110000000000000000000000011111111111111111111100000000011000000111000010000000000000000000","000000000000000000000000000000010001111000000000000000011111111111111111111110000000011000000001000000000000000000000000","000000000000000000000000000000000011111100000000000000001111111111111111111110000000000000000000000000000000000000000000","000000000000000000000000000000000011111111100000000000000100001111111111111100000000000000001000001100000000000000000000","000000000000000000000000000000000011111111100000000000000000000111111111110000000000000000000110111000000000000000000000","000000000000000000000000000000000111111111110000000000000000000111111111110000000000000000000110011010000000000000000000","000000000000000000000000000000000111111111111111000000000000000011111111100000000000000000000010000000000111000000000000","000000000000000000000000000000000111111111111111000000000000000011111111100000000000000000000000110000000011100000000000","000000000000000000000000000000000011111111111111000000000000000011111111100000000000000000000000000000000000000000000000","000000000000000000000000000000000001111111111110000000000000000011111111100010000000000000000000000000011101000000000000","000000000000000000000000000000000000111111111110000000000000000011111111100110000000000000000000000001111101100000000000","000000000000000000000000000000000000011111111110000000000000000011111111000100000000000000000000000011111111100000000000","000000000000000000000000000000000000111111111100000000000000000001111111000100000000000000000000001111111111110000000000","000000000000000000000000000000000000111111110000000000000000000001111110000000000000000000000000001111111111111000000000","000000000000000000000000000000000000111111110000000000000000000001111110000000000000000000000000001111111111111000000000","000000000000000000000000000000000000111111100000000000000000000000111100000000000000000000000000001111111111111000000000","000000000000000000000000000000000000111111000000000000000000000000100000000000000000000000000000000100000011110000000000","000000000000000000000000000000000001111110000000000000000000000000000000000000000000000000000000000000000001100000000010","000000000000000000000000000000000001111000000000000000000000000000000000000000000000000000000000000000000000000000000000","000000000000000000000000000000000001110000000000000000000000000000000000000000000000000000000000000000000000000000001000","000000000000000000000000000000000001110000000000000000000000000000000000000000000000000000000000000000000000000000000000","000000000000000000000000000000000001100000000000000000000000000000000000000000000000000000000000000000000000000000000000","000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000000000000000000000000","000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000","000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"];
+  const CENTER = {US:[39,-98],CA:[57,-100],MX:[23,-102],BR:[-10,-52],AR:[-35,-65],CL:[-33,-71],CO:[4,-73],PE:[-10,-75],VE:[7,-66],EC:[-1.5,-78],BO:[-17,-65],PY:[-23,-58],UY:[-33,-56],CU:[22,-79],DO:[19,-70],GT:[15.5,-90.3],CR:[10,-84],PA:[8.5,-80],JM:[18.1,-77.3],HN:[14.8,-86.6],SV:[13.8,-88.9],NI:[12.9,-85],PR:[18.2,-66.5],TT:[10.5,-61.3],GB:[54,-2.5],IE:[53,-8],FR:[46.5,2.5],DE:[51,10],ES:[40,-3.5],PT:[39.5,-8],IT:[42.8,12.5],NL:[52.2,5.3],BE:[50.6,4.6],CH:[46.8,8.2],AT:[47.6,14.1],SE:[62,15],NO:[62,9],FI:[64,26],DK:[56,10],IS:[65,-18.5],PL:[52,19],CZ:[49.8,15.5],SK:[48.7,19.5],HU:[47.1,19.5],RO:[45.9,25],BG:[42.7,25.5],GR:[39,22],RS:[44,21],HR:[45.1,15.2],SI:[46.1,14.8],BA:[44,17.8],AL:[41,20],MK:[41.6,21.7],ME:[42.7,19.4],UA:[49,32],BY:[53.7,27.9],LT:[55.3,23.9],LV:[56.9,24.6],EE:[58.6,25],MD:[47.2,28.5],LU:[49.8,6.1],MT:[35.9,14.4],CY:[35,33],RU:[60,90],TR:[39,35],IL:[31.5,35],JO:[31,36.5],LB:[33.9,35.9],SA:[24,45],AE:[24,54],QA:[25.3,51.2],KW:[29.3,47.6],BH:[26,50.5],OM:[21,57],YE:[15.5,48],IQ:[33,44],IR:[32,53],SY:[35,38],GE:[42,43.5],AM:[40.2,45],AZ:[40.3,47.7],KZ:[48,67],UZ:[41.5,64.5],TM:[39,59.5],KG:[41.5,74.5],TJ:[38.8,71],AF:[33.9,66],PK:[30,70],IN:[22,79],BD:[24,90.3],LK:[7.8,80.7],NP:[28.3,84],BT:[27.5,90.4],MV:[3.2,73.2],MM:[21,96],TH:[15,101],LA:[18.5,103.8],KH:[12.6,104.9],VN:[16,107],MY:[4,102],SG:[1.35,103.8],ID:[-2,118],PH:[12.5,122],BN:[4.5,114.7],CN:[35,103],MN:[46.8,103],KR:[36.5,127.8],KP:[40.1,127.2],JP:[36,138],TW:[23.7,121],HK:[22.3,114.2],EG:[26.5,30],LY:[27,17],TN:[34,9.5],DZ:[28,2.6],MA:[31.8,-6.5],SD:[15.5,30],SS:[7.3,30],ET:[8,39.5],ER:[15.2,39.8],DJ:[11.8,42.6],SO:[5.5,46.5],KE:[0.3,38],UG:[1.3,32.4],TZ:[-6.3,34.8],RW:[-2,29.9],BI:[-3.4,29.9],CD:[-2.9,23.7],CG:[-0.7,15.2],GA:[-0.8,11.6],CM:[5.7,12.7],NG:[9.6,8.1],GH:[7.9,-1.2],CI:[7.6,-5.5],SN:[14.4,-14.5],ML:[17.5,-3.5],NE:[16,8],TD:[15.3,18.7],BF:[12.3,-1.7],GN:[10.9,-10.9],SL:[8.5,-11.8],LR:[6.4,-9.4],MR:[20,-10.5],AO:[-12.3,17.5],ZM:[-13.4,27.8],ZW:[-19,29.8],MW:[-13.2,34.3],MZ:[-18.5,35.5],BW:[-22.2,23.8],NA:[-22.1,17.2],ZA:[-29,24],MG:[-19.5,46.7],MU:[-20.3,57.6],LS:[-29.6,28.2],SZ:[-26.5,31.5],AU:[-25,134],NZ:[-41.5,172.5],PG:[-6.5,145],FJ:[-17.8,178]};
+  const COLS = LAND[0].length;
+  let regionNames = null;
+  try { regionNames = new Intl.DisplayNames(['en'], { type: 'region' }); } catch (e) {}
+  const nameOf = (c) => { try { return (regionNames && regionNames.of(c)) || c; } catch (e) { return c; } };
+  const flag = (c) => String.fromCodePoint(...[...c].map((ch) => 127397 + ch.charCodeAt(0)));
+
+  let data = [];            // [{code,count,online}]
+  let pts = [];             // drawn markers {x,y,r,code,count,online}
+  let W = 0, H = 0, raf = 0, visible = true;
+
+  const css = (name, fb) => (getComputedStyle(document.documentElement).getPropertyValue(name) || '').trim() || fb;
+  function project(lat, lon) { return [(lon + 180) / 360 * W, (TOP - lat) / (TOP - BOT) * H]; }
+
+  function layout() {
+    W = wrap.clientWidth || 600;
+    H = Math.round(W * (TOP - BOT) / 360);
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr);
+    cv.style.height = H + 'px';
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    const maxC = Math.max(1, ...data.map((d) => d.count));
+    pts = data.filter((d) => CENTER[d.code]).map((d) => {
+      const [x, y] = project(CENTER[d.code][0], CENTER[d.code][1]);
+      const r = (3 + 6 * Math.sqrt(d.count / maxC)) * Math.min(1, Math.max(0.7, W / 700));
+      return { x, y, r, code: d.code, count: d.count, online: d.online };
+    });
+  }
+
+  function draw(t) {
+    ctx.clearRect(0, 0, W, H);
+    const cw = W / COLS, ch = H / LAND.length, dr = Math.max(0.9, Math.min(cw, ch) * 0.34);
+    ctx.fillStyle = css('--text', '#999');
+    ctx.globalAlpha = 0.26;
+    ctx.beginPath();
+    for (let r = 0; r < LAND.length; r++) {
+      const row = LAND[r];
+      for (let c = 0; c < COLS; c++) if (row.charCodeAt(c) === 49) {
+        const x = (c + 0.5) * cw, y = (r + 0.5) * ch;
+        ctx.moveTo(x + dr, y); ctx.arc(x, y, dr, 0, 6.2832);
+      }
+    }
+    ctx.fill();
+    ctx.globalAlpha = 1;
+    const accent = css('--accent', '#f2a93b'), sig = css('--signal', '#3ee6a8');
+    for (const p of pts) {
+      if (p.online) {                                   // pulsing ring = someone is here right now
+        const k = reduce ? 0.5 : ((t || 0) / 1400 + p.x * 0.01) % 1;
+        ctx.beginPath(); ctx.arc(p.x, p.y, p.r + 3 + k * 12, 0, 6.2832);
+        ctx.strokeStyle = sig; ctx.globalAlpha = 0.55 * (1 - k); ctx.lineWidth = 2; ctx.stroke();
+        ctx.globalAlpha = 1;
+      }
+      ctx.beginPath(); ctx.arc(p.x, p.y, p.r + 2, 0, 6.2832);
+      ctx.fillStyle = accent; ctx.globalAlpha = 0.25; ctx.fill(); ctx.globalAlpha = 1;
+      ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, 6.2832);
+      ctx.fillStyle = p.online ? sig : accent; ctx.fill();
+    }
+  }
+  function loop(t) {
+    draw(t);
+    raf = (visible && !reduce && pts.some((p) => p.online) && !document.hidden) ? requestAnimationFrame(loop) : 0;
+  }
+  function kick() { cancelAnimationFrame(raf); raf = requestAnimationFrame(loop); }
+
+  function renderList() {
+    listEl.textContent = '';
+    data.slice(0, 12).forEach((d) => {
+      const s = document.createElement('span');
+      s.className = 'vchip' + (d.online ? ' on' : '');
+      s.title = d.online ? d.online + ' online now' : '';
+      const b = document.createElement('b'); b.textContent = d.count;
+      s.append(document.createTextNode(flag(d.code) + ' ' + nameOf(d.code) + ' '), b);
+      listEl.appendChild(s);
+    });
+    const total = data.reduce((n, d) => n + d.count, 0);
+    sub.textContent = total
+      ? total.toLocaleString('en-IN') + (total === 1 ? ' visit' : ' visits') + ' from ' + data.length + (data.length === 1 ? ' country' : ' countries')
+      : 'be the first to show up on the map';
+  }
+
+  function show(e) {
+    const rect = cv.getBoundingClientRect();
+    const x = (e.clientX - rect.left) * (W / rect.width), y = (e.clientY - rect.top) * (H / rect.height);
+    let best = null, bd = 1e9;
+    for (const p of pts) { const d = Math.hypot(p.x - x, p.y - y); if (d < bd) { bd = d; best = p; } }
+    if (!best || bd > best.r + 12) { tip.hidden = true; return; }
+    tip.textContent = flag(best.code) + ' ' + nameOf(best.code) + ' · ' + best.count + (best.count === 1 ? ' visit' : ' visits') + (best.online ? ' · ' + best.online + ' online now' : '');
+    tip.style.left = Math.min(Math.max(best.x, 70), W - 70) + 'px';
+    tip.style.top = best.y + 'px';
+    tip.hidden = false;
+  }
+  cv.addEventListener('pointermove', show);
+  cv.addEventListener('pointerdown', show);
+  cv.addEventListener('pointerleave', () => { tip.hidden = true; });
+
+  function load() {
+    fetch(API + '/countries', { cache: 'no-store' }).then((r) => r.json()).then((j) => {
+      if (!j || !j.ok) throw 0;
+      data = j.countries || [];
+      card.hidden = false;
+      renderList(); layout(); kick();
+    }).catch((err) => { card.hidden = true; });
+  }
+  load();
+
+  // refresh when the live visitor count changes (debounced) and every 2 minutes
+  let deb = 0;
+  window.addEventListener('ps-presence', () => { clearTimeout(deb); deb = setTimeout(load, 1500); });
+  setInterval(() => { if (!document.hidden) load(); }, 120000);
+
+  if ('ResizeObserver' in window) new ResizeObserver(() => { if (!card.hidden) { layout(); kick(); } }).observe(wrap);
+  else window.addEventListener('resize', () => { layout(); kick(); });
+  new MutationObserver(() => { draw(performance.now()); }).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+  if ('IntersectionObserver' in window) new IntersectionObserver((en) => { visible = en[0].isIntersecting; if (visible) kick(); }).observe(card);
+  document.addEventListener('visibilitychange', () => { if (!document.hidden) kick(); });
 })();
 // ══════════════════════════════════════════════════════════════
 // INITIAL ROUTE — open the section named in the URL (runs last so

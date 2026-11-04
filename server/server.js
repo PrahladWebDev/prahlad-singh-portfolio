@@ -27,11 +27,12 @@ const DATA_FILE = path.join(DATA_DIR, 'store.json');
 fs.mkdirSync(DATA_DIR, { recursive: true });
 
 // ───────────────────────── persistence (tiny JSON file) ─────────────────────────
-let store = { waves: 0, guestbook: [] };
+let store = { waves: 0, guestbook: [], countries: {} };
 try {
   const raw = JSON.parse(fs.readFileSync(DATA_FILE, 'utf8'));
   store.waves = Number(raw.waves) || 0;
   store.guestbook = Array.isArray(raw.guestbook) ? raw.guestbook : [];
+  store.countries = raw.countries && typeof raw.countries === 'object' ? raw.countries : {};
 } catch (_) { /* first run */ }
 
 let saveTimer = null;
@@ -48,6 +49,9 @@ function saveSoon() {
 }
 process.on('SIGTERM', () => { try { fs.writeFileSync(DATA_FILE, JSON.stringify(store)); } catch (_) {} process.exit(0); });
 process.on('SIGINT', () => { try { fs.writeFileSync(DATA_FILE, JSON.stringify(store)); } catch (_) {} process.exit(0); });
+
+let geoip = null;
+try { geoip = require('geoip-lite'); } catch (_) { console.warn('geoip-lite not installed - visitor map will only work behind Cloudflare (CF-IPCountry).'); }
 
 // ───────────────────────── helpers ─────────────────────────
 const app = express();
@@ -127,11 +131,23 @@ async function sendMail({ subject, text, html, replyTo }) {
 // A "visitor" = one browser (id from localStorage); several tabs count once.
 const clients = new Set();               // active SSE responses
 const visitors = new Map();              // visitorId -> open connection count
+const visitorCountry = new Map();        // visitorId -> ISO country (only while online, never saved)
+const lastCounted = new Map();           // visitorId -> time of last counted visit (memory only)
 
 const onlineCount = () => visitors.size;
 function broadcast(event, data) {
   const msg = `event: ${event}\ndata: ${JSON.stringify(data)}\n\n`;
   for (const res of clients) { try { res.write(msg); } catch (_) {} }
+}
+
+// Country only. The IP is looked up and thrown away, it is never stored or logged.
+function countryOf(req) {
+  const h = String(req.get('cf-ipcountry') || req.get('x-country') || '').toUpperCase();
+  if (/^[A-Z]{2}$/.test(h) && h !== 'XX' && h !== 'T1') return h;
+  if (geoip) {
+    try { const g = geoip.lookup(req.ip); if (g && /^[A-Z]{2}$/.test(g.country)) return g.country; } catch (_) {}
+  }
+  return null;
 }
 
 app.get('/api/presence', (req, res) => {
@@ -146,7 +162,20 @@ app.get('/api/presence', (req, res) => {
 
   clients.add(res);
   const before = visitors.size;
+  const isNew = !visitors.has(vid);
   visitors.set(vid, (visitors.get(vid) || 0) + 1);
+  if (isNew) {
+    const cc = countryOf(req);
+    if (cc) {
+      visitorCountry.set(vid, cc);
+      const now = Date.now();
+      if (now - (lastCounted.get(vid) || 0) > 30 * 60e3) {   // one visit per browser per 30 min
+        lastCounted.set(vid, now);
+        store.countries[cc] = (store.countries[cc] || 0) + 1;
+        saveSoon();
+      }
+    }
+  }
   res.write(`event: hello\ndata: ${JSON.stringify({ online: onlineCount(), waves: store.waves })}\n\n`);
   if (visitors.size !== before) broadcast('presence', { online: onlineCount() });
 
@@ -155,9 +184,24 @@ app.get('/api/presence', (req, res) => {
     clearInterval(ping);
     clients.delete(res);
     const n = (visitors.get(vid) || 1) - 1;
-    if (n <= 0) { visitors.delete(vid); broadcast('presence', { online: onlineCount() }); }
+    if (n <= 0) { visitors.delete(vid); visitorCountry.delete(vid); broadcast('presence', { online: onlineCount() }); }
     else visitors.set(vid, n);
   });
+});
+setInterval(() => {
+  const cut = Date.now() - 2 * 3600e3;
+  for (const [k, t] of lastCounted) if (t < cut && !visitors.has(k)) lastCounted.delete(k);
+}, 30 * 60e3).unref();
+
+// visits per country + which countries have someone online right now
+app.get('/api/countries', (_req, res) => {
+  const online = {};
+  for (const cc of visitorCountry.values()) online[cc] = (online[cc] || 0) + 1;
+  const codes = new Set([...Object.keys(store.countries), ...Object.keys(online)]);
+  const list = [...codes].map((code) => ({ code, count: store.countries[code] || 0, online: online[code] || 0 }))
+    .sort((a, b) => b.count - a.count);
+  res.setHeader('Cache-Control', 'no-store');
+  res.json({ ok: true, total: list.reduce((n, c) => n + c.count, 0), countries: list });
 });
 
 app.get('/api/online', (_req, res) => res.json({ online: onlineCount() }));
