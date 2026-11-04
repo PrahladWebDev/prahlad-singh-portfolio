@@ -23,6 +23,12 @@ jobs:
             set -e
             cd /var/www/prahladsingh.in
             git pull origin main
+            # API (live visitors, guestbook, wave, Gmail contact)
+            cd server
+            npm ci --omit=dev || npm install --omit=dev
+            pm2 startOrReload ecosystem.config.js --update-env
+            pm2 save
+            cd ..
             sudo nginx -t
             sudo systemctl reload nginx
             echo "Deployment completed"

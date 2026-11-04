@@ -85,3 +85,32 @@ Personal portfolio — feel free to fork the structure/animations for your own s
 | Drifting clouds + rain/snow toggle | `.drift` clouds · `#weatherBtn` · JS `initWeather` |
 | Chunky cartoon icons | `svg.toon` (nav, stats, skills, education, contact) |
 | Fun 404 page | `404.html` — add `error_page 404 /404.html;` to the nginx server block, then `sudo nginx -t && sudo systemctl reload nginx` |
+
+---
+
+## Live visitors, wave counter, guestbook & Gmail contact form
+
+These need a tiny backend, so they live in `server/` (Node + Express, no database — data is a JSON file in `server/data/`).
+
+| Feature | Where |
+|---|---|
+| "N visitors online" pill (Server-Sent Events, tabs of one browser count once) | About → NOW card · JS `initLive` |
+| 👋 Wave button + global counter (others see a floating 👋 live) | About hero buttons |
+| Guestbook (name + 280-char note, no links, honeypot, rate-limited, emailed to you) | Contact section |
+| Contact form sends real email through your Gmail (falls back to `mailto:` if the API is down) | Contact section · `POST /api/contact` |
+
+### One-time setup on the VPS
+
+```bash
+cd /var/www/prahladsingh.in/server
+cp .env.example .env && nano .env        # set GMAIL_APP_PASSWORD + ADMIN_TOKEN
+npm install --omit=dev
+npm i -g pm2 && pm2 startOrReload ecosystem.config.js && pm2 save && pm2 startup
+```
+
+1. **Gmail app password**: Google Account → Security → turn on 2-Step Verification → *App passwords* → create one → paste the 16 characters into `GMAIL_APP_PASSWORD`. Your normal Gmail password will not work, and it must never go into `index.html` or git.
+2. Paste `nginx-api.conf.example` into the site's nginx `server { }` block, then `sudo nginx -t && sudo systemctl reload nginx`.
+3. After that, every push to `main` redeploys the API too (see `.github/workflows/deploy.yml`).
+
+Delete a guestbook entry: `curl -X DELETE -H "Authorization: Bearer $ADMIN_TOKEN" https://prahladsingh.in/api/guestbook/<id>` (the id is in the notification email).
+Local testing: `cd server && npm i && node server.js`, then serve the site with a proxy for `/api`, or set `window.PORTFOLIO_API = 'http://127.0.0.1:4000/api'` before the main script and `ALLOWED_ORIGIN=http://localhost:8000` in `.env`.

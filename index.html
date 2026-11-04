@@ -1684,6 +1684,37 @@ html[lang] .to-top svg, html[lang] .s-location svg, html[lang] .exp-meta svg, ht
   .hm-bubble { right: 0; top: calc(100% - 4px); transform-origin: top right; }
   .hm-bubble::after { display: none; }
 }
+
+/* ── LIVE VISITORS · WAVE · GUESTBOOK ── */
+.live-pill{display:inline-flex;align-items:center;gap:8px;padding:3px 11px;border-radius:999px;border:1px solid rgba(62,230,168,.35);background:rgba(62,230,168,.1);color:var(--signal);font-family:var(--mono);font-size:11px}
+.live-pill .dot{width:6px;height:6px;border-radius:50%;background:var(--signal);animation:sonar 2s ease-out infinite}
+.live-pill.off{opacity:.55;filter:grayscale(1)}
+.live-pill.off .dot{animation:none}
+.wave-btn{position:relative}
+.wave-btn .wave-hand{display:inline-block;transform-origin:70% 80%;font-size:16px;line-height:1}
+.wave-btn:hover .wave-hand,.wave-btn.waving .wave-hand{animation:waveHand .9s ease-in-out}
+.wave-btn .wave-n{font-family:var(--mono);font-size:11px;opacity:.8;margin-left:2px}
+@keyframes waveHand{0%,100%{transform:rotate(0)}15%{transform:rotate(18deg)}30%{transform:rotate(-12deg)}45%{transform:rotate(18deg)}60%{transform:rotate(-8deg)}75%{transform:rotate(12deg)}}
+.wave-float{position:fixed;z-index:9999;pointer-events:none;font-size:28px;animation:waveFloat 1.8s ease-out forwards}
+@keyframes waveFloat{0%{opacity:0;transform:translateY(0) scale(.6)}15%{opacity:1}100%{opacity:0;transform:translateY(-90px) scale(1.3) rotate(14deg)}}
+.gb-wrap{margin-top:22px}
+.gb-form .gb-hp{position:absolute;left:-9999px;width:1px;height:1px;opacity:0}
+.gb-form textarea{min-height:84px}
+.gb-count{font-family:var(--mono);font-size:11px;color:var(--muted)}
+.cf-status{font-family:var(--mono);font-size:11px;min-height:1em}
+.cf-status.ok{color:var(--signal)}
+.cf-status.err{color:#ff6b6b}
+.gb-list{display:grid;gap:12px;margin-top:14px}
+.gb-item{border:1px solid var(--line);border-radius:var(--radius);background:var(--panel);padding:16px 20px}
+.gb-meta{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px;margin-bottom:6px}
+.gb-name{font-family:var(--display);font-weight:800;font-size:14px}
+.gb-when{font-family:var(--mono);font-size:10px;color:var(--muted)}
+.gb-msg{font-size:13px;line-height:1.6;white-space:pre-wrap;overflow-wrap:anywhere}
+.gb-empty{font-family:var(--mono);font-size:12px;color:var(--muted);padding:8px 2px}
+html[lang] .gb-item{background:var(--t5);border:3px solid var(--ink);border-radius:var(--radius)}
+html[lang] .gb-form input,html[lang] .gb-form textarea{background:var(--card);border:2.5px solid var(--ink);border-radius:16px;color:var(--on-pastel);font-weight:700}
+html[lang] .live-pill{border:2px solid var(--ink);background:var(--card);color:#2f9f7c;font-weight:800}
+@media (prefers-reduced-motion:reduce){.wave-btn:hover .wave-hand,.wave-btn.waving .wave-hand,.live-pill .dot{animation:none}.wave-float{animation-duration:.01s}}
 </style>
 </head>
 <body>
@@ -1823,6 +1854,7 @@ html[lang] .to-top svg, html[lang] .s-location svg, html[lang] .exp-meta svg, ht
 
       <div class="hero-cta reveal">
         <a class="btn primary" href="/resume"><svg viewBox="0 0 24 24"><path d="M12 3v12m0 0l-4-4m4 4l4-4"/><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></svg>RESUME</a>
+        <button class="btn wave-btn" id="wave-btn" type="button" aria-label="Wave hello"><span class="wave-hand" aria-hidden="true">👋</span>Wave<span class="wave-n" id="wave-n" aria-live="polite"></span></button>
         <button class="btn" type="button" onclick="go('contact', document.getElementById('nav-contact'))"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><polyline points="3 7 12 13 21 7"/></svg>Hire me</button>
       </div>
 
@@ -1838,6 +1870,7 @@ html[lang] .to-top svg, html[lang] .s-location svg, html[lang] .exp-meta svg, ht
             <div class="now-row"><span class="now-k">STATUS</span><span class="now-v"><span class="now-badge">Open to opportunities</span></span></div>
             <div class="now-row"><span class="now-k">ROLE</span><span class="now-v">Backend → Full-Stack Developer · Lifelayer Health Solutions</span></div>
             <div class="now-row"><span class="now-k">BASED IN</span><span class="now-v">Gurugram, India</span></div>
+            <div class="now-row"><span class="now-k">ONLINE</span><span class="now-v"><span class="live-pill off" id="live-pill"><span class="dot"></span><span id="live-n">connecting…</span></span></span></div>
             <div class="now-row"><span class="now-k">LAST PUSH</span><span class="now-v" id="now-push">checking GitHub…</span></div>
           </div>
           <div class="console-status">
@@ -2167,13 +2200,34 @@ html[lang] .to-top svg, html[lang] .s-location svg, html[lang] .exp-meta svg, ht
           <div class="cf-resp"><span class="dot"></span>Usually replies within 24 hrs</div>
         </div>
         <input id="cf-name" type="text" placeholder="Your name" required maxlength="80" aria-label="Your name" autocomplete="name">
+        <input id="cf-email" type="email" placeholder="Your email (optional, so I can reply)" maxlength="120" aria-label="Your email" autocomplete="email">
+        <input id="cf-hp" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0">
         <textarea id="cf-msg" placeholder="What are you building? Tell me about the role or project..." required maxlength="2000" aria-label="Message"></textarea>
         <div class="cf-actions">
-          <button class="btn primary" type="submit"><svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>Send via email</button>
+          <button class="btn primary" type="submit"><svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>Send message</button>
           <button class="btn" type="button" onclick="copyEmail(this)"><svg viewBox="0 0 24 24"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>Copy email</button>
           <span class="cf-mail">prahlad.singh.dev@gmail.com</span>
+          <span class="cf-status" id="cf-status" role="status" aria-live="polite"></span>
         </div>
       </form>
+
+      <div class="gb-wrap reveal" id="guestbook">
+        <form class="contact-form gb-form" id="gb-form" autocomplete="off">
+          <div class="cf-top">
+            <div class="cf-title">Guestbook</div>
+            <div class="cf-resp"><span class="dot"></span><span id="gb-total">leave a note, say hi</span></div>
+          </div>
+          <input id="gb-name" type="text" placeholder="Your name" required maxlength="40" aria-label="Guestbook name">
+          <textarea id="gb-msg" placeholder="Say something nice (280 chars, no links)…" required maxlength="280" aria-label="Guestbook message"></textarea>
+          <input id="gb-hp" class="gb-hp" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
+          <div class="cf-actions">
+            <button class="btn primary" type="submit">Sign guestbook</button>
+            <span class="gb-count" id="gb-chars">0 / 280</span>
+            <span class="cf-status" id="gb-status" role="status" aria-live="polite"></span>
+          </div>
+        </form>
+        <div class="gb-list" id="gb-list" aria-live="polite"><div class="gb-empty">Loading entries…</div></div>
+      </div>
     </section>
   </main>
 </div>
@@ -3624,10 +3678,33 @@ fetchFullGitHub();
     e.preventDefault();
     const name = document.getElementById('cf-name').value.trim();
     const msg = document.getElementById('cf-msg').value.trim();
+    const email = (document.getElementById('cf-email') || {}).value || '';
+    const hp = (document.getElementById('cf-hp') || {}).value || '';
+    const status = document.getElementById('cf-status');
+    const btn = e.target.querySelector('button[type=submit]');
     if (!name || !msg) return false;
-    const subject = encodeURIComponent('Portfolio enquiry from ' + name);
-    const body = encodeURIComponent(msg + '\n\n— ' + name);
-    window.location.href = 'mailto:prahlad.singh.dev@gmail.com?subject=' + subject + '&body=' + body;
+    const say = (t, cls) => { if (status) { status.textContent = t; status.className = 'cf-status ' + (cls || ''); } };
+    const mailto = () => {
+      const subject = encodeURIComponent('Portfolio enquiry from ' + name);
+      const body = encodeURIComponent(msg + '\n\n— ' + name);
+      window.location.href = 'mailto:prahlad.singh.dev@gmail.com?subject=' + subject + '&body=' + body;
+    };
+    if (btn) btn.disabled = true;
+    say('Sending…');
+    fetch((window.PORTFOLIO_API || '/api') + '/contact', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name: name, email: email.trim(), message: msg, website: hp })
+    }).then(function (r) { return r.json().then(function (j) { return { r: r, j: j }; }); })
+      .then(function (x) {
+        if (x.r.ok && x.j.ok) {
+          say('Sent ✓ Thanks, I will reply soon.', 'ok');
+          document.getElementById('cf-msg').value = '';
+        } else if (x.r.status === 429 || x.r.status === 400) {
+          say(x.j.error || 'Please check the form and try again.', 'err');
+        } else { say('Server unavailable, opening your mail app…', 'err'); mailto(); }
+      })
+      .catch(function () { say('Server unavailable, opening your mail app…', 'err'); mailto(); })
+      .then(function () { if (btn) btn.disabled = false; });
     return false;
   };
   window.copyEmail = function (btn) {
@@ -3650,6 +3727,122 @@ fetchFullGitHub();
   const selectors = '.proj-card, .skill-block, .exp-item, .contact-card, .stat-box, .info-block, .edu-card, .repo-card';
   document.querySelectorAll(selectors).forEach(card => {
     card.style.willChange = 'transform';
+  });
+})();
+// ══════════════════════════════════════════════════════════════
+// LIVE VISITORS · WAVE COUNTER · GUESTBOOK  (talks to server/ API)
+// ══════════════════════════════════════════════════════════════
+(function initLive() {
+  const API = window.PORTFOLIO_API || '/api';
+  const $ = (id) => document.getElementById(id);
+  const fmt = (n) => Number(n).toLocaleString('en-IN');
+  const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // stable per-browser id so several tabs count as one visitor
+  let vid = '';
+  try { vid = localStorage.getItem('ps-vid') || ''; } catch (e) {}
+  if (!vid) {
+    vid = (window.crypto && crypto.randomUUID ? crypto.randomUUID() : String(Math.random()).slice(2) + Date.now()).replace(/[^\w-]/g, '').slice(0, 32);
+    try { localStorage.setItem('ps-vid', vid); } catch (e) {}
+  }
+
+  // ---------- live visitors + wave events over SSE ----------
+  const pill = $('live-pill'), liveN = $('live-n'), waveN = $('wave-n');
+  function setOnline(n) {
+    if (!pill) return;
+    pill.classList.remove('off');
+    liveN.textContent = fmt(n) + (n === 1 ? ' visitor online' : ' visitors online');
+  }
+  function setWaves(n) { if (waveN) waveN.textContent = n > 0 ? '· ' + fmt(n) : ''; }
+  function floatHand(x, y) {
+    if (reduce) return;
+    const el = document.createElement('div');
+    el.className = 'wave-float'; el.textContent = '👋';
+    el.style.left = x + 'px'; el.style.top = y + 'px';
+    document.body.appendChild(el);
+    setTimeout(() => el.remove(), 1900);
+  }
+  if (pill && 'EventSource' in window) {
+    const es = new EventSource(API + '/presence?id=' + encodeURIComponent(vid));
+    es.addEventListener('hello', (e) => { const d = JSON.parse(e.data); setOnline(d.online); setWaves(d.waves); });
+    es.addEventListener('presence', (e) => setOnline(JSON.parse(e.data).online));
+    es.addEventListener('wave', (e) => {
+      const d = JSON.parse(e.data); setWaves(d.waves);
+      if (!mine) floatHand(window.innerWidth * (0.15 + Math.random() * 0.7), window.innerHeight * 0.78);
+      mine = false;
+    });
+    es.onerror = () => { pill.classList.add('off'); liveN.textContent = 'offline'; };
+    window.addEventListener('pagehide', () => es.close());
+  } else if (pill) { liveN.textContent = 'offline'; }
+
+  // ---------- wave button ----------
+  let mine = false;
+  const wbtn = $('wave-btn');
+  if (wbtn) wbtn.addEventListener('click', (ev) => {
+    wbtn.classList.remove('waving'); void wbtn.offsetWidth; wbtn.classList.add('waving');
+    const r = wbtn.getBoundingClientRect();
+    floatHand(r.left + r.width / 2 - 14, r.top - 6);
+    mine = true;
+    fetch(API + '/wave', { method: 'POST' })
+      .then((res) => res.json()).then((j) => { if (j && j.ok) setWaves(j.waves); mine = false; })
+      .catch(() => { mine = false; });
+  });
+  fetch(API + '/wave').then((r) => r.json()).then((j) => setWaves(j.waves)).catch(() => {});
+
+  // ---------- guestbook ----------
+  const list = $('gb-list'), form = $('gb-form');
+  if (!list || !form) return;
+  const status = $('gb-status'), msgEl = $('gb-msg'), chars = $('gb-chars'), total = $('gb-total');
+  const say = (t, cls) => { status.textContent = t; status.className = 'cf-status ' + (cls || ''); };
+
+  function ago(iso) {
+    const s = Math.max(1, (Date.now() - new Date(iso).getTime()) / 1000);
+    if (s < 60) return 'just now';
+    if (s < 3600) return Math.floor(s / 60) + ' min ago';
+    if (s < 86400) return Math.floor(s / 3600) + ' h ago';
+    if (s < 86400 * 30) return Math.floor(s / 86400) + ' d ago';
+    return new Date(iso).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' });
+  }
+  function item(e) {
+    const d = document.createElement('div'); d.className = 'gb-item';
+    const m = document.createElement('div'); m.className = 'gb-meta';
+    const n = document.createElement('span'); n.className = 'gb-name'; n.textContent = e.name;
+    const w = document.createElement('span'); w.className = 'gb-when'; w.textContent = ago(e.at);
+    m.append(n, w);
+    const t = document.createElement('div'); t.className = 'gb-msg'; t.textContent = e.message; // textContent: never HTML
+    d.append(m, t);
+    return d;
+  }
+  function render(entries, count) {
+    list.textContent = '';
+    if (!entries.length) { const d = document.createElement('div'); d.className = 'gb-empty'; d.textContent = 'No entries yet. Be the first to sign!'; list.appendChild(d); }
+    else entries.forEach((e) => list.appendChild(item(e)));
+    if (total) total.textContent = count ? fmt(count) + (count === 1 ? ' entry' : ' entries') : 'leave a note, say hi';
+  }
+  function load() {
+    fetch(API + '/guestbook?limit=30').then((r) => r.json()).then((j) => render(j.entries || [], j.total || 0))
+      .catch(() => { list.textContent = ''; const d = document.createElement('div'); d.className = 'gb-empty'; d.textContent = 'Guestbook is offline right now.'; list.appendChild(d); });
+  }
+  load();
+
+  msgEl.addEventListener('input', () => { chars.textContent = msgEl.value.length + ' / 280'; });
+  try { const saved = localStorage.getItem('ps-gb-name'); if (saved) $('gb-name').value = saved; } catch (e) {}
+
+  form.addEventListener('submit', (ev) => {
+    ev.preventDefault();
+    const name = $('gb-name').value.trim(), message = msgEl.value.trim();
+    if (!name || !message) return;
+    const btn = form.querySelector('button[type=submit]'); btn.disabled = true; say('Signing…');
+    fetch(API + '/guestbook', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name: name, message: message, website: $('gb-hp').value })
+    }).then((r) => r.json().then((j) => ({ r, j }))).then((x) => {
+      if (x.r.ok && x.j.ok) {
+        say('Thanks for signing! ✓', 'ok'); msgEl.value = ''; chars.textContent = '0 / 280';
+        try { localStorage.setItem('ps-gb-name', name); } catch (e) {}
+        load();
+      } else say(x.j.error || 'Could not sign right now.', 'err');
+    }).catch(() => say('Guestbook is offline right now.', 'err')).then(() => { btn.disabled = false; });
   });
 })();
 // ══════════════════════════════════════════════════════════════
