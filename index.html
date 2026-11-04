@@ -1714,6 +1714,9 @@ html[lang] .to-top svg, html[lang] .s-location svg, html[lang] .exp-meta svg, ht
 html[lang] .gb-item{background:var(--t5);border:3px solid var(--ink);border-radius:var(--radius)}
 html[lang] .gb-form input,html[lang] .gb-form textarea{background:var(--card);border:2.5px solid var(--ink);border-radius:16px;color:var(--on-pastel);font-weight:700}
 html[lang] .live-pill{border:2px solid var(--ink);background:var(--card);color:#2f9f7c;font-weight:800}
+.topbar .live-pill{white-space:nowrap;flex-shrink:0;padding:4px 10px}
+.topbar .live-pill b{font-weight:700}
+@media (max-width:640px){.topbar .live-pill{padding:4px 8px;gap:5px;font-size:11px}.topbar .live-pill .live-t{display:none}}
 @media (prefers-reduced-motion:reduce){.wave-btn:hover .wave-hand,.wave-btn.waving .wave-hand,.live-pill .dot{animation:none}.wave-float{animation-duration:.01s}}
 </style>
 </head>
@@ -1842,6 +1845,7 @@ html[lang] .live-pill{border:2px solid var(--ink);background:var(--card);color:#
           <button class="theme-swatch" data-theme="nord" style="--sw:#88c0d0" title="Nord" aria-label="Nord theme"></button>
           <button class="theme-swatch" data-theme="synthwave" style="--sw:#ff6ec7" title="Synthwave" aria-label="Synthwave theme"></button>
         </div>
+        <span class="live-pill off" id="live-pill" title="Visitors on the site right now" aria-live="polite"><span class="dot"></span><b id="live-n">…</b><span id="live-t" class="live-t"> online</span></span>
         <div class="avail-badge"><div class="avail-dot"></div>OPEN TO WORK</div>
       </div>
     </div>
@@ -1870,7 +1874,6 @@ html[lang] .live-pill{border:2px solid var(--ink);background:var(--card);color:#
             <div class="now-row"><span class="now-k">STATUS</span><span class="now-v"><span class="now-badge">Open to opportunities</span></span></div>
             <div class="now-row"><span class="now-k">ROLE</span><span class="now-v">Backend → Full-Stack Developer · Lifelayer Health Solutions</span></div>
             <div class="now-row"><span class="now-k">BASED IN</span><span class="now-v">Gurugram, India</span></div>
-            <div class="now-row"><span class="now-k">ONLINE</span><span class="now-v"><span class="live-pill off" id="live-pill"><span class="dot"></span><span id="live-n">connecting…</span></span></span></div>
             <div class="now-row"><span class="now-k">LAST PUSH</span><span class="now-v" id="now-push">checking GitHub…</span></div>
           </div>
           <div class="console-status">
@@ -3747,11 +3750,13 @@ fetchFullGitHub();
   }
 
   // ---------- live visitors + wave events over SSE ----------
-  const pill = $('live-pill'), liveN = $('live-n'), waveN = $('wave-n');
+  const pill = $('live-pill'), liveN = $('live-n'), liveT = $('live-t'), waveN = $('wave-n');
   function setOnline(n) {
     if (!pill) return;
     pill.classList.remove('off');
-    liveN.textContent = fmt(n) + (n === 1 ? ' visitor online' : ' visitors online');
+    liveN.textContent = fmt(n);
+    liveT.textContent = ' online';
+    pill.title = n + (n === 1 ? ' visitor' : ' visitors') + ' on the site right now';
   }
   function setWaves(n) { if (waveN) waveN.textContent = n > 0 ? '· ' + fmt(n) : ''; }
   function floatHand(x, y) {
@@ -3771,9 +3776,9 @@ fetchFullGitHub();
       if (!mine) floatHand(window.innerWidth * (0.15 + Math.random() * 0.7), window.innerHeight * 0.78);
       mine = false;
     });
-    es.onerror = () => { pill.classList.add('off'); liveN.textContent = 'offline'; };
+    es.onerror = () => { pill.classList.add('off'); liveN.textContent = '–'; liveT.textContent = ' offline'; pill.title = 'Live count unavailable'; };
     window.addEventListener('pagehide', () => es.close());
-  } else if (pill) { liveN.textContent = 'offline'; }
+  } else if (pill) { liveN.textContent = '–'; liveT.textContent = ' offline'; }
 
   // ---------- wave button ----------
   let mine = false;
