@@ -27,12 +27,13 @@ const DATA_FILE = path.join(DATA_DIR, 'store.json');
 fs.mkdirSync(DATA_DIR, { recursive: true });
 
 // ───────────────────────── persistence (tiny JSON file) ─────────────────────────
-let store = { waves: 0, guestbook: [], countries: {} };
+let store = { waves: 0, guestbook: [], countries: {}, likes: {} };
 try {
   const raw = JSON.parse(fs.readFileSync(DATA_FILE, 'utf8'));
   store.waves = Number(raw.waves) || 0;
   store.guestbook = Array.isArray(raw.guestbook) ? raw.guestbook : [];
   store.countries = raw.countries && typeof raw.countries === 'object' ? raw.countries : {};
+  store.likes = raw.likes && typeof raw.likes === 'object' ? raw.likes : {};
 } catch (_) { /* first run */ }
 
 let saveTimer = null;
@@ -342,6 +343,18 @@ app.post('/api/contact', limit('contact', 3, 10 * 60e3), async (req, res) => {
     console.error('contact mail failed:', e.message);
     res.status(502).json({ ok: false, error: 'Could not send the email right now.' });
   }
+});
+
+// ───────────────────────── project likes ─────────────────────────
+// One heart per project per visitor is enforced in the browser; the server just counts and rate-limits.
+app.get('/api/likes', (_req, res) => { res.setHeader('Cache-Control', 'no-store'); res.json({ ok: true, likes: store.likes }); });
+app.post('/api/likes/:slug', limit('like', 30, 60e3), (req, res) => {
+  const slug = String(req.params.slug || '').toLowerCase();
+  if (!/^[a-z0-9][a-z0-9-]{0,59}$/.test(slug)) return res.status(400).json({ ok: false, error: 'bad project' });
+  if (!(slug in store.likes) && Object.keys(store.likes).length >= 100) return res.status(400).json({ ok: false, error: 'unknown project' });
+  store.likes[slug] = (store.likes[slug] || 0) + 1;
+  saveSoon();
+  res.json({ ok: true, slug, likes: store.likes[slug] });
 });
 
 app.get('/api/health', (_req, res) => res.json({ ok: true, online: onlineCount(), mail: !!transporter }));
