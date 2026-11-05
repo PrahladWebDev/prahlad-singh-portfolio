@@ -27,13 +27,14 @@ const DATA_FILE = path.join(DATA_DIR, 'store.json');
 fs.mkdirSync(DATA_DIR, { recursive: true });
 
 // ───────────────────────── persistence (tiny JSON file) ─────────────────────────
-let store = { waves: 0, guestbook: [], countries: {}, likes: {} };
+let store = { waves: 0, guestbook: [], countries: {}, likes: {}, sections: {} };
 try {
   const raw = JSON.parse(fs.readFileSync(DATA_FILE, 'utf8'));
   store.waves = Number(raw.waves) || 0;
   store.guestbook = Array.isArray(raw.guestbook) ? raw.guestbook : [];
   store.countries = raw.countries && typeof raw.countries === 'object' ? raw.countries : {};
   store.likes = raw.likes && typeof raw.likes === 'object' ? raw.likes : {};
+  store.sections = raw.sections && typeof raw.sections === 'object' ? raw.sections : {};
 } catch (_) { /* first run */ }
 
 let saveTimer = null;
@@ -355,6 +356,83 @@ app.post('/api/likes/:slug', limit('like', 30, 60e3), (req, res) => {
   store.likes[slug] = (store.likes[slug] || 0) + 1;
   saveSoon();
   res.json({ ok: true, slug, likes: store.likes[slug] });
+});
+
+// ───────────────────────── section popularity + private stats page ─────────────────────────
+// Counts how often each section is opened (no IPs, no identifiers). Only you can read it, via /api/stats.
+const SECTION_IDS = ['about', 'skills', 'experience', 'projects', 'store', 'github', 'education', 'contact'];
+const istDay = (offsetDays = 0) => new Date(Date.now() + 19800000 - offsetDays * 864e5).toISOString().slice(0, 10);
+
+app.post('/api/sections/:id', limit('sec', 40, 60e3), (req, res) => {
+  const id = String(req.params.id || '');
+  if (!SECTION_IDS.includes(id)) return res.status(400).json({ ok: false });
+  const rec = store.sections[id] || (store.sections[id] = { total: 0, days: {} });
+  rec.total += 1;
+  const d = istDay();
+  rec.days[d] = (rec.days[d] || 0) + 1;
+  const keep = istDay(35);
+  for (const k of Object.keys(rec.days)) if (k < keep) delete rec.days[k];
+  saveSoon();
+  res.json({ ok: true });
+});
+
+app.get('/api/stats/data', (req, res) => {
+  if (!isAdmin(req)) return res.status(401).json({ ok: false });
+  const days7 = Array.from({ length: 7 }, (_, i) => istDay(i));
+  const sections = SECTION_IDS.map((id) => {
+    const r = store.sections[id] || { total: 0, days: {} };
+    return { id, total: r.total, today: r.days[istDay()] || 0, week: days7.reduce((n, d) => n + (r.days[d] || 0), 0) };
+  }).sort((a, b) => b.week - a.week || b.total - a.total);
+  const countries = Object.entries(store.countries).map(([code, count]) => ({ code, count })).sort((a, b) => b.count - a.count);
+  const likes = Object.entries(store.likes).map(([slug, count]) => ({ slug, count })).sort((a, b) => b.count - a.count);
+  res.setHeader('Cache-Control', 'no-store');
+  res.json({
+    ok: true, online: onlineCount(), waves: store.waves, sections,
+    visits: countries.reduce((n, c) => n + c.count, 0), countries: countries.slice(0, 8), likes: likes.slice(0, 8),
+    guestbook: { approved: store.guestbook.filter(isApproved).length, pending: store.guestbook.filter((e) => !isApproved(e)).length }
+  });
+});
+
+app.get('/api/stats', (_req, res) => {
+  res.setHeader('Cache-Control', 'no-store');
+  res.setHeader('X-Robots-Tag', 'noindex');
+  res.type('html').send(`<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex"><title>Portfolio stats</title>
+<style>*{box-sizing:border-box}body{margin:0;font-family:system-ui,Arial,sans-serif;background:#0e1526;color:#e9ecf6;padding:20px}
+.w{max-width:680px;margin:0 auto}h1{font-size:20px;margin:0 0 4px}.sub{color:#8f9ab8;font-size:13px;margin-bottom:18px}
+.card{background:#162038;border-radius:14px;padding:18px;margin-bottom:14px}h2{font-size:12px;letter-spacing:1.5px;color:#8f9ab8;margin:0 0 12px;font-weight:700}
+input,button{font:inherit;padding:12px;border-radius:10px;border:0}input{width:100%;background:#0e1526;color:#fff;margin-bottom:10px}
+button{background:#f2a93b;color:#14100a;font-weight:700;cursor:pointer;width:100%}
+.row{display:grid;grid-template-columns:96px 1fr 76px;gap:10px;align-items:center;margin:9px 0;font-size:14px}
+.bar{height:12px;border-radius:99px;background:#0e1526;overflow:hidden}.bar i{display:block;height:100%;background:#f2a93b;border-radius:99px}
+.n{text-align:right;color:#cfd6ec;font-variant-numeric:tabular-nums}.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.k{background:#0e1526;border-radius:12px;padding:12px}.k b{display:block;font-size:22px}.k span{font-size:11px;color:#8f9ab8}
+.tip{font-size:13px;color:#cfd6ec;line-height:1.5}.err{color:#ff7b7b;font-size:13px;min-height:1em}</style></head><body><div class="w">
+<h1>Portfolio stats</h1><div class="sub">Private. Needs your ADMIN_TOKEN.</div>
+<div class="card" id="login"><input id="tok" type="password" placeholder="ADMIN_TOKEN" autocomplete="current-password"><button id="go">Open stats</button><div class="err" id="err"></div></div>
+<div id="out" hidden></div></div>
+<script>
+const $=(i)=>document.getElementById(i);
+const nm={about:'About',skills:'Skills',experience:'Experience',projects:'Projects',store:'Web Store',github:'GitHub',education:'Education',contact:'Contact'};
+const flag=(c)=>String.fromCodePoint(...[...c].map((x)=>127397+x.charCodeAt(0)));
+let rn=null;try{rn=new Intl.DisplayNames(['en'],{type:'region'})}catch(e){}
+function el(t,c,x){const e=document.createElement(t);if(c)e.className=c;if(x!=null)e.textContent=x;return e}
+function bars(card,items,label,val,max){items.forEach((it)=>{const r=el('div','row');r.append(el('span','',label(it)));const b=el('div','bar');const i=el('i');i.style.width=(max?Math.max(2,val(it)/max*100):0)+'%';b.append(i);r.append(b,el('span','n',val(it).toLocaleString('en-IN')));card.append(r)})}
+function show(d){const o=$('out');o.textContent='';
+ const g=el('div','card');const gr=el('div','grid');
+ [[d.online,'online now'],[d.visits,'visits (all time)'],[d.waves,'waves'],[d.guestbook.pending+' / '+d.guestbook.approved,'guestbook pending / live']].forEach(([a,b])=>{const k=el('div','k');k.append(el('b','',String(a)),el('span','',b));gr.append(k)});g.append(gr);o.append(g);
+ const s=el('div','card');s.append(el('h2','','SECTIONS OPENED, LAST 7 DAYS (ALL TIME ON THE RIGHT)'));
+ const mx=Math.max(1,...d.sections.map((x)=>x.week));
+ d.sections.forEach((x)=>{const r=el('div','row');r.append(el('span','',nm[x.id]||x.id));const b=el('div','bar');const i=el('i');i.style.width=Math.max(x.week?2:0,x.week/mx*100)+'%';b.append(i);r.append(b,el('span','n',x.week+' · '+x.total));s.append(r)});
+ const top=d.sections.find((x)=>x.id!=='about');if(top&&top.week>0){s.append(el('div','tip','Most opened after About this week: '+(nm[top.id]||top.id)+'. If it is far down the sidebar, consider moving it up.'))}
+ o.append(s);
+ if(d.countries.length){const c=el('div','card');c.append(el('h2','','TOP COUNTRIES'));bars(c,d.countries,(x)=>flag(x.code)+' '+(rn?rn.of(x.code):x.code),(x)=>x.count,d.countries[0].count);o.append(c)}
+ if(d.likes.length){const c=el('div','card');c.append(el('h2','','MOST LIKED PROJECTS'));bars(c,d.likes,(x)=>x.slug,(x)=>x.count,d.likes[0].count);o.append(c)}
+ o.hidden=false;$('login').hidden=true}
+async function load(t){const r=await fetch('/api/stats/data',{headers:{Authorization:'Bearer '+t},cache:'no-store'});if(!r.ok)throw 0;const d=await r.json();sessionStorage.setItem('ps-stats',t);try{localStorage.setItem('ps-owner','1')}catch(e){}show(d)}
+$('go').onclick=()=>load($('tok').value.trim()).catch(()=>{$('err').textContent='Wrong token.'});
+$('tok').onkeydown=(e)=>{if(e.key==='Enter')$('go').click()};
+const saved=sessionStorage.getItem('ps-stats');if(saved)load(saved).catch(()=>{});
+</script></body></html>`);
 });
 
 app.get('/api/health', (_req, res) => res.json({ ok: true, online: onlineCount(), mail: !!transporter }));
