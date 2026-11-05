@@ -1772,6 +1772,11 @@ html[lang] #scroll-progress{height:5px;box-shadow:0 2px 0 var(--ink)}
 @keyframes heartPop{0%{transform:scale(.6)}60%{transform:scale(1.35)}100%{transform:scale(1)}}
 html[lang] .p-like.liked{color:#d6405a;border-color:var(--ink)}
 html[lang] .p-like.liked svg{fill:#ff6b81;stroke:var(--ink)}
+.rb-txt{display:inline-flex;flex-direction:column;align-items:flex-start;line-height:1.2}
+.resume-btn .rb-txt{align-items:center}
+.rdate{display:block;font-family:var(--mono);font-size:9px;font-weight:500;letter-spacing:.2px;opacity:.78;margin-top:1px;text-transform:none;white-space:nowrap}
+.rdate:empty{display:none}
+html[lang] .rdate{font-weight:700;opacity:.8}
 @media (prefers-reduced-motion:reduce){.wave-btn:hover .wave-hand,.wave-btn.waving .wave-hand,.live-pill .dot{animation:none}.wave-float{animation-duration:.01s}}
 </style>
 </head>
@@ -1871,7 +1876,7 @@ html[lang] .p-like.liked svg{fill:#ff6b81;stroke:var(--ink)}
       </div>
       <a href="/resume" class="resume-btn" title="View Prahlad Singh's Resume">
         <svg viewBox="0 0 24 24"><path d="M12 3v12m0 0l-4-4m4 4l4-4"/><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></svg>
-        RESUME
+        <span class="rb-txt">RESUME<small class="rdate" data-resume-date></small></span>
       </a>
     </div>
   </aside>
@@ -1913,7 +1918,7 @@ html[lang] .p-like.liked svg{fill:#ff6b81;stroke:var(--ink)}
       <p class="sec-sub">Full-Stack Developer · MERN / MEVN · Real-time systems that stay up</p>
 
       <div class="hero-cta reveal">
-        <a class="btn primary" href="/resume"><svg viewBox="0 0 24 24"><path d="M12 3v12m0 0l-4-4m4 4l4-4"/><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></svg>RESUME</a>
+        <a class="btn primary" href="/resume"><svg viewBox="0 0 24 24"><path d="M12 3v12m0 0l-4-4m4 4l4-4"/><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></svg><span class="rb-txt">RESUME<small class="rdate" data-resume-date></small></span></a>
         <button class="btn wave-btn" id="wave-btn" type="button" aria-label="Wave hello"><span class="wave-hand" aria-hidden="true">👋</span>Wave<span class="wave-n" id="wave-n" aria-live="polite"></span></button>
         <button class="btn" type="button" onclick="go('contact', document.getElementById('nav-contact'))"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><polyline points="3 7 12 13 21 7"/></svg>Hire me</button>
       </div>
@@ -4127,16 +4132,21 @@ fetchFullGitHub();
 })();
 
 (function resumeDate() {
-  const el = document.getElementById('resume-meta');
-  if (!el) return;
+  const meta = document.getElementById('resume-meta');
+  const spots = document.querySelectorAll('[data-resume-date]');
+  if (!meta && !spots.length) return;
   fetch('/prahlad_resume.pdf', { method: 'HEAD', cache: 'no-cache' }).then((r) => {
     if (!r.ok) return;
     const lm = r.headers.get('last-modified'), len = parseInt(r.headers.get('content-length') || '0', 10);
     const d = lm ? new Date(lm) : null;
-    const parts = [];
-    if (d && !isNaN(d)) parts.push('updated ' + d.toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' }));
-    if (len > 0) parts.push(len >= 1048576 ? (len / 1048576).toFixed(1) + ' MB' : Math.round(len / 1024) + ' KB');
-    if (parts.length) el.textContent = parts.join(' · ');
+    const when = d && !isNaN(d) ? d.toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' }) : '';
+    spots.forEach((el) => { if (when) el.textContent = 'updated ' + when; });   // About + sidebar RESUME buttons
+    if (meta) {
+      const parts = [];
+      if (when) parts.push('updated ' + when);
+      if (len > 0) parts.push(len >= 1048576 ? (len / 1048576).toFixed(1) + ' MB' : Math.round(len / 1024) + ' KB');
+      if (parts.length) meta.textContent = parts.join(' · ');
+    }
   }).catch(() => {});
 })();
 
