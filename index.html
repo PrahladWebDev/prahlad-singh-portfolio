@@ -2948,7 +2948,19 @@ function updateMeta(id) {
   if (twUrl) twUrl.setAttribute('content', url);
 }
 
+// Section popularity: count each section once per page load. No IDs or IPs are sent.
+// Skipped for Do-Not-Track, automation, and for the owner's browser (set when you open /api/stats).
+const _secSeen = new Set();
+function trackSection(id) {
+  try {
+    if (_secSeen.has(id)) return;
+    _secSeen.add(id);
+    if (navigator.doNotTrack === '1' || navigator.webdriver || localStorage.getItem('ps-owner') === '1') return;
+    fetch((window.PORTFOLIO_API || '/api') + '/sections/' + encodeURIComponent(id), { method: 'POST', keepalive: true }).catch(() => {});
+  } catch (e) {}
+}
 function showSection(id, el) {
+  trackSection(id);
   document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
   document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
   document.getElementById('section-' + id).classList.add('active');
@@ -4164,7 +4176,7 @@ fetchFullGitHub();
     const url = sectionUrl(id);
     try { if (location.pathname !== url || legacyHash) history.replaceState({ section: id }, '', url + (legacyHash ? '' : location.hash)); } catch (e) { /* file:// preview */ }
   }
-  if (id !== 'about') showSection(id);
+  if (id !== 'about') showSection(id); else trackSection('about');
   if (id === 'projects' && rawHash && !legacyHash) focusProjectBySlug(rawHash);   // /projects#gathalok
 })();
 
