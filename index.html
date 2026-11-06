@@ -1798,6 +1798,30 @@ html[lang] .sidebar-top:not(.no-hero) .s-location svg { stroke: rgba(255,255,255
 .sidebar-top.no-hero { aspect-ratio: auto; padding: 36px 26px 24px; }
 .sidebar-top.no-hero::after { display: none; }
 .sidebar-top.no-hero > .s-info { padding: 0; }
+/* ── BUG SQUASH mini-game ── */
+.game-link{display:inline-flex;align-items:center;gap:6px;padding:3px 11px;border-radius:999px;border:1px dashed var(--line-strong);background:var(--panel-2);color:var(--text);font-family:var(--mono);font-size:11px;cursor:pointer}
+.game-link:hover,.game-link:focus-visible{border-color:var(--accent);color:var(--accent)}
+#game{position:fixed;inset:0;z-index:99500;display:flex;flex-direction:column;background:var(--panel);color:var(--text)}
+#game[hidden]{display:none}
+.game-hud{display:flex;align-items:center;gap:18px;padding:12px 16px;padding-top:max(12px,env(safe-area-inset-top));border-bottom:1px solid var(--line);font-family:var(--mono);font-size:13px}
+.game-hud b{font-size:18px;font-family:var(--display)}
+.game-hud .gh{display:flex;align-items:baseline;gap:6px}
+.game-hud .gh span{font-size:10px;letter-spacing:1.4px;color:var(--muted)}
+.game-x{margin-left:auto;width:34px;height:34px;border-radius:9px;border:1px solid var(--line-strong);background:var(--panel-2);color:var(--text);font-size:16px;cursor:pointer}
+.game-stage{position:relative;flex:1;min-height:0;overflow:hidden}
+.game-stage canvas{position:absolute;inset:0;width:100%;height:100%;touch-action:none;cursor:crosshair}
+.game-panel{position:absolute;left:50%;top:46%;transform:translate(-50%,-50%);width:min(92vw,390px);background:var(--panel-2);border:1px solid var(--line-strong);border-radius:var(--radius);padding:26px 24px;text-align:center;z-index:2;box-shadow:0 20px 50px rgba(0,0,0,.35)}
+.game-panel[hidden],.game-panel [hidden]{display:none!important}
+.game-panel h2{margin:0 0 8px;font-family:var(--display);font-size:24px;letter-spacing:-.4px}
+.game-panel p{margin:0 0 14px;font-size:13.5px;line-height:1.6;color:var(--muted)}
+.game-panel .gp-big{font-family:var(--display);font-size:46px;font-weight:800;color:var(--accent);line-height:1;margin:2px 0 10px}
+.game-panel .gp-stats{font-family:var(--mono);font-size:11.5px;color:var(--text);line-height:1.7;margin-bottom:16px}
+.game-panel .gp-row{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.game-panel .gp-hint{font-family:var(--mono);font-size:10.5px;color:var(--muted);margin-top:12px}
+html[lang] #game{background:var(--cream,var(--panel))}
+html[lang] .game-panel{border:3px solid var(--ink);box-shadow:5px 5px 0 var(--shc)}
+html[lang] .game-hud,html[lang] .game-x{border-color:var(--ink)}
+html[lang] .game-link{border:2px solid var(--ink);background:var(--card);color:var(--on-pastel);font-weight:800}
 @media (prefers-reduced-motion:reduce){.wave-btn:hover .wave-hand,.wave-btn.waving .wave-hand,.live-pill .dot{animation:none}.wave-float{animation-duration:.01s}}
 </style>
 </head>
@@ -1954,6 +1978,7 @@ html[lang] .sidebar-top:not(.no-hero) .s-location svg { stroke: rgba(255,255,255
             <div class="now-row"><span class="now-k">STATUS</span><span class="now-v"><span class="now-badge">Open to opportunities</span></span></div>
             <div class="now-row"><span class="now-k">ROLE</span><span class="now-v">Backend → Full-Stack Developer · Lifelayer Health Solutions</span></div>
             <div class="now-row"><span class="now-k">BASED IN</span><span class="now-v">Gurugram, India</span></div>
+            <div class="now-row"><span class="now-k">PLAY</span><span class="now-v"><button type="button" class="game-link" onclick="openBugSquash()">🐛 Bug Squash · 30-second game</button></span></div>
             <div class="now-row"><span class="now-k">LAST PUSH</span><span class="now-v" id="now-push">checking GitHub…</span></div>
           </div>
           <div class="console-status">
@@ -2327,6 +2352,25 @@ html[lang] .sidebar-top:not(.no-hero) .s-location svg { stroke: rgba(255,255,255
   </main>
 </div>
 
+<div id="game" hidden role="dialog" aria-modal="true" aria-label="Bug Squash mini-game">
+  <div class="game-hud">
+    <div class="gh"><span>SCORE</span><b id="g-score">0</b></div>
+    <div class="gh"><span>TIME</span><b id="g-time">30</b></div>
+    <div class="gh"><span>PROD</span><b id="g-lives" aria-label="lives left">❤️❤️❤️</b></div>
+    <button type="button" class="game-x" id="g-close" aria-label="Close game">✕</button>
+  </div>
+  <div class="game-stage" id="g-stage">
+    <canvas id="g-canvas" aria-label="Game area: tap the bugs"></canvas>
+    <div class="game-panel" id="g-panel">
+      <h2 id="g-title">🐛 Bug Squash</h2>
+      <p id="g-text">Squash the bugs before they reach production. Beetles are worth 2. Don't touch the 💎 features. Three escaped bugs and prod is down.</p>
+      <div class="gp-big" id="g-big" hidden>0</div>
+      <div class="gp-stats" id="g-stats" hidden></div>
+      <div class="gp-row"><button type="button" class="btn primary" id="g-go">Start</button><button type="button" class="btn" id="g-share" hidden>Share score</button></div>
+      <div class="gp-hint" id="g-hint">30 seconds · tap or click · Esc to quit</div>
+    </div>
+  </div>
+</div>
 <div class="cmdk" id="cmdk" hidden>
   <div class="cmdk-backdrop" data-close></div>
   <div class="cmdk-panel" role="dialog" aria-modal="true" aria-label="Quick search">
@@ -3242,6 +3286,7 @@ async function saveContact(trigger) {
       g: 'Themes', label: 'Theme: ' + (b.getAttribute('title') || b.dataset.theme).replace(/\s*\(.*\)/, ''), hint: 'Switch colour theme', kw: 'theme colour color dark light mode',
       run: () => b.click()
     }));
+    items.push({ g: 'Fun', label: 'Play Bug Squash', hint: 'A 30-second mini-game', kw: 'game play fun bugs squash arcade', run: () => window.openBugSquash && window.openBugSquash() });
     const skills = new Set();
     document.querySelectorAll('#section-skills .sk-item').forEach(el => {
       const name = (el.textContent || '').replace(/\s+/g, ' ').trim();
@@ -4179,6 +4224,177 @@ fetchFullGitHub();
       if (parts.length) meta.textContent = parts.join(' · ');
     }
   }).catch(() => {});
+})();
+
+// ══════════════════════════════════════════════════════════════
+// BUG SQUASH  (30-second mini-game: tap bugs, avoid features, don't let 3 reach prod)
+// ══════════════════════════════════════════════════════════════
+(function bugSquash() {
+  const $ = (id) => document.getElementById(id);
+  const root = $('game');
+  if (!root) return;
+  const API = window.PORTFOLIO_API || '/api';
+  const cv = $('g-canvas'), ctx = cv.getContext('2d'), stage = $('g-stage');
+  const el = { score: $('g-score'), time: $('g-time'), lives: $('g-lives'), panel: $('g-panel'), title: $('g-title'), text: $('g-text'),
+    big: $('g-big'), stats: $('g-stats'), go: $('g-go'), share: $('g-share'), hint: $('g-hint'), close: $('g-close') };
+  const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const DURATION = 30, MAX_LIVES = 3, FONT = '"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif';
+  const KIND = {
+    bug:     { e: '🐛', pts: 1,  speed: 1,    r: 22, col: '#6ad07a' },
+    beetle:  { e: '🪲', pts: 2,  speed: 1.55, r: 20, col: '#f2a93b' },
+    feature: { e: '💎', pts: -3, speed: 1,    r: 22, col: '#6ab7ff' }
+  };
+  let W = 0, H = 0, dpr = 1, S = null, raf = 0, last = 0, isOpen = false, lastFocus = null, paused = false;
+  let best = 0; try { best = parseInt(localStorage.getItem('ps-bug-best') || '0', 10) || 0; } catch (e) {}
+
+  function resize() {
+    W = stage.clientWidth; H = stage.clientHeight; dpr = Math.min(window.devicePixelRatio || 1, 2);
+    cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+  const hearts = (n) => '❤️'.repeat(Math.max(0, n)) + '🖤'.repeat(MAX_LIVES - Math.max(0, n));
+  function hud() { el.score.textContent = S ? S.score : 0; el.time.textContent = S ? Math.max(0, Math.ceil(S.left)) : DURATION; el.lives.textContent = hearts(S ? S.lives : MAX_LIVES); }
+
+  function start() {
+    S = { score: 0, left: DURATION, elapsed: 0, lives: MAX_LIVES, items: [], parts: [], pops: [], spawn: 0.3, shake: 0, running: true, caught: 0 };
+    el.panel.hidden = true; hud(); cancelAnimationFrame(raf); last = performance.now(); raf = requestAnimationFrame(loop);
+  }
+
+  function spawn() {
+    const t = S.elapsed, roll = Math.random();
+    const kind = roll < 0.14 ? 'feature' : (roll < 0.14 + 0.08 + Math.min(0.2, t * 0.01) ? 'beetle' : 'bug');
+    const k = KIND[kind], scale = Math.max(0.8, Math.min(1.3, H / 640));
+    const r = k.r * (W < 520 ? 1.15 : 1);
+    S.items.push({ kind, r, x: r + Math.random() * (W - 2 * r), y: -r, vy: (85 + t * 4.5 + Math.random() * 45) * k.speed * scale, ph: Math.random() * 6.28, wob: 8 + Math.random() * 16, x0: 0 });
+    S.items[S.items.length - 1].x0 = S.items[S.items.length - 1].x;
+  }
+  function burst(x, y, col, n) {
+    if (reduce) return;
+    for (let i = 0; i < n; i++) { const a = Math.random() * 6.28, v = 60 + Math.random() * 160; S.parts.push({ x, y, vx: Math.cos(a) * v, vy: Math.sin(a) * v - 40, life: 0.5 + Math.random() * 0.3, col }); }
+  }
+  const pop = (x, y, text, col) => S.pops.push({ x, y, text, col, life: 0.8 });
+
+  function loop(now) {
+    if (!S || !S.running) return;
+    const dt = Math.min(0.05, (now - last) / 1000); last = now;
+    S.elapsed += dt; S.left = DURATION - S.elapsed;
+    S.spawn -= dt;
+    if (S.spawn <= 0) { spawn(); S.spawn = Math.max(0.3, 0.85 - S.elapsed * 0.018); }
+    for (const it of S.items) {
+      it.y += it.vy * dt; it.ph += dt * 3; it.x = it.x0 + Math.sin(it.ph) * it.wob;
+    }
+    const gone = [];
+    S.items = S.items.filter((it) => {
+      if (it.y > H - 6) { gone.push(it); return false; } return true;
+    });
+    for (const it of gone) if (it.kind !== 'feature') {
+      S.lives -= 1; S.shake = reduce ? 0 : 0.25; pop(Math.min(W - 20, Math.max(20, it.x)), H - 30, 'prod bug!', '#ff6b6b'); burst(it.x, H - 6, '#ff6b6b', 8);
+    }
+    for (const q of S.parts) { q.x += q.vx * dt; q.y += q.vy * dt; q.vy += 380 * dt; q.life -= dt; }
+    S.parts = S.parts.filter((q) => q.life > 0);
+    for (const q of S.pops) { q.y -= 38 * dt; q.life -= dt; }
+    S.pops = S.pops.filter((q) => q.life > 0);
+    if (S.shake > 0) S.shake -= dt;
+    hud(); draw();
+    if (S.lives <= 0 || S.left <= 0) return finish();
+    raf = requestAnimationFrame(loop);
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+    ctx.save();
+    if (S.shake > 0) ctx.translate((Math.random() - 0.5) * 8, (Math.random() - 0.5) * 8);
+    // production line
+    ctx.setLineDash([8, 7]); ctx.strokeStyle = 'rgba(255,107,107,.55)'; ctx.lineWidth = 2;
+    ctx.beginPath(); ctx.moveTo(0, H - 5); ctx.lineTo(W, H - 5); ctx.stroke(); ctx.setLineDash([]);
+    ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+    for (const it of S.items) { ctx.font = Math.round(it.r * 2) + 'px ' + FONT; ctx.fillText(KIND[it.kind].e, it.x, it.y); }
+    for (const q of S.parts) { ctx.globalAlpha = Math.max(0, q.life * 1.6); ctx.fillStyle = q.col; ctx.fillRect(q.x - 2, q.y - 2, 4, 4); }
+    ctx.globalAlpha = 1;
+    ctx.font = '700 17px ui-monospace, Menlo, monospace';
+    for (const q of S.pops) { ctx.globalAlpha = Math.min(1, q.life * 2); ctx.fillStyle = q.col; ctx.fillText(q.text, q.x, q.y); }
+    ctx.globalAlpha = 1; ctx.restore();
+  }
+
+  function hit(ev) {
+    if (!S || !S.running) return;
+    const rc = cv.getBoundingClientRect(), x = ev.clientX - rc.left, y = ev.clientY - rc.top;
+    for (let i = S.items.length - 1; i >= 0; i--) {
+      const it = S.items[i], k = KIND[it.kind];
+      if (Math.hypot(it.x - x, it.y - y) <= it.r * 1.5) {
+        S.items.splice(i, 1);
+        if (it.kind === 'feature') { S.score = Math.max(0, S.score + k.pts); S.shake = reduce ? 0 : 0.2; pop(it.x, it.y, '-3 feature!', '#ff6b6b'); burst(it.x, it.y, k.col, 10); }
+        else { S.score += k.pts; S.caught++; pop(it.x, it.y, '+' + k.pts, k.col); burst(it.x, it.y, k.col, 12); }
+        hud(); return;
+      }
+    }
+  }
+  cv.addEventListener('pointerdown', (e) => { e.preventDefault(); hit(e); });
+
+  function finish() {
+    S.running = false; cancelAnimationFrame(raf); draw();
+    const score = S.score, isBest = score > best;
+    if (isBest) { best = score; try { localStorage.setItem('ps-bug-best', String(best)); } catch (e) {} }
+    el.title.textContent = S.lives <= 0 ? '💥 Prod is down!' : '⏱ Time!';
+    el.text.textContent = score >= 25 ? 'Senior bug exterminator. Hire this person.' : score >= 12 ? 'Solid debugging. The pager stays quiet.' : 'Bugs everywhere. Try once more!';
+    el.big.hidden = false; el.big.textContent = score;
+    el.stats.hidden = false; el.stats.textContent = 'Your best: ' + best + (isBest && score > 0 ? '  (new record!)' : '');
+    el.go.textContent = 'Play again'; el.share.hidden = false; el.hint.textContent = 'Checking how you did…';
+    el.panel.hidden = false; el.go.focus();
+    fetch(API + '/game/score', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ score: Math.min(60, score) }) })
+      .then((r) => r.json()).then((j) => {
+        if (!j || !j.ok) throw 0;
+        S.beat = j.beat; S.plays = j.plays;
+        el.stats.textContent = 'Your best: ' + best + (isBest && score > 0 ? ' (new record!)' : '') + '  ·  Global best: ' + j.best;
+        el.hint.textContent = j.plays > 5 ? 'You beat ' + j.beat + '% of ' + j.plays.toLocaleString('en-IN') + ' players' : 'You are one of the first players!';
+      }).catch(() => { el.hint.textContent = 'Scores are offline right now'; });
+  }
+
+  el.share.addEventListener('click', () => {
+    const msg = 'I squashed ' + (S ? S.score : 0) + ' bugs in 30 seconds' + (S && S.beat != null && S.plays > 5 ? ' and beat ' + S.beat + '% of players' : '') + ' 🐛 Try to beat me: https://prahladsingh.in';
+    if (navigator.share) { navigator.share({ text: msg }).catch(() => {}); return; }
+    (navigator.clipboard ? navigator.clipboard.writeText(msg) : Promise.reject()).then(() => { el.share.textContent = 'Copied!'; setTimeout(() => { el.share.textContent = 'Share score'; }, 1800); }).catch(() => {});
+  });
+
+  function open() {
+    if (isOpen) return;
+    isOpen = true; lastFocus = document.activeElement;
+    root.hidden = false; document.body.style.overflow = 'hidden';
+    S = null; resize(); ctx.clearRect(0, 0, W, H); hud();
+    el.title.textContent = '🐛 Bug Squash';
+    el.text.textContent = "Squash the bugs before they reach production. Beetles are worth 2. Don't touch the 💎 features. Three escaped bugs and prod is down.";
+    el.big.hidden = true; el.stats.hidden = best <= 0; el.stats.textContent = 'Your best: ' + best;
+    el.go.textContent = 'Start'; el.share.hidden = true; el.hint.textContent = '30 seconds · tap or click · Esc to quit';
+    el.panel.hidden = false; el.go.focus();
+  }
+  function close() {
+    if (!isOpen) return;
+    isOpen = false; cancelAnimationFrame(raf); if (S) S.running = false;
+    root.hidden = true; document.body.style.overflow = '';
+    if (lastFocus && lastFocus.focus) { try { lastFocus.focus(); } catch (e) {} }
+  }
+  el.go.addEventListener('click', start);
+  el.close.addEventListener('click', close);
+  window.addEventListener('resize', () => { if (isOpen) resize(); });
+  document.addEventListener('keydown', (e) => { if (isOpen && e.key === 'Escape') { e.preventDefault(); close(); } });
+  document.addEventListener('visibilitychange', () => {
+    if (!isOpen || !S || !S.running) return;
+    if (document.hidden) { cancelAnimationFrame(raf); paused = true; }
+    else if (paused) { paused = false; last = performance.now(); raf = requestAnimationFrame(loop); }
+  });
+
+  // easter egg: Konami code opens the game
+  const KONAMI = ['arrowup', 'arrowup', 'arrowdown', 'arrowdown', 'arrowleft', 'arrowright', 'arrowleft', 'arrowright', 'b', 'a'];
+  let kpos = 0;
+  document.addEventListener('keydown', (e) => {
+    const t = e.target, typing = t && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' || t.isContentEditable);
+    if (typing || isOpen) { kpos = 0; return; }
+    kpos = (e.key.toLowerCase() === KONAMI[kpos]) ? kpos + 1 : (e.key.toLowerCase() === KONAMI[0] ? 1 : 0);
+    if (kpos === KONAMI.length) { kpos = 0; open(); }
+  });
+
+  window.openBugSquash = open;
+  window.__bugsquash = { state: () => S, finish: () => S && finish() };   // handy for testing
 })();
 
 // ══════════════════════════════════════════════════════════════
