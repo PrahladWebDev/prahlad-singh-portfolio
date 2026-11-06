@@ -27,7 +27,7 @@ const DATA_FILE = path.join(DATA_DIR, 'store.json');
 fs.mkdirSync(DATA_DIR, { recursive: true });
 
 // ───────────────────────── persistence (tiny JSON file) ─────────────────────────
-let store = { waves: 0, guestbook: [], countries: {}, likes: {}, sections: {} };
+let store = { waves: 0, guestbook: [], countries: {}, likes: {}, sections: {}, game: { plays: 0, best: 0, hist: [] } };
 try {
   const raw = JSON.parse(fs.readFileSync(DATA_FILE, 'utf8'));
   store.waves = Number(raw.waves) || 0;
@@ -35,6 +35,7 @@ try {
   store.countries = raw.countries && typeof raw.countries === 'object' ? raw.countries : {};
   store.likes = raw.likes && typeof raw.likes === 'object' ? raw.likes : {};
   store.sections = raw.sections && typeof raw.sections === 'object' ? raw.sections : {};
+  if (raw.game && typeof raw.game === 'object') store.game = { plays: Number(raw.game.plays) || 0, best: Number(raw.game.best) || 0, hist: Array.isArray(raw.game.hist) ? raw.game.hist.map((n) => Number(n) || 0) : [] };
 } catch (_) { /* first run */ }
 
 let saveTimer = null;
@@ -433,6 +434,22 @@ $('go').onclick=()=>load($('tok').value.trim()).catch(()=>{$('err').textContent=
 $('tok').onkeydown=(e)=>{if(e.key==='Enter')$('go').click()};
 const saved=sessionStorage.getItem('ps-stats');if(saved)load(saved).catch(()=>{});
 </script></body></html>`);
+});
+
+// ───────────────────────── Bug Squash mini-game (scores only, no names) ─────────────────────────
+const GAME_MAX = 60;
+app.get('/api/game', (_req, res) => { res.setHeader('Cache-Control', 'no-store'); res.json({ ok: true, plays: store.game.plays, best: store.game.best }); });
+app.post('/api/game/score', limit('game', 12, 60e3), (req, res) => {
+  const score = Math.floor(Number((req.body || {}).score));
+  if (!Number.isFinite(score) || score < 0 || score > GAME_MAX) return res.status(400).json({ ok: false });
+  const g = store.game;
+  while (g.hist.length <= GAME_MAX) g.hist.push(0);
+  let below = 0;
+  for (let i = 0; i < score; i++) below += g.hist[i];
+  const beat = g.plays > 0 ? Math.round((below / g.plays) * 100) : 0;   // % of earlier players this score beat
+  g.hist[score] += 1; g.plays += 1; if (score > g.best) g.best = score;
+  saveSoon();
+  res.json({ ok: true, plays: g.plays, best: g.best, beat });
 });
 
 app.get('/api/health', (_req, res) => res.json({ ok: true, online: onlineCount(), mail: !!transporter }));
