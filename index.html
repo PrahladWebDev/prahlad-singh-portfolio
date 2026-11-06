@@ -180,10 +180,10 @@ overflow: hidden;
 #side-canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; opacity: 0.85; }
 .sidebar-top > * { position: relative; z-index: 1; }
 
-.avatar-wrap { position: relative; width: 68px; height: 68px; margin-bottom: 18px; }
+.avatar-wrap { --av: 148px; position: relative; width: var(--av); height: var(--av); margin-bottom: 20px; }
 .avatar {
-  width: 68px; height: 68px;
-  border-radius: 16px;
+  width: var(--av); height: var(--av);
+  border-radius: 22px;
   background: linear-gradient(150deg, var(--raised), var(--panel-2));
   border: 1px solid var(--line-strong);
   display: flex; align-items: center; justify-content: center;
@@ -193,11 +193,11 @@ overflow: hidden;
   position: relative;
 }
 .avatar picture { display: block; width: 100%; height: 100%; }
-.avatar img { width: 100%; height: 100%; object-fit: cover; border-radius: 15px; }
+.avatar img { width: 100%; height: 100%; object-fit: contain; border-radius: 19px; display: block; }
 .avatar-fallback { display: none; align-items: center; justify-content: center; width: 100%; height: 100%; }
 .avatar-ring {
   position: absolute; inset: -5px;
-  border-radius: 19px;
+  border-radius: 27px;
   border: 1.5px solid var(--signal-dim);
   animation: ringPulse 2.6s ease-in-out infinite;
   pointer-events: none;
@@ -1215,13 +1215,13 @@ html[lang] .sidebar-top {
   background: linear-gradient(180deg, var(--lilac) 0%, rgba(220,207,255,0) 100%);
 }
 html[lang] .avatar {
-  border: 3px solid var(--ink); border-radius: 50%;
+  border: 3px solid var(--ink); border-radius: 26px;
   background: var(--butter); color: var(--on-pastel); box-shadow: 3px 3px 0 var(--shc);
   animation: toonBob 4.5s ease-in-out infinite;
 }
-html[lang] .avatar img { border-radius: 50%; }
-html[lang] .avatar-ring { border-radius: 50%; border: 2.5px dashed var(--purple); inset: -9px; animation: toonSpin 18s linear infinite; opacity: .9; }
-html[lang] .status-chip { background: var(--signal); border: 3px solid var(--ink); width: 20px; height: 20px; bottom: 0; right: -2px; }
+html[lang] .avatar img { border-radius: 22px; }
+html[lang] .avatar-ring { border-radius: 34px; border: 2.5px dashed var(--purple); inset: -9px; animation: none; opacity: .9; }
+html[lang] .status-chip { background: var(--signal); border: 3px solid var(--ink); width: 22px; height: 22px; bottom: -6px; right: -6px; }
 html[lang] .nav-item { border-radius: 16px; font-weight: 700; font-size: 14px; border: 2.5px solid transparent; margin-bottom: 5px; }
 html[lang] .nav-item:hover { background: var(--panel-2); color: var(--on-pastel); transform: translateX(4px) rotate(-.6deg); }
 html[lang] .nav-item.active { background: var(--butter); border-color: var(--on-pastel); box-shadow: 3px 3px 0 var(--shc); color: var(--on-pastel); }
@@ -1778,6 +1778,26 @@ html[lang] .p-like.liked svg{fill:#ff6b81;stroke:var(--ink)}
 .rdate{display:block;font-family:var(--mono);font-size:9px;font-weight:500;letter-spacing:.2px;opacity:.78;margin-top:1px;text-transform:none;white-space:nowrap}
 .rdate:empty{display:none}
 html[lang] .rdate{font-weight:700;opacity:.8}
+/* Sidebar header: the animated picture fills the whole header area (down to the dashed line) */
+.sidebar-top { padding: 0; aspect-ratio: 1 / 0.94; display: flex; flex-direction: column; justify-content: flex-end; }
+.sidebar-top > .side-hero { position: absolute; inset: 0; z-index: 0; display: block; }
+.side-hero img { width: 100%; height: 100%; object-fit: cover; object-position: center 25%; display: block; }
+.sidebar-top::after { content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 58%; z-index: 1; pointer-events: none; background: linear-gradient(to top, rgba(16,12,34,.9) 0%, rgba(16,12,34,.55) 50%, rgba(16,12,34,0) 100%); }
+.sidebar-top > .s-info { position: relative; z-index: 2; padding: 0 24px 20px; }
+.sidebar-top > .sidebar-close, .sidebar-close { z-index: 5; }
+.s-dot { display: inline-block; width: 9px; height: 9px; border-radius: 50%; background: var(--signal); box-shadow: 0 0 0 3px rgba(62,230,168,.28); margin-right: 8px; vertical-align: 2px; }
+html[lang] .sidebar-top:not(.no-hero) .s-name { color: #fff; text-shadow: 0 2px 10px rgba(0,0,0,.55); }
+html[lang] .sidebar-top:not(.no-hero) .s-role { color: #ffe3a3; text-shadow: 0 1px 6px rgba(0,0,0,.5); }
+html[lang] .sidebar-top:not(.no-hero) .s-location { color: rgba(255,255,255,.9); text-shadow: 0 1px 6px rgba(0,0,0,.5); }
+html[lang] .sidebar-top:not(.no-hero) .s-location svg { stroke: rgba(255,255,255,.9); }
+.sidebar-top:not(.no-hero) .s-name { color: #fff; text-shadow: 0 2px 10px rgba(0,0,0,.55); }
+.sidebar-top:not(.no-hero) .s-role { color: #ffe3a3; }
+.sidebar-top:not(.no-hero) .s-location { color: rgba(255,255,255,.9); }
+.sidebar-top:not(.no-hero) .s-location svg { stroke: rgba(255,255,255,.9); }
+/* if the picture ever fails to load, fall back to the plain header */
+.sidebar-top.no-hero { aspect-ratio: auto; padding: 36px 26px 24px; }
+.sidebar-top.no-hero::after { display: none; }
+.sidebar-top.no-hero > .s-info { padding: 0; }
 @media (prefers-reduced-motion:reduce){.wave-btn:hover .wave-hand,.wave-btn.waving .wave-hand,.live-pill .dot{animation:none}.wave-float{animation-duration:.01s}}
 </style>
 </head>
@@ -1806,22 +1826,17 @@ html[lang] .rdate{font-weight:700;opacity:.8}
     </div>
     <div class="sidebar-top">
       <canvas id="side-canvas" role="presentation" aria-hidden="true" title="Rotating 3D wireframe decoration"></canvas>
-      <div class="avatar-wrap">
-        <div class="avatar-ring"></div>
-        <div class="avatar">
-          <picture>
-            <source media="(prefers-reduced-motion: reduce)" srcset="/Prahlad.jpg">
-            <img src="/Prahlad-avatar.gif" width="68" height="68" alt="Prahlad Singh — Full-Stack MERN/MEVN Developer based in Gurgaon, India" title="Prahlad Singh, Full-Stack Developer" loading="eager" onerror="this.style.display='none';this.closest('.avatar').querySelector('.avatar-fallback').style.display='flex'">
-          </picture>
-          <span class="avatar-fallback">PS</span>
-        </div>
-        <div class="status-chip" title="Available for work"></div>
-      </div>
-      <div class="s-name">Prahlad Singh</div>
+      <picture class="side-hero">
+        <source media="(prefers-reduced-motion: reduce)" srcset="/Prahlad.jpg">
+        <img src="/Prahlad-avatar.gif" width="352" height="352" alt="Prahlad Singh — Full-Stack MERN/MEVN Developer based in Gurgaon, India" title="Prahlad Singh, Full-Stack Developer" loading="eager" onerror="this.style.display='none';this.closest('.sidebar-top').classList.add('no-hero')">
+      </picture>
+      <div class="s-info">
+      <div class="s-name"><span class="s-dot" title="Available for work"></span>Prahlad Singh</div>
       <div class="s-role">FULL-STACK DEVELOPER</div>
       <div class="s-location">
         <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M21 10c0 6-9 12-9 12s-9-6-9-12a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
         Gurgaon, Haryana
+      </div>
       </div>
     </div>
 
