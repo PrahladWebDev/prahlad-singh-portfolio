@@ -80,7 +80,7 @@
     "addressCountry": "IN"
   },
   "email": "mailto:prahlad.singh.dev@gmail.com",
-  "worksFor": { "@type": "Organization", "name": "Lifelayer Health Solutions Pvt. Ltd." },
+  "worksFor": { "@type": "Organization", "name": "Mydocin IT Solution Pvt. Ltd." },
   "alumniOf": [
     { "@type": "CollegeOrUniversity", "name": "Dr. A.P.J. Abdul Kalam Technical University" },
     { "@type": "CollegeOrUniversity", "name": "Mahatma Jyotiba Phule Rohilkhand University" }
@@ -750,6 +750,7 @@ a:focus-visible,button:focus-visible,summary:focus-visible,input:focus-visible,t
 .current-tag { display: inline-flex; align-items: center; gap: 7px; background: rgba(62,230,168,0.1); border: 1px solid rgba(62,230,168,0.3); color: var(--signal); padding: 5px 12px; border-radius: 20px; font-family: var(--mono); font-size: 9px; font-weight: 700; letter-spacing: 1px; margin-bottom: 14px; }
 .ct-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--signal); animation: sonar 1.8s ease-out infinite; }
 .exp-co { font-family: var(--display); font-size: 21px; font-weight: 800; letter-spacing: -0.4px; color: var(--text); }
+.exp-tag{display:inline-block;vertical-align:middle;margin-left:12px;font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:.3px;padding:5px 11px;border-radius:20px;border:1px solid var(--accent-dim);color:var(--accent);background:rgba(242,169,59,.08)}
 .exp-role { font-family: var(--mono); font-size: 11px; color: var(--muted); margin-top: 4px; }
 .exp-meta { display: flex; gap: 20px; margin: 12px 0 20px; font-family: var(--mono); font-size: 11px; color: var(--faint); }
 .exp-meta span { display: flex; align-items: center; gap: 6px; }
@@ -1397,7 +1398,7 @@ html[lang] .get-btn.soon { background: var(--card); border-style: dashed; box-sh
 html[lang] .labs-chips a.plat-chip { background: var(--lilac); color: var(--on-pastel); border-color: var(--on-pastel); font-size: 13px; }
 html[lang] .labs-chips a.plat-chip:hover { box-shadow: 5px 6px 0 var(--shc); }
 html[lang] .pf-btn b { opacity: .7; }
-html[lang] .p-featured, html[lang] .exp-hl span, html[lang] .current-tag {
+html[lang] .p-featured, html[lang] .exp-hl span, html[lang] .exp-tag, html[lang] .current-tag {
   border: 2.5px solid var(--ink); color: var(--on-pastel); background: var(--butter); font-weight: 800;
 }
 html[lang] .current-tag { background: var(--mint); }
@@ -1976,7 +1977,7 @@ html[lang] .game-link{border:2px solid var(--ink);background:var(--card);color:v
           </div>
           <div class="console-body now-body">
             <div class="now-row"><span class="now-k">STATUS</span><span class="now-v"><span class="now-badge">Open to opportunities</span></span></div>
-            <div class="now-row"><span class="now-k">ROLE</span><span class="now-v">Backend → Full-Stack Developer · Lifelayer Health Solutions</span></div>
+            <div class="now-row"><span class="now-k">ROLE</span><span class="now-v">Full-Stack Developer · Mydocin IT Solution</span></div>
             <div class="now-row"><span class="now-k">BASED IN</span><span class="now-v">Gurugram, India</span></div>
             <div class="now-row"><span class="now-k">PLAY</span><span class="now-v"><button type="button" class="game-link" onclick="openBugSquash()">🐛 Bug Squash · 30-second game</button></span></div>
             <div class="now-row"><span class="now-k">LAST PUSH</span><span class="now-v" id="now-push">checking GitHub…</span></div>
@@ -2143,24 +2144,38 @@ html[lang] .game-link{border:2px solid var(--ink);background:var(--card);color:v
       <div class="exp-timeline">
         <div class="exp-item reveal">
           <div class="current-tag"><span class="ct-dot"></span> CURRENT ROLE</div>
-          <div class="exp-co">Lifelayer Health Solutions Pvt. Ltd.</div>
-          <div class="exp-role">Backend Developer → Full-Stack</div>
+          <div class="exp-co">Mydocin IT Solution Pvt. Ltd.<span class="exp-tag">MedTech</span></div>
+          <div class="exp-role">Full-Stack Developer</div>
           <div class="exp-meta">
-            <span><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>Mar 2025 – Present</span>
-            <span class="exp-dur" id="exp-dur"></span>
+            <span><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>5 May 2026 – Present</span>
+            <span class="exp-dur" data-start="2026-05-05"></span>
+            <span><svg viewBox="0 0 24 24"><path d="M21 10c0 6-9 12-9 12s-9-6-9-12a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>Faridabad, Haryana, India</span>
+          </div>
+          <div class="exp-hl"><span>Full-Stack</span><span>Multi-tenant</span><span>REST APIs</span><span>Auth / RBAC</span><span>Architecture</span><span>Deployments</span></div><div class="chip-row"><span class="chip"><svg aria-hidden="true"><use href="#sk-javascript"/></svg>JavaScript</span><span class="chip"><svg aria-hidden="true"><use href="#sk-vuedotjs"/></svg>Vue.js</span><span class="chip"><svg aria-hidden="true"><use href="#sk-nodedotjs"/></svg>Node.js</span><span class="chip"><svg aria-hidden="true"><use href="#sk-mongodb"/></svg>MongoDB</span><span class="chip"><svg aria-hidden="true"><use href="#sk-redis"/></svg>Redis</span><span class="chip"><svg aria-hidden="true"><use href="#sk-socketdotio"/></svg>Socket.io</span><span class="chip"><svg aria-hidden="true"><use href="#sk-nginx"/></svg>Nginx</span><span class="chip"><svg aria-hidden="true"><use href="#sk-pm2"/></svg>PM2</span></div>
+          <ul class="exp-list">
+            <li>Developing end-to-end web applications using modern JavaScript technologies.</li>
+            <li>Building scalable frontend interfaces and backend services using Vue.js, Node.js, and Express.js.</li>
+            <li>Designing and integrating RESTful APIs, MongoDB databases, and application business logic.</li>
+            <li>Working on multi-tenant architecture, authentication, authorization, and secure data management.</li>
+            <li>Collaborating on application architecture, system integrations, performance optimization, and production deployments.</li>
+          </ul>
+        </div>
+        <div class="exp-item past reveal">
+          <div class="exp-co">Lifelayer Health Solutions Pvt. Ltd.<span class="exp-tag">MedTech</span></div>
+          <div class="exp-role">Backend Developer</div>
+          <div class="exp-meta">
+            <span><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>17 Mar 2025 – 4 May 2026</span>
+            <span class="exp-dur" data-start="2025-03-17" data-end="2026-05-04"></span>
             <span><svg viewBox="0 0 24 24"><path d="M21 10c0 6-9 12-9 12s-9-6-9-12a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>Gurugram, India</span>
           </div>
-          <div class="exp-hl"><span>Multi-tenant</span><span>DICOM Viewer</span><span>Telemedicine</span><span>Payments</span><span>Auth / RBAC</span><span>DevOps</span></div><div class="chip-row"><span class="chip"><svg aria-hidden="true"><use href="#sk-vuedotjs"/></svg>Vue.js</span><span class="chip"><svg aria-hidden="true"><use href="#sk-nodedotjs"/></svg>Node.js</span><span class="chip"><svg aria-hidden="true"><use href="#sk-mongodb"/></svg>MongoDB</span><span class="chip"><svg aria-hidden="true"><use href="#sk-socketdotio"/></svg>Socket.io</span><span class="chip"><svg aria-hidden="true"><use href="#sk-webrtc"/></svg>PeerJS</span><span class="chip"><svg aria-hidden="true"><use href="#sk-redis"/></svg>Redis</span><span class="chip"><svg aria-hidden="true"><use href="#sk-razorpay"/></svg>Razorpay</span><span class="chip"><svg aria-hidden="true"><use href="#sk-puppeteer"/></svg>Puppeteer</span><span class="chip"><svg aria-hidden="true"><use href="#sk-jsonwebtokens"/></svg>JWT</span><span class="chip"><svg aria-hidden="true"><use href="#sk-nginx"/></svg>Nginx</span><span class="chip"><svg aria-hidden="true"><use href="#sk-pm2"/></svg>PM2</span><span class="chip"><svg aria-hidden="true"><use href="#sk-githubactions"/></svg>GitHub Actions</span></div>
-          <ul class="exp-list collapsed" id="exp-list">
-            <li>Built a large-scale multi-tenant healthcare platform (MEVN) with per-company MongoDB database isolation, connection manager, and model factory pattern.</li>
-            <li>Developed a DICOM medical imaging viewer in Vue.js with multi-panel grid support (1×1 to 2×4), per-panel DWV instances, and drag-and-drop series loading.</li>
-            <li>Built production-grade telemedicine video system using PeerJS, Socket.io, and Redis session persistence.</li>
-            <li>Implemented ambulance booking and live GPS tracking with real-time Socket.io + Google Maps integration.</li>
-            <li>Integrated Razorpay payment gateway with Transaction schema, Puppeteer PDF invoicing, and webhook handling.</li>
-            <li>Designed JWT authentication with RBAC across 5+ roles; HIPAA-aligned MongoDB schemas with indexing.</li>
-            <li>Managed VPS deployments: Linux, Nginx reverse proxy, PM2 process management, CI/CD via GitHub Actions.</li>
+          <div class="exp-hl"><span>Backend</span><span>Multi-tenant</span><span>REST APIs</span><span>Auth / RBAC</span><span>Real-time</span><span>DevOps</span></div><div class="chip-row"><span class="chip"><svg aria-hidden="true"><use href="#sk-nodedotjs"/></svg>Node.js</span><span class="chip"><svg aria-hidden="true"><use href="#sk-mongodb"/></svg>MongoDB</span><span class="chip"><svg aria-hidden="true"><use href="#sk-redis"/></svg>Redis</span><span class="chip"><svg aria-hidden="true"><use href="#sk-socketdotio"/></svg>Socket.io</span><span class="chip"><svg aria-hidden="true"><use href="#sk-jsonwebtokens"/></svg>JWT</span><span class="chip"><svg aria-hidden="true"><use href="#sk-nginx"/></svg>Nginx</span><span class="chip"><svg aria-hidden="true"><use href="#sk-pm2"/></svg>PM2</span></div>
+          <ul class="exp-list">
+            <li>Developed RESTful APIs and backend services using Node.js, Express.js, and MongoDB.</li>
+            <li>Worked on multi-tenant architecture with company-level data isolation and database management.</li>
+            <li>Implemented authentication, authorization, and role-based access control (RBAC).</li>
+            <li>Integrated real-time communication, medical imaging, location-based services, and payment solutions.</li>
+            <li>Contributed to system performance, backend optimization, and production deployment using Linux, Nginx, and PM2.</li>
           </ul>
-          <button class="more-btn" id="exp-more" type="button" onclick="toggleExp(this)" aria-expanded="false">Show 4 more ▾</button>
         </div>
         <div class="exp-item past reveal">
           <div class="exp-co">Independent — Freelance &amp; Personal Projects</div>
@@ -3452,18 +3467,20 @@ function counter(el, target, suffix) {
     if (v >= target) clearInterval(t);
   }, 35);
 }
-counter(document.getElementById('cnt-exp'), 1.8, '');
+counter(document.getElementById('cnt-exp'), Math.round((Date.now() - new Date(2025, 2, 17)) / (365.25 * 864e5) * 10) / 10, '');
 counter(document.getElementById('cnt-proj'), PROJECTS.length, '+');
 counter(document.getElementById('cnt-stack'), document.querySelectorAll('.sk-item').length, '+');
 counter(document.getElementById('cnt-live'), PROJECTS.filter(p => p.deployed && p.deployed.status).length, '+');
 document.querySelectorAll('[data-proj-count]').forEach(e => { e.textContent = PROJECTS.length; });
 (function expDuration() {
-  const el = document.getElementById('exp-dur'); if (!el) return;
-  const now = new Date(), start = new Date(2025, 2, 1);
-  const m = (now.getFullYear() - start.getFullYear()) * 12 + now.getMonth() - start.getMonth();
-  const y = Math.floor(m / 12), mo = m % 12;
-  const parts = [y ? y + ' yr' + (y > 1 ? 's' : '') : '', mo ? mo + ' mo' + (mo > 1 ? 's' : '') : ''].filter(Boolean);
-  el.textContent = '· ' + (parts.join(' ') || '< 1 mo');
+  document.querySelectorAll('.exp-dur[data-start]').forEach(el => {
+    const start = new Date(el.dataset.start);
+    const end = el.dataset.end ? new Date(el.dataset.end) : new Date();
+    let m = (end.getFullYear() - start.getFullYear()) * 12 + end.getMonth() - start.getMonth();
+    const y = Math.floor(m / 12), mo = m % 12;
+    const parts = [y ? y + ' yr' + (y > 1 ? 's' : '') : '', mo ? mo + ' mo' + (mo > 1 ? 's' : '') : ''].filter(Boolean);
+    el.textContent = '· ' + (parts.join(' ') || '< 1 mo');
+  });
 })();
 
 
